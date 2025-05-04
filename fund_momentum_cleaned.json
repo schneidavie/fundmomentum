@@ -1,0 +1,298 @@
+[
+  {
+    "FundName": "20VC",
+    "FundSize": "400000000M",
+    "Currency": "USD",
+    "Location": "AI, Climate, Vertical & Enterprise SaaS, Consumer, Fintech",
+    "IndustryFocus": [
+      "England"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Harry Stebbings (Fouder) -https://www.linkedin.com/in/harrystebbings/",
+    "LinkedInPage": "https://www.linkedin.com/company/20vc/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "24Ventures",
+    "FundSize": "130000000M",
+    "Currency": "EUR",
+    "Location": "Software, CleanTech, QuantumTech",
+    "IndustryFocus": [
+      "Poland"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Katarzyna Kowalczyk (MP) - https://www.linkedin.com/in/katarzyna-kowalczyk-cfa-14127870/ I \u0141ukasz W\u0105sikiewicz",
+    "LinkedInPage": "https://www.linkedin.com/company/24v/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Acurio Ventures III",
+    "FundSize": "150000000M",
+    "Currency": "EUR",
+    "Location": "Generalist, Digital Platforms, Technology, Software",
+    "IndustryFocus": [
+      "Spain"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Ander Michelena, Jon Uriarte (Founding Partners), Bart Tompkins, Diego Recondo JD",
+    "LinkedInPage": "https://www.linkedin.com/company/acurio-ventures/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "AENU Fund I",
+    "FundSize": "170000000M",
+    "Currency": "EUR",
+    "Location": "Climate Tech",
+    "IndustryFocus": [
+      "GER"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Fabian Heilemann (Co-founder & Managing Partner) - https://www.linkedin.com/in/fabian-heilemann/",
+    "LinkedInPage": "https://www.linkedin.com/company/aenu/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Asabys Partners",
+    "FundSize": "180000000M",
+    "Currency": "EUR",
+    "Location": "Life Sciences",
+    "IndustryFocus": [
+      "Spain"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Josep Ll. Sanfeliu (Co-Founder & MP) - https://www.linkedin.com/in/jsanfeliuinvestinlife/ , Clara Camp\u00e0s (Co-Founder & MP) - https://www.linkedin.com/in/claracampas/",
+    "LinkedInPage": "https://www.linkedin.com/company/asabys-partners",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Arch Venture Fund XIII",
+    "FundSize": "3000000000M",
+    "Currency": "USD",
+    "Location": "Biotechnology, Healthcare, AI-driven Therapies",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Robert Nelsen, Keith Crandell, Kristina Burow, Mark McDonnell, Steve Gillis, Paul Berns",
+    "LinkedInPage": "https://www.linkedin.com/company/arch-venture-partners/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Aquiti Venture",
+    "FundSize": "30000000M",
+    "Currency": "EUR",
+    "Location": "Climate, Health",
+    "IndustryFocus": [
+      "France"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.linkedin.com/in/jean-francois-cochy-09a89318/ I https://www.linkedin.com/in/cindy-charlot-030b8128/",
+    "LinkedInPage": "https://www.linkedin.com/company/aquiti",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Avid Ventures Fund II",
+    "FundSize": "87000000M",
+    "Currency": "USD",
+    "Location": "Fintech & Software",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Addie Lerner (Founder & Managing Partner), Tali Vogelstein Miller (Founding Investor), Irene Gendelman (Investor), Dan Deutsch (VP of Finance)",
+    "LinkedInPage": "https://www.linkedin.com/company/avid-ventures/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Bain Capital Life Sciences IV",
+    "FundSize": "3000000000M",
+    "Currency": "USD",
+    "Location": "Life Sciences",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Matthew Calistri - https://www.linkedin.com/in/matthewcalistri/ I Allyson Rinderle - https://www.linkedin.com/in/allyson-rinderle-4b043123/",
+    "LinkedInPage": "https://www.linkedin.com/company/bain-capital/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Backtrace Capital",
+    "FundSize": "10000000M",
+    "Currency": "EUR",
+    "Location": "Tech Infrastructure",
+    "IndustryFocus": [
+      "GER"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Michael M\u00fcnnix - https://www.linkedin.com/in/muennix/ I https://www.linkedin.com/in/dominiktobschall/",
+    "LinkedInPage": "https://www.linkedin.com/company/backtrace-capital/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "BEX Fund V",
+    "FundSize": "765000000M",
+    "Currency": "USD",
+    "Location": "fund-of-funds secondaries",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Thomas Carbonel (P) - https://www.linkedin.com/in/thomas-carbonel-2220111/ and Stephane Chevrier",
+    "LinkedInPage": "https://www.linkedin.com/company/bex-capital/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "BNP Paribas Solar Impulse Venture Fund",
+    "FundSize": "150000000M",
+    "Currency": "EUR",
+    "Location": "Energy transition, sustainable agriculture and food, the circular economy, water and ocean management, smart cities, sustainable mobility, and industrial innovation",
+    "IndustryFocus": [
+      "France"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Yann Lagalaye (MP) - https://www.linkedin.com/in/yann-lagalaye-a8a8aa/",
+    "LinkedInPage": "https://www.linkedin.com/company/bnp-paribas/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Boldstart Ventures Flagship Fund VII",
+    "FundSize": "250000000M",
+    "Currency": "USD",
+    "Location": "Cryptocurrency, Developer software, SaaS, Security",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "GP: Eliot Durbin, https://www.linkedin.com/in/eliotdurbin/",
+    "LinkedInPage": "https://www.linkedin.com/company/boldstart-ventures/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Bregal Sagemount Credit Solutions LP",
+    "FundSize": "800000000M",
+    "Currency": "USD",
+    "Location": "Credit Solutions",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Gene Yoon (MP) - https://www.linkedin.com/in/gene-yoon-b38a9/",
+    "LinkedInPage": "https://www.linkedin.com/company/bregal-sagemount/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "Brookfield Catalytic Transition Fund",
+    "FundSize": "2 400 000 000M",
+    "Currency": "USD",
+    "Location": "Clean energy and transition assets",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Mark Carney (Chair & Head of Transition Investing) - https://www.linkedin.com/in/mark-carney-5b9744205/",
+    "LinkedInPage": "https://www.linkedin.com/company/brookfield-asset-management/",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "",
+    "FundSize": "M",
+    "Currency": "",
+    "Location": "",
+    "IndustryFocus": [],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "",
+    "LinkedInPage": "",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "For getting access to the other 50 funds go to https://seedraisr.substack.com/p/fund-momentum-new-fresh-capital-ready and become a paid subscriber for just $9.99/month",
+    "FundSize": "M",
+    "Currency": "",
+    "Location": "",
+    "IndustryFocus": [],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "",
+    "LinkedInPage": "",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "",
+    "FundSize": "M",
+    "Currency": "",
+    "Location": "",
+    "IndustryFocus": [],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "",
+    "LinkedInPage": "",
+    "FundManagers": [],
+    "Hiring": false
+  },
+  {
+    "FundName": "If you are fundraising for your startup or as an emerging fund manager let's get in touch > https://seedraisr.com or via LinkedIn.",
+    "FundSize": "M",
+    "Currency": "",
+    "Location": "",
+    "IndustryFocus": [],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "",
+    "LinkedInPage": "",
+    "FundManagers": [],
+    "Hiring": false
+  }
+]

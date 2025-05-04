@@ -1,0 +1,3159 @@
+[
+  {
+    "FundName": "20VC",
+    "FundSize": "400000000M",
+    "Currency": "USD",
+    "Location": "AI, Climate, Vertical & Enterprise SaaS, Consumer, Fintech",
+    "IndustryFocus": [
+      "England"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.thetwentyminutevc.com/",
+    "LinkedInPage": "https://www.linkedin.com/company/20vc/",
+    "FundManagers": [
+      {
+        "Name": "Harry Stebbings (Fouder)",
+        "LinkedIn": "https://www.linkedin.com/in/harrystebbings/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "24Ventures",
+    "FundSize": "130000000M",
+    "Currency": "EUR",
+    "Location": "Software, CleanTech, QuantumTech",
+    "IndustryFocus": [
+      "Poland"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.24ventures.vc/",
+    "LinkedInPage": "https://www.linkedin.com/company/24v/",
+    "FundManagers": [
+      {
+        "Name": "Katarzyna Kowalczyk (MP)",
+        "LinkedIn": "https://www.linkedin.com/in/katarzyna-kowalczyk-cfa-14127870/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Acurio Ventures III",
+    "FundSize": "150000000M",
+    "Currency": "EUR",
+    "Location": "Generalist, Digital Platforms, Technology, Software",
+    "IndustryFocus": [
+      "Spain"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://acurio.vc",
+    "LinkedInPage": "https://www.linkedin.com/company/acurio-ventures/",
+    "FundManagers": [
+      {
+        "Name": "Ander Michelena",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Jon Uriarte (Founding Partners)",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Bart Tompkins",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Diego Recondo JD",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "AENU Fund I",
+    "FundSize": "170000000M",
+    "Currency": "EUR",
+    "Location": "Climate Tech",
+    "IndustryFocus": [
+      "GER"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.aenu.com",
+    "LinkedInPage": "https://www.linkedin.com/company/aenu/",
+    "FundManagers": [
+      {
+        "Name": "Fabian Heilemann (Co-founder & Managing Partner)",
+        "LinkedIn": "https://www.linkedin.com/in/fabian-heilemann/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Asabys Partners",
+    "FundSize": "180000000M",
+    "Currency": "EUR",
+    "Location": "Life Sciences",
+    "IndustryFocus": [
+      "Spain"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://asabys.com/",
+    "LinkedInPage": "https://www.linkedin.com/company/asabys-partners",
+    "FundManagers": [
+      {
+        "Name": "Josep Ll. Sanfeliu (Co-Founder & MP)",
+        "LinkedIn": "https://www.linkedin.com/in/jsanfeliuinvestinlife/"
+      },
+      {
+        "Name": "Clara Camp\u00e0s (Co-Founder & MP)",
+        "LinkedIn": "https://www.linkedin.com/in/claracampas/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Arch Venture Fund XIII",
+    "FundSize": "3000000000M",
+    "Currency": "USD",
+    "Location": "Biotechnology, Healthcare, AI-driven Therapies",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.archventure.com",
+    "LinkedInPage": "https://www.linkedin.com/company/arch-venture-partners/",
+    "FundManagers": [
+      {
+        "Name": "Robert Nelsen",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Keith Crandell",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Kristina Burow",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Mark McDonnell",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Steve Gillis",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Paul Berns",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Aquiti Venture",
+    "FundSize": "30000000M",
+    "Currency": "EUR",
+    "Location": "Climate, Health",
+    "IndustryFocus": [
+      "France"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.aquiti.fr/",
+    "LinkedInPage": "https://www.linkedin.com/company/aquiti",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/in/jean-francois-cochy-09a89318/ I https://www.linkedin.com/in/cindy-charlot-030b8128/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Avid Ventures Fund II",
+    "FundSize": "87000000M",
+    "Currency": "USD",
+    "Location": "Fintech & Software",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.avidventures.com",
+    "LinkedInPage": "https://www.linkedin.com/company/avid-ventures/",
+    "FundManagers": [
+      {
+        "Name": "Addie Lerner (Founder & Managing Partner)",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Tali Vogelstein Miller (Founding Investor)",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Irene Gendelman (Investor)",
+        "LinkedIn": null
+      },
+      {
+        "Name": "Dan Deutsch (VP of Finance)",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Bain Capital Life Sciences IV",
+    "FundSize": "3000000000M",
+    "Currency": "USD",
+    "Location": "Life Sciences",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.baincapital.com",
+    "LinkedInPage": "https://www.linkedin.com/company/bain-capital/",
+    "FundManagers": [
+      {
+        "Name": "Matthew Calistri",
+        "LinkedIn": "https://www.linkedin.com/in/matthewcalistri/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Backtrace Capital",
+    "FundSize": "10000000M",
+    "Currency": "EUR",
+    "Location": "Tech Infrastructure",
+    "IndustryFocus": [
+      "GER"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://backtrace.vc/",
+    "LinkedInPage": "https://www.linkedin.com/company/backtrace-capital/",
+    "FundManagers": [
+      {
+        "Name": "Michael M\u00fcnnix",
+        "LinkedIn": "https://www.linkedin.com/in/muennix/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "BEX Fund V",
+    "FundSize": "765000000M",
+    "Currency": "USD",
+    "Location": "fund-of-funds secondaries",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.bexcapital.com",
+    "LinkedInPage": "https://www.linkedin.com/company/bex-capital/",
+    "FundManagers": [
+      {
+        "Name": "Thomas Carbonel (P)",
+        "LinkedIn": "https://www.linkedin.com/in/thomas-carbonel-2220111/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "BNP Paribas Solar Impulse Venture Fund",
+    "FundSize": "150000000M",
+    "Currency": "EUR",
+    "Location": "Energy transition, sustainable agriculture and food, the circular economy, water and ocean management, smart cities, sustainable mobility, and industrial innovation",
+    "IndustryFocus": [
+      "France"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://group.bnpparibas/",
+    "LinkedInPage": "https://www.linkedin.com/company/bnp-paribas/",
+    "FundManagers": [
+      {
+        "Name": "Yann Lagalaye (MP)",
+        "LinkedIn": "https://www.linkedin.com/in/yann-lagalaye-a8a8aa/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Boldstart Ventures Flagship Fund VII",
+    "FundSize": "250000000M",
+    "Currency": "USD",
+    "Location": "Cryptocurrency, Developer software, SaaS, Security",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://boldstart.vc",
+    "LinkedInPage": "https://www.linkedin.com/company/boldstart-ventures/",
+    "FundManagers": [
+      {
+        "Name": "GP: Eliot Durbin",
+        "LinkedIn": null
+      },
+      {
+        "Name": "https://www.linkedin.com/in/eliotdurbin/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Bregal Sagemount Credit Solutions LP",
+    "FundSize": "800000000M",
+    "Currency": "USD",
+    "Location": "Credit Solutions",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.sagemount.com/",
+    "LinkedInPage": "https://www.linkedin.com/company/bregal-sagemount/",
+    "FundManagers": [
+      {
+        "Name": "Gene Yoon (MP)",
+        "LinkedIn": "https://www.linkedin.com/in/gene-yoon-b38a9/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "Brookfield Catalytic Transition Fund",
+    "FundSize": "2 400 000 000M",
+    "Currency": "USD",
+    "Location": "Clean energy and transition assets",
+    "IndustryFocus": [
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "https://www.brookfield.com",
+    "LinkedInPage": "https://www.linkedin.com/company/brookfield-asset-management/",
+    "FundManagers": [
+      {
+        "Name": "Mark Carney (Chair & Head of Transition Investing)",
+        "LinkedIn": "https://www.linkedin.com/in/mark-carney-5b9744205/"
+      }
+    ],
+    "SourceTab": "Sept"
+  },
+  {
+    "FundName": "360 Digitaly",
+    "FundSize": "30M (first close)M",
+    "Currency": "EUR",
+    "Location": "FRA/ITA",
+    "IndustryFocus": [
+      "Climate & Deep Tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed to Series B with focus on Italy",
+    "LinkedInPage": "https://www.360cap.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/360-capital-partners/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "415 Capital",
+    "FundSize": "150MM",
+    "Currency": "EUR",
+    "Location": "GER",
+    "IndustryFocus": [
+      "Life science",
+      "healthcare"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early stage (R&D stage)",
+    "LinkedInPage": "https://415capital.com/",
+    "FundManagers": [
+      {
+        "Name": "https://de.linkedin.com/company/415-capital",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "Acrew Capital",
+    "FundSize": "700MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Data",
+      "security",
+      "fintech",
+      "health"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "$1\u201315MM to lead rounds for Seed and Series A companies out of its early stage program and invests $10\u201320MM into rounds for Series B and Series C companies out of its inflection stage program",
+    "LinkedInPage": "https://www.acrewcapital.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/acrew-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "Adams Street Venture Innovation Fund IV",
+    "FundSize": "12bnM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Venture Capital",
+      "Growth",
+      "Buyouts"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth & Later Stage",
+    "LinkedInPage": "https://www.adamsstreetpartners.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/adams-street-partners/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "Also Capital Fund I",
+    "FundSize": "21MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Hard tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed to Series B",
+    "LinkedInPage": "https://www.alsocapital.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/also-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "ARX Equity Partners",
+    "FundSize": "78M (first close)M",
+    "Currency": "EUR",
+    "Location": "Cech Rep.",
+    "IndustryFocus": [
+      "healthcare",
+      "education",
+      "and lifestyle services"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "ower mid-cap SMEs in selected Central European",
+    "LinkedInPage": "https://www.arxequity.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/arx-equity-partners/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "Avaana",
+    "FundSize": "135MM",
+    "Currency": "USD",
+    "Location": "India",
+    "IndustryFocus": [
+      "energy transition",
+      "supply chain",
+      "resources",
+      "industrial decarbonization",
+      "and food systems"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "https://avaanacapital.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/avaana-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "BlackFin Capital Partners Fund IV",
+    "FundSize": "18bnM",
+    "Currency": "EUR",
+    "Location": "Global",
+    "IndustryFocus": [
+      "PE firm focusing exclusively on financial services buyouts and FinTechs"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth Stage",
+    "LinkedInPage": "https://www.blackfin.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/blackfin-capital-partners",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "Brightspark",
+    "FundSize": "100MM",
+    "Currency": "USD",
+    "Location": "CAN",
+    "IndustryFocus": [
+      "Climate (Carbon removal) & Manufacturing (Robotics)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "early-stage (Seed-Series A) Canadian technology startups",
+    "LinkedInPage": "https://brightspark.com/en",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/brightspark/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "Buckley Ventures IV",
+    "FundSize": "250MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "internet",
+      "software",
+      "and frontier technology sectors"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "https://www.buckleyventures.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/buckleyventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Oct"
+  },
+  {
+    "FundName": "4impact\u00a0VC Fund II.",
+    "FundSize": "68MM",
+    "Currency": "EUR",
+    "Location": "NED",
+    "IndustryFocus": [
+      "Sustainability & Carbon Removal"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed - Series A",
+    "LinkedInPage": "https://www.4impact.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/4impactvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "Altos Ventures",
+    "FundSize": "500MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "SaaS",
+      "consumer tech",
+      "mobile applications",
+      "and enterprise software"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early & Growth Stage",
+    "LinkedInPage": "https://altos.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/altos-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "Axeleo Capital (AXC)",
+    "FundSize": "125M (first close)M",
+    "Currency": "EUR",
+    "Location": "France",
+    "IndustryFocus": [
+      "B2B SaaS & Green Tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "https://www.axc.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/axeleo-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "BBG Ventures",
+    "FundSize": "60MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Female founders in health and wellbeing; the future of education and work; climate friendly commerce; overlooked and emerging consumers"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "https://www.bbgventures.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bbg-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "Bek Ventures",
+    "FundSize": "235MM",
+    "Currency": "EUR",
+    "Location": "LUX",
+    "IndustryFocus": [
+      "SaaS",
+      "Enterprise",
+      "Consumer",
+      "Infra"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "https://www.bekventures.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bekventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "BlueGreen Ventures",
+    "FundSize": "75MM",
+    "Currency": "USD",
+    "Location": "IND",
+    "IndustryFocus": [
+      "Climate",
+      "Fintech",
+      "Consumer"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage in India",
+    "LinkedInPage": "https://www.bluegreen.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bluegreen-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "Broadwood Capital",
+    "FundSize": "100MM",
+    "Currency": "GPF",
+    "Location": "UK",
+    "IndustryFocus": [
+      "Real Estate",
+      "Construction"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Lending",
+    "LinkedInPage": "https://www.broadwood.capital/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/broadwood-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "Bynd Venture Capital Fund III.",
+    "FundSize": "40MM",
+    "Currency": "EUR",
+    "Location": "POR",
+    "IndustryFocus": [
+      "artificial intelligence (AI)",
+      "software",
+      "consumer goods",
+      "and sustainability technology"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage in ESP & POR",
+    "LinkedInPage": "https://www.bynd.vc/en",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bynd-venture-capital",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "Capagro",
+    "FundSize": "115MM",
+    "Currency": "EUR",
+    "Location": "France",
+    "IndustryFocus": [
+      "AgTech and FoodTech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth Stage",
+    "LinkedInPage": "https://capagro.fr/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/capagro/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "Capital Dynamics",
+    "FundSize": "11bnM",
+    "Currency": "USD",
+    "Location": "CHE",
+    "IndustryFocus": [
+      "Secondaries",
+      "Mid-Market",
+      "Clean Energy Infra"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth & Later Stage",
+    "LinkedInPage": "https://www.capdyn.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/capital-dynamics/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_1"
+  },
+  {
+    "FundName": "21 Invest",
+    "FundSize": "70M (first close)M",
+    "Currency": "EUR",
+    "Location": "ITA",
+    "IndustryFocus": [
+      "Healthcare"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth Stage in Ita & EU",
+    "LinkedInPage": "https://www.21invest.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/21-invest/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Bling Capital Fund IV",
+    "FundSize": "270MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "SaaS",
+      "Healthcare",
+      "FinTech",
+      "Consumer",
+      "Marketplaces",
+      "AI"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed/Seed",
+    "LinkedInPage": "https://www.blingcap.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bling-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "BSV Ventures",
+    "FundSize": "15MM",
+    "Currency": "EUR",
+    "Location": "EST",
+    "IndustryFocus": [
+      "R&D",
+      "DeepTech",
+      "Life Science"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed/Seed in Baltics & EU",
+    "LinkedInPage": "https://bsv.ventures/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bsv-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Extantia Capital",
+    "FundSize": "204MM",
+    "Currency": "EUR",
+    "Location": "GER",
+    "IndustryFocus": [
+      "Climate like Energy",
+      "Carbon",
+      "Sustainable fuels"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed-Series A",
+    "LinkedInPage": "https://www.extantia.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/extantia/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Ferment Venture Studio Fund I.",
+    "FundSize": "20MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Energy",
+      "agriculture",
+      "materials",
+      "and health"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "https://www.ferment.co/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/fermentco/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Forerunner Ventures Fund VII.",
+    "FundSize": "500MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Consumer",
+      "AI",
+      "Health",
+      "EdTech",
+      "Social Impact",
+      "Marketplaces"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed & Series A",
+    "LinkedInPage": "https://www.forerunnerventures.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/forerunner-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Kyip Impact Mission",
+    "FundSize": "30M (first close)M",
+    "Currency": "EUR",
+    "Location": "ITA",
+    "IndustryFocus": [
+      "Health",
+      "nutrition",
+      "preventive care",
+      "and promotion of healthy and sustainable lifestyles"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth Stage",
+    "LinkedInPage": "https://kyipcapital.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/kyip-capital-sgr/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Metalayer (still in stealth)",
+    "FundSize": "20M (first close)M",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Blockchain & Crypto"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "",
+    "FundManagers": [],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Nucleus Capital",
+    "FundSize": "40MM",
+    "Currency": "EUR",
+    "Location": "GER",
+    "IndustryFocus": [
+      "Climate like BioTech",
+      "FoodTech",
+      "DeepTech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "https://www.nucleus-capital.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/nucleuscapital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Play Ventures Fund III.",
+    "FundSize": "140MM",
+    "Currency": "USD",
+    "Location": "SGP",
+    "IndustryFocus": [
+      "Gaming"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed to Series A",
+    "LinkedInPage": "https://www.playventures.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/playventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Nov_2"
+  },
+  {
+    "FundName": "Alstin III",
+    "FundSize": "175MM",
+    "Currency": "EUR",
+    "Location": "GER",
+    "IndustryFocus": [
+      "B2B Saas",
+      "fintech",
+      "insurtech",
+      "regtech",
+      "and cybersecurity"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed & Series A",
+    "LinkedInPage": "https://alstin.capital/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/alstincapital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Blue Earth Capital",
+    "FundSize": "113MM",
+    "Currency": "USD",
+    "Location": "CHE",
+    "IndustryFocus": [
+      "Healthcare",
+      "EdTech",
+      "FinTech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth/Credit",
+    "LinkedInPage": "https://blueearth.capital/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/blueearthcapital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Cadenza AI Venture Fund",
+    "FundSize": "50MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "AI",
+      "Infra",
+      "Enterprise SaaS"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed & Seed",
+    "LinkedInPage": "https://cadenza.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/cadenza-vc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Fly Ventures III.",
+    "FundSize": "80MM",
+    "Currency": "EUR",
+    "Location": "GER",
+    "IndustryFocus": [
+      "DeepTech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early",
+    "LinkedInPage": "https://fly.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/fly-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Hadean Ventures II",
+    "FundSize": "100MM",
+    "Currency": "EUR",
+    "Location": "NOR",
+    "IndustryFocus": [
+      "Healthcare esp. in Therapeutics",
+      "Medical Devices",
+      "and Diagnostics"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Nordics & DACH - Seed & Series A",
+    "LinkedInPage": "https://hadeanventures.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/hadean-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Heartcore Fund V.",
+    "FundSize": "170MM",
+    "Currency": "EUR",
+    "Location": "DK",
+    "IndustryFocus": [
+      "Generalist tech",
+      "B2B/B2C"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early",
+    "LinkedInPage": "https://www.heartcore.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/heartcorecapital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Laude Ventures Fund I",
+    "FundSize": "75MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "AI",
+      "data",
+      "and enterprise SaaS"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed until Series A",
+    "LinkedInPage": "https://laude.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/laude-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Next Tier GVC Gaesco S.C.R.S.A.",
+    "FundSize": "50MM",
+    "Currency": "EUR",
+    "Location": "ESP",
+    "IndustryFocus": [
+      "AI",
+      "B2B SaaS"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early & Growth",
+    "LinkedInPage": "https://nexttier.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/nexttier-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Rerail I.",
+    "FundSize": "205M (first close)M",
+    "Currency": "USD",
+    "Location": "UK",
+    "IndustryFocus": [
+      "FinTech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed/Seed",
+    "LinkedInPage": "https://www.rerail.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/rerailv/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "Swish Ventures I.",
+    "FundSize": "60MM",
+    "Currency": "USD",
+    "Location": "ISR",
+    "IndustryFocus": [
+      "Cybersecurity",
+      "AI"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed in ISR & US",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/swish-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_1"
+  },
+  {
+    "FundName": "360 Capital LIFE II",
+    "FundSize": "140M (first close)M",
+    "Currency": "EUR",
+    "Location": "France",
+    "IndustryFocus": [
+      "Climate Tech",
+      "Energy Transition",
+      "Circular Economy",
+      "Urban Sustainability"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Series A and B",
+    "LinkedInPage": "https://www.360cap.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/360-capital-partners/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "BenchStrength Capital Fund I",
+    "FundSize": "62MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Enterprise software",
+      "fintech",
+      "healthcare IT"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "https://benchstrengthvc.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/benchstrengthvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "Category Capital I",
+    "FundSize": "160MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Enterprise SaaS",
+      "AI",
+      "Data",
+      "Dev Tools",
+      "Infra",
+      "Cyber"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed - Series A",
+    "LinkedInPage": "https://www.categoryvc.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/category-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "Evercurious VC Fund I",
+    "FundSize": "125M (first close)M",
+    "Currency": "EUR",
+    "Location": "GRE",
+    "IndustryFocus": [
+      "DeepTech & Hardware"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed to Series A",
+    "LinkedInPage": "https://evercurious.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/evercurious/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "FirstLook Partners Fund I",
+    "FundSize": "30MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Thesis-driven emerging managers and breakout companies"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth in US",
+    "LinkedInPage": "https://www.firstlookpartners.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/firstlookpartners/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "Momentum III",
+    "FundSize": "25M (first close)M",
+    "Currency": "EUR",
+    "Location": "NOR",
+    "IndustryFocus": [
+      "Climate tech",
+      "including food and agriculture",
+      "energy transition",
+      "decarbonizing industry",
+      "and blue economy solutions"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed in Nordics & EU",
+    "LinkedInPage": "https://momentumpartners.no/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/momentum-partners-as/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "MS&AD Ventures V",
+    "FundSize": "100MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Insurtech",
+      "fintech",
+      "property",
+      "health",
+      "transport",
+      "AI",
+      "cybersecurity",
+      "climate tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "https://msad.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/ms-ad-ventures",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "Robin Capital Fund One",
+    "FundSize": "15MM",
+    "Currency": "EUR",
+    "Location": "GER",
+    "IndustryFocus": [
+      "B2B Enterprise/SaaS"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed & Seed in DACH",
+    "LinkedInPage": "https://robincap.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/robincapital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "Scrum Sports & Entertainment Fund I",
+    "FundSize": "68MM",
+    "Currency": "USD",
+    "Location": "JP/US",
+    "IndustryFocus": [
+      "Sports & Entertainment"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage Seed to Series A",
+    "LinkedInPage": "https://scrum.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/scrum-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "VGames III",
+    "FundSize": "142MM",
+    "Currency": "USD",
+    "Location": "ISR",
+    "IndustryFocus": [
+      "Gaming"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early in Israel, Eastern Europe, and emerging markets",
+    "LinkedInPage": "https://www.vgames.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/vgamesil/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Dec_2 I Jan_1"
+  },
+  {
+    "FundName": "Eximius Ventures Fund II",
+    "FundSize": "30MM",
+    "Currency": "USD",
+    "Location": "IND",
+    "IndustryFocus": [
+      "Fintech",
+      "AI/SaaS",
+      "frontier tech",
+      "consumer tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early",
+    "LinkedInPage": "https://eximiusvc.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/eximius-capital-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "BNP Paribas Solar Impulse Venture Fund",
+    "FundSize": "172MM",
+    "Currency": "EUR",
+    "Location": "France",
+    "IndustryFocus": [
+      "Cleantech and ecological transition like Energy",
+      "AgriTech",
+      "Food",
+      "Circular",
+      "Smart City",
+      "Mobility"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early & Growth",
+    "LinkedInPage": "https://www.bnpparibas-am.com/en/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bnp-paribas-asset-management/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "Portfolia FemTech Fund III",
+    "FundSize": "415MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Women's health",
+      "including mental health",
+      "pregnancy",
+      "pregnancy loss",
+      "fertility",
+      "menopause",
+      "aging",
+      "and more"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early & Growth",
+    "LinkedInPage": "https://www.portfolia.co/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/portfolia/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "AO Ventures (Tennis Australia's venture capital fund)",
+    "FundSize": "30M (first close)M",
+    "Currency": "USD",
+    "Location": "AUS",
+    "IndustryFocus": [
+      "Sports",
+      "entertainment",
+      "media",
+      "and health technology startups"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed to Series A",
+    "LinkedInPage": "https://www.aoventures.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/tennis-australia/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "33East Venture Capital Fund",
+    "FundSize": "26M (first close)M",
+    "Currency": "EUR",
+    "Location": "CYP",
+    "IndustryFocus": [
+      "Technology startups",
+      "with potential focus on fintech",
+      "blockchain",
+      "and gaming sectors in CYP"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed & Seed",
+    "LinkedInPage": "https://www.33east.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/33east/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "Foothill Ventures Fund III",
+    "FundSize": "110MM",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Technology startups",
+      "with emphasis on artificial intelligence (AI)",
+      "software",
+      "life sciences",
+      "and deep tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed to Series A",
+    "LinkedInPage": "https://www.foothill.ventures/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/foothillventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "Riceberg Ventures Fund",
+    "FundSize": "20MM",
+    "Currency": "USD",
+    "Location": "CHE",
+    "IndustryFocus": [
+      "DeepTech",
+      "including SpaceTech",
+      "AI",
+      "health tech",
+      "cybersecurity",
+      "novel energy",
+      "semiconductors",
+      "and quantum computing"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early",
+    "LinkedInPage": "https://riceberg.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/riceberg-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "Sigma Capital Fund I",
+    "FundSize": "100MM",
+    "Currency": "USD",
+    "Location": "UAE",
+    "IndustryFocus": [
+      "Web3",
+      "Blockchain",
+      "Metaverse",
+      "Gaming",
+      "DeFi"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early",
+    "LinkedInPage": "https://sigmavc.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/sigma-cap/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "Algebris Climatech",
+    "FundSize": "60M (first close)M",
+    "Currency": "EUR",
+    "Location": "ITA",
+    "IndustryFocus": [
+      "Climate tech and deep tech in key transition industries such as energy",
+      "materials",
+      "industrials",
+      "and food"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early & Growth",
+    "LinkedInPage": "https://www.algebris.com/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/algebris-investments/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "Defiant Fund I",
+    "FundSize": "30MM",
+    "Currency": "USD",
+    "Location": "UK",
+    "IndustryFocus": [
+      "B2B SaaS and fintech startups"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed to Series A",
+    "LinkedInPage": "https://defiant.vc/",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/defiantvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Jan_2"
+  },
+  {
+    "FundName": "Cherry Ventures (V)",
+    "FundSize": "5000M",
+    "Currency": "USD",
+    "Location": "GER",
+    "IndustryFocus": [
+      "Multi-sector tech (AI",
+      "climate tech",
+      "fintech",
+      "SaaS)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage (Seed\u2013Series A) & Series B+",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/cherry-ventures",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "Emblem",
+    "FundSize": "800M",
+    "Currency": "EUR",
+    "Location": "FRA",
+    "IndustryFocus": [
+      "Tech startups (B2B software",
+      "materials science",
+      "AI",
+      "commerce platforms)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed-stage ventures",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/emblemvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "Course Corrected (II)",
+    "FundSize": "630M",
+    "Currency": "EUR",
+    "Location": "SWE",
+    "IndustryFocus": [
+      "Climate tech (energy",
+      "mobility",
+      "food systems",
+      "industry)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/course-corrected",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "Shift4Good",
+    "FundSize": "2200M",
+    "Currency": "EUR",
+    "Location": "FRA",
+    "IndustryFocus": [
+      "Sustainable transportation (fleet electrification",
+      "micromobility",
+      "battery recycling",
+      "hydrogen technologies",
+      "AI-driven energy-saving software)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Series A and B",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/shift4good",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "Varrock Ventures",
+    "FundSize": "300M",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "Crypto"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed and seed-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/varrock/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "GTMfund (II)",
+    "FundSize": "540M",
+    "Currency": "USD",
+    "Location": "US",
+    "IndustryFocus": [
+      "B2B SaaS"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed to Series A",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/gtmfund",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "Angular Ventures (III)",
+    "FundSize": "1250M",
+    "Currency": "USD",
+    "Location": "UK",
+    "IndustryFocus": [
+      "Hard tech (AI",
+      "energy",
+      "biology",
+      "space technologies)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Inception-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/angularventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "BADideas.fund",
+    "FundSize": "220M",
+    "Currency": "USD",
+    "Location": "EST",
+    "IndustryFocus": [
+      "Tech startups (B2B SaaS",
+      "marketplaces",
+      "AI)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/badideas-fund",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "4elements",
+    "FundSize": "274M",
+    "Currency": "EUR",
+    "Location": "FRA",
+    "IndustryFocus": [
+      "Climate tech (propulsion systems",
+      "real estate decarbonization",
+      "carbon storage)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/4elements-ventures",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "Elev8.vc",
+    "FundSize": "300M",
+    "Currency": "USD",
+    "Location": "SGP",
+    "IndustryFocus": [
+      "Deep tech (AI",
+      "med tech",
+      "robotics",
+      "advanced manufacturing)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/elev8vc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_1"
+  },
+  {
+    "FundName": "Fund F (I)",
+    "FundSize": "\u20ac28MM",
+    "Currency": "EUR",
+    "Location": "Austria",
+    "IndustryFocus": [
+      "Multi-sector (healthtech",
+      "climatetech)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed & Seed",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/fund_f/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "Perplexity AI (I)",
+    "FundSize": "$50MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "AI startups"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed & Seed",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/perplexity-fund/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "VC4 FoF I (IV)",
+    "FundSize": "\u20ac33MM",
+    "Currency": "EUR",
+    "Location": "Spain",
+    "IndustryFocus": [
+      "VC funds (US",
+      "LATAM",
+      "Europe)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Multi-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/vc4-fof",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "Afore Capital (IV)",
+    "FundSize": "$185MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Multi-sector tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/aforecapital",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "Slow Ventures (I)",
+    "FundSize": "$63MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Creator economy"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/slow-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "Antler (II)",
+    "FundSize": "\u20ac100MM",
+    "Currency": "EUR",
+    "Location": "Nordic region (Finland)",
+    "IndustryFocus": [
+      "Multi-sector tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/antlerglobal/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "Footwork (II)",
+    "FundSize": "$225MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Consumer tech",
+      "Enterprise brands"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/footworkvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "Greenfield Partners (III)",
+    "FundSize": "$400MM",
+    "Currency": "USD",
+    "Location": "Israel",
+    "IndustryFocus": [
+      "Enterprise tech (cybersecurity",
+      "AI",
+      "IT infrastructure)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-growth (Series B & C)",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/greenfieldlp/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "Bonfire Ventures (IV)",
+    "FundSize": "$245MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "B2B software"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bonfireventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "4Founders Capital (III)",
+    "FundSize": "\u20ac44MM",
+    "Currency": "EUR",
+    "Location": "Spain",
+    "IndustryFocus": [
+      "Early-stage tech startups"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/4founders-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Feb_2"
+  },
+  {
+    "FundName": "Vento Fund II",
+    "FundSize": "\u20ac75 millionM",
+    "Currency": "EUR",
+    "Location": "Sector-agnostic",
+    "IndustryFocus": [
+      "Torino",
+      "Piemonte",
+      "Italy"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage (pre-seed and seed)",
+    "LinkedInPage": "https://www.vento.ventures [https://www.vento.ventures]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/vento-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "Icebreaker.vc Fund III",
+    "FundSize": "Not specifiedM",
+    "Currency": "EUR",
+    "Location": "Broad industry focus including ICT, Health, Manufacturing",
+    "IndustryFocus": [
+      "Helsinki",
+      "Southern Finland"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Idea-stage to Seed",
+    "LinkedInPage": "https://www.icebreaker.vc/ [https://www.icebreaker.vc/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/icebreaker-vc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "Daybreak Ventures Fund I",
+    "FundSize": "$33 millionM",
+    "Currency": "USD",
+    "Location": "Consumer and enterprise",
+    "IndustryFocus": [
+      "New York City",
+      "New York",
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage (seed and pre-seed)",
+    "LinkedInPage": "https://www.daybreakventures.com/ [https://www.daybreakventures.com/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/daybreak-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "Climate Fund Managers - Climate Investor Three",
+    "FundSize": "\u20ac150 millionM",
+    "Currency": "EUR",
+    "Location": "Green hydrogen, energy transition, decarbonization of industry",
+    "IndustryFocus": [
+      "Amsterdam",
+      "The Netherlands"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Project development through operations",
+    "LinkedInPage": "https://www.climatefundmanagers.com/ [https://www.climatefundmanagers.com/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/climate-fund-managers/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "Bessemer Venture Partners India Fund II",
+    "FundSize": "$350 millionM",
+    "Currency": "USD",
+    "Location": "Technology, consumer internet, healthcare, financial services",
+    "IndustryFocus": [
+      "Bengaluru",
+      "India"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage to growth-stage",
+    "LinkedInPage": "https://www.bvp.com/ [https://www.bvp.com/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/bessemer-venture-partners/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "Valor Ventures Fund 3",
+    "FundSize": "$27 millionM",
+    "Currency": "USD",
+    "Location": "B2B AI and SaaS startups",
+    "IndustryFocus": [
+      "Atlanta",
+      "Georgia",
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed-stage",
+    "LinkedInPage": "https://valor.vc/ [https://valor.vc/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/valorvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "Foundation Capital Fund XI",
+    "FundSize": "$600 millionM",
+    "Currency": "USD",
+    "Location": "Enterprise, artificial intelligence, fintech, cryptocurrency",
+    "IndustryFocus": [
+      "Palo Alto",
+      "California",
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage (seed and Series A)",
+    "LinkedInPage": "https://www.foundationcapital.com/ [https://www.foundationcapital.com/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/foundation-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "8VC Fund VI",
+    "FundSize": "$998 millionM",
+    "Currency": "USD",
+    "Location": "Supply chain and logistics",
+    "IndustryFocus": [
+      "Austin",
+      "Texas",
+      "USA"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage to growth-stage",
+    "LinkedInPage": "https://www.8vc.com/ [https://www.8vc.com/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/8vc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "Ar\u0101ya Ventures Super Angel Fund I",
+    "FundSize": "\u20ac22 millionM",
+    "Currency": "EUR",
+    "Location": "Health, FinTech, Commerce, Future of Work",
+    "IndustryFocus": [
+      "London",
+      "UK"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed and Seed",
+    "LinkedInPage": "https://araya.ventures/ [https://araya.ventures/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/arayaventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "OpenOcean Fund IV",
+    "FundSize": "\u20ac100 millionM",
+    "Currency": "EUR",
+    "Location": "Technical, data-driven startups",
+    "IndustryFocus": [
+      "Helsinki",
+      "Finland"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth-stage",
+    "LinkedInPage": "https://www.openocean.vc/ [https://www.openocean.vc/]",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/openocean-vc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_1"
+  },
+  {
+    "FundName": "Susa Ventures V",
+    "FundSize": "1750M",
+    "Currency": "$",
+    "Location": "US",
+    "IndustryFocus": [
+      "Sector-agnostic",
+      "focus on software and AI"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed and seed-stage",
+    "LinkedInPage": "susa.ventures",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/susa-ventures",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Plug & Play and EA Ventures Fund I",
+    "FundSize": "200M",
+    "Currency": "\u20ac",
+    "Location": "ESP",
+    "IndustryFocus": [
+      "AI",
+      "enterprise",
+      "fintech",
+      "sustainability",
+      "mobility",
+      "e-commerce"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed-stage",
+    "LinkedInPage": "plugandplaytechcenter.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/plug-and-play-tech-center & https://www.linkedin.com/company/ea-group-holding/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Cendana 6",
+    "FundSize": "4000M",
+    "Currency": "$",
+    "Location": "US",
+    "IndustryFocus": [
+      "Fund of funds (sub-$100M pre-seed & seed VCs)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed and seed-stage",
+    "LinkedInPage": "cendanacapital.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/cendana-capital",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Recursive Ventures III",
+    "FundSize": "300M",
+    "Currency": "$",
+    "Location": "US",
+    "IndustryFocus": [
+      "Tech leveraging data and AI"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed and seed-stage",
+    "LinkedInPage": "recursiveventures.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/recursive-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Daphni Blue III",
+    "FundSize": "2000M",
+    "Currency": "\u20ac",
+    "Location": "FRA",
+    "IndustryFocus": [
+      "Climate transition",
+      "sustainability",
+      "science-based"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed and Series A",
+    "LinkedInPage": "daphni.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/daphni/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Motion Ventures Fund II",
+    "FundSize": "1000M",
+    "Currency": "$",
+    "Location": "SIG",
+    "IndustryFocus": [
+      "Maritime tech",
+      "digitalization",
+      "decarbonization"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed to Series A",
+    "LinkedInPage": "motion.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/motionventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Adara Ventures AV4",
+    "FundSize": "1000M",
+    "Currency": "\u20ac",
+    "Location": "LUX",
+    "IndustryFocus": [
+      "Deep tech: cybersecurity",
+      "AI",
+      "digital infra",
+      "health",
+      "space"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "adara.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/adaravc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Maven 11 Fund III",
+    "FundSize": "1070M",
+    "Currency": "$",
+    "Location": "NED",
+    "IndustryFocus": [
+      "Crypto: consumer",
+      "infra",
+      "AI-crypto"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed to Series A",
+    "LinkedInPage": "maven11.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/maven11/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Dream Fund II",
+    "FundSize": "325M",
+    "Currency": "$",
+    "Location": "US",
+    "IndustryFocus": [
+      "Retail",
+      "software",
+      "e-com",
+      "HR Tech",
+      "Health",
+      "Privacy"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early Stage",
+    "LinkedInPage": "dreamventures.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/dream-venturesvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "2AM VC Fund II",
+    "FundSize": "250M",
+    "Currency": "$",
+    "Location": "US/IND",
+    "IndustryFocus": [
+      "Consumer tech",
+      "fintech",
+      "SaaS",
+      "AI",
+      "food & bev"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed to seed-stage",
+    "LinkedInPage": "2amvc.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/2-a-m-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Mar_2"
+  },
+  {
+    "FundName": "Founders Fund Growth III",
+    "FundSize": "46BM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Artificial Intelligence",
+      "Defense",
+      "Space",
+      "Fintech",
+      "Growth-Stage Startups"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Late-Stage Venture Focus",
+    "LinkedInPage": "foundersfund.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/the-founders-fund/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "Red Bull Ventures",
+    "FundSize": "200MM",
+    "Currency": "EUR",
+    "Location": "Austria",
+    "IndustryFocus": [
+      "Media & Entertainment Technology",
+      "Advanced Manufacturing & Supply Chain Solutions",
+      "Sports & Human Performance",
+      "Digital & Technological Innovation",
+      "Consumer Engagement & Retail Innovations",
+      "Sustainability"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-Stage Focus",
+    "LinkedInPage": "redbull.ventures",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/redbullventures",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "Revent Fund II",
+    "FundSize": "100MM",
+    "Currency": "EUR",
+    "Location": "Germany",
+    "IndustryFocus": [
+      "Climate Tech",
+      "Healthcare",
+      "Industrial Decarbonization",
+      "Reskilling",
+      "Empowerment"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-Stage Focus",
+    "LinkedInPage": "revent.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/revent-vc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "Construct Capital Fund III",
+    "FundSize": "300MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Manufacturing",
+      "Logistics",
+      "Transportation",
+      "Critical Infrastructure",
+      "Defense",
+      "Energy"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-Stage Focus (Seed to Series A)",
+    "LinkedInPage": "constructcap.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/constructcap/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "Lerer Hippeau Fund IX",
+    "FundSize": "200MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Generalist (Consumer",
+      "Enterprise",
+      "AI",
+      "Fintech",
+      "Health",
+      "PropTech",
+      "etc.)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-Seed and Seed Focus",
+    "LinkedInPage": "lererhippeau.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/lerer-hippeau-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "Climate Tech Portfolio Fund III",
+    "FundSize": "105MM",
+    "Currency": "EUR",
+    "Location": "Netherlands",
+    "IndustryFocus": [
+      "Climate Tech (Green Hydrogen",
+      "CO2-Free Cement",
+      "Iron-Air Batteries",
+      "Sustainable Proteins)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Venture Capital and Growth Equity Focus (Fund-of-Funds)",
+    "LinkedInPage": "carbonequity.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/carbon-equity/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "NuVentures Fund I",
+    "FundSize": "75MM",
+    "Currency": "USD",
+    "Location": "USA & India",
+    "IndustryFocus": [
+      "AI",
+      "SaaS",
+      "Consumer Tech"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-Stage Focus (Startups with a strong India connection)",
+    "LinkedInPage": "nuventures.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/nuventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "Outlier Grove Fund I",
+    "FundSize": "20MM",
+    "Currency": "USD",
+    "Location": "UK",
+    "IndustryFocus": [
+      "B2B Technology Startups"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Angel and Seed Focus",
+    "LinkedInPage": "outliergrove.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/outlier-grove/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "Revaia Growth II",
+    "FundSize": "250MM",
+    "Currency": "EUR",
+    "Location": "France",
+    "IndustryFocus": [
+      "Energy Transition",
+      "AI for Insurance",
+      "Cybersecurity",
+      "Sustainable Innovation"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Growth-Stage Focus (Series B to IPO or Buyout)",
+    "LinkedInPage": "revaia.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/revaia/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "Moneta Ventures Fund III",
+    "FundSize": "250MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Enterprise Software (Software++)",
+      "Technology",
+      "Healthcare"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed and Series A Focus",
+    "LinkedInPage": "moneta.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/moneta-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_1"
+  },
+  {
+    "FundName": "KOMPAS VC Fund II",
+    "FundSize": "150MM",
+    "Currency": "EUR",
+    "Location": "Denmark",
+    "IndustryFocus": [
+      "Industrial Technology (productivity",
+      "decarbonisation",
+      "manufacturing",
+      "built environment",
+      "AI",
+      "robotics",
+      "material science",
+      "synthetic biology)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "kompas.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/kompasvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "First Momentum Ventures Fund II",
+    "FundSize": "35MM",
+    "Currency": "EUR",
+    "Location": "Germany",
+    "IndustryFocus": [
+      "Deep Tech",
+      "Industrial Tech",
+      "B2B (New Industrials",
+      "Energy",
+      "Compute-robotics",
+      "automation",
+      "industrial AI",
+      "novel materials",
+      "grid infrastructure",
+      "energy storage",
+      "semiconductors",
+      "quantum computing",
+      "next-gen data storage)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed/Early-stage",
+    "LinkedInPage": "firstmomentum.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/firstmomentum/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "CIV Fund I",
+    "FundSize": "200MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Manufacturing",
+      "Energy",
+      "Infrastructure (nuclear energy",
+      "automation",
+      "robotics",
+      "digital infrastructure",
+      "clean energy",
+      "carbon capture)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage",
+    "LinkedInPage": "civ.co",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/civ-co/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "Programma 103 (P101 SGR)",
+    "FundSize": "250MM",
+    "Currency": "EUR",
+    "Location": "Italy",
+    "IndustryFocus": [
+      "Digital & Technology (fintech",
+      "proptech",
+      "edtech",
+      "cybersecurity",
+      "sustainability",
+      "digital transformation)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage (Series A & B, some growth)",
+    "LinkedInPage": "p101.it",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/p101/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "TBD VC Fund I",
+    "FundSize": "35MM",
+    "Currency": "USD",
+    "Location": "Israel & USA",
+    "IndustryFocus": [
+      "Deep Tech (enterprise AI",
+      "cloud infrastructure",
+      "cybersecurity",
+      "defense tech)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed and Seed",
+    "LinkedInPage": "tbd.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/tbdvc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "11 Tribes Ventures Fund II",
+    "FundSize": "46MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Early-stage Technology (capital-efficient",
+      "scalable startups outside traditional tech hubs)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Seed & Series A",
+    "LinkedInPage": "11tribes.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/11-tribes/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "Neo Fund IV",
+    "FundSize": "320MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Software",
+      "Science",
+      "Deep Tech (software-science intersection",
+      "AI",
+      "infrastructure)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed, Seed, Accelerator, selective Late-stage",
+    "LinkedInPage": "neo.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/school/neoventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "Volta Ventures Seed Fund III",
+    "FundSize": "20MM",
+    "Currency": "EUR",
+    "Location": "Netherlands",
+    "IndustryFocus": [
+      "B2B Software (early-stage SaaS startups in Benelux)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed and Seed",
+    "LinkedInPage": "volta.ventures",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/volta-ventures/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "Sturgeon Emerging Opportunities II (SEO II)",
+    "FundSize": "165MM",
+    "Currency": "USD",
+    "Location": "UK",
+    "IndustryFocus": [
+      "B2B Software",
+      "FinTech",
+      "Marketplaces (Kazakhstan",
+      "Uzbekistan",
+      "Pakistan",
+      "Bangladesh",
+      "MENA)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Early-stage (Seed to Series A)",
+    "LinkedInPage": "sturgeoncapital.com",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/sturgeon-capital/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  },
+  {
+    "FundName": "Stepchange Fund I",
+    "FundSize": "7MM",
+    "Currency": "USD",
+    "Location": "USA",
+    "IndustryFocus": [
+      "Climate Tech (consumer/commercial transport",
+      "grid",
+      "climate resilience)"
+    ],
+    "StageFocus": [
+      "Unknown"
+    ],
+    "Website": "Pre-seed and Seed",
+    "LinkedInPage": "stepchange.vc",
+    "FundManagers": [
+      {
+        "Name": "https://www.linkedin.com/company/stepchange-vc/",
+        "LinkedIn": null
+      }
+    ],
+    "SourceTab": "Apr_2"
+  }
+]

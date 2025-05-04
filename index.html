@@ -44,7 +44,7 @@
 
   <script>
     async function loadFunds() {
-      const response = await fetch('fund_momentum_valid_only.json');
+      const response = await fetch('fund_momentum_valid_relaxed.json');
       const data = await response.json();
 
       const searchInput = document.getElementById('search');

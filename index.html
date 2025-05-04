@@ -1,38 +1,31 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fund Momentum Tracker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fund Momentum – Live Tracker</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2rem;
-      background-color: #f9f9f9;
-    }
-    h1 {
-      color: #333;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #fff;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #eee;
-    }
+    body { font-family: Arial, sans-serif; margin: 2rem; background-color: #f9f9f9; }
+    h1 { color: #333; }
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #eee; }
+    input, select { margin-bottom: 1rem; padding: 5px; }
   </style>
 </head>
 <body>
-  <h1>Fund Momentum – Sep 2024 to May 2025</h1>
-  <p>This is a demo view of the most recent VC & PE funds actively deploying capital. For full access, subscribe at <a href="https://seedraisr.substack.com" target="_blank">Seedraisr</a>.</p>
+  <h1>Fund Momentum Tracker</h1>
+  <p>Now showing all active VC & PE funds from Sep 2024 to May 2025.</p>
 
-  <table>
+  <input type="text" id="search" placeholder="Search by fund name..." />
+  <select id="hiringFilter">
+    <option value="">All Hiring Status</option>
+    <option value="true">Hiring</option>
+    <option value="false">Not Hiring</option>
+  </select>
+
+  <table id="fundTable">
     <thead>
       <tr>
         <th>Fund Name</th>
@@ -46,30 +39,55 @@
         <th>Hiring?</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>AlphaTech Capital</td>
-        <td>150M</td>
-        <td>EUR</td>
-        <td>Berlin, Germany</td>
-        <td>AI, SaaS, ClimateTech</td>
-        <td>Pre-Seed, Seed</td>
-        <td><a href="https://alphatech.vc" target="_blank">Website</a></td>
-        <td><a href="https://www.linkedin.com/company/alphatech-vc/" target="_blank">LinkedIn</a></td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td>Green Horizon Partners</td>
-        <td>300M</td>
-        <td>USD</td>
-        <td>Amsterdam, Netherlands</td>
-        <td>Sustainability, Energy, Mobility</td>
-        <td>Series A, Series B</td>
-        <td><a href="https://greenhorizon.com" target="_blank">Website</a></td>
-        <td><a href="https://www.linkedin.com/company/greenhorizonpartners/" target="_blank">LinkedIn</a></td>
-        <td>No</td>
-      </tr>
-    </tbody>
+    <tbody></tbody>
   </table>
+
+  <script>
+    async function loadFunds() {
+      const response = await fetch('fund_momentum_sep2024_may2025.json');
+      const data = await response.json();
+
+      const searchInput = document.getElementById('search');
+      const hiringFilter = document.getElementById('hiringFilter');
+      const tableBody = document.querySelector('#fundTable tbody');
+
+      function renderTable(filteredData) {
+        tableBody.innerHTML = '';
+        filteredData.forEach(fund => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${fund.FundName}</td>
+            <td>${fund.FundSize}</td>
+            <td>${fund.Currency}</td>
+            <td>${fund.Location}</td>
+            <td>${(fund.IndustryFocus || []).join(', ')}</td>
+            <td>${(fund.StageFocus || []).join(', ')}</td>
+            <td><a href="${fund.Website}" target="_blank">Website</a></td>
+            <td><a href="${fund.LinkedInPage}" target="_blank">LinkedIn</a></td>
+            <td>${fund.Hiring ? 'Yes' : 'No'}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+
+      function applyFilters() {
+        const term = searchInput.value.toLowerCase();
+        const hiring = hiringFilter.value;
+        const filtered = data.filter(fund => {
+          const matchesTerm = fund.FundName.toLowerCase().includes(term);
+          const matchesHiring = hiring === "" || String(fund.Hiring) === hiring;
+          return matchesTerm && matchesHiring;
+        });
+        renderTable(filtered);
+      }
+
+      searchInput.addEventListener('input', applyFilters);
+      hiringFilter.addEventListener('change', applyFilters);
+
+      renderTable(data);
+    }
+
+    loadFunds();
+  </script>
 </body>
 </html>

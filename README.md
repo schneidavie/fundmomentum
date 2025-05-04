@@ -1,6 +1,6 @@
 # 🧠 Fund Momentum – VC & PE Tracker (Sep 2024–May 2025 Edition)
 
-This is the open-source dataset maintained by **Fund Momentum**, your go-to resource for discovering fresh VC & PE funds **actively deploying capital**.
+This is the open-data dataset maintained by **Fund Momentum**, your go-to resource for discovering fresh VC & PE funds **actively deploying capital**.
 
 ---
 
@@ -23,13 +23,14 @@ This is the open-source dataset maintained by **Fund Momentum**, your go-to reso
 
 ---
 
-## 🔗 Data Files
+## 🔗 Files
 
 | File | Description |
 |------|-------------|
-| [`fund_momentum_sep2024_may2025.json`](./fund_momentum_sep2024_may2025.json) | Structured JSON for AI tools, LLMs, and LangChain apps |
-| `fund_momentum_sep2024_may2025.csv` | Spreadsheet format for traditional use (coming soon) |
-| `schema/fund-schema.json` | Optional JSON schema definition for devs |
+| `index.html` | Live HTML view (loads all funds from JSON) |
+| `fund_momentum_sep2024_may2025.json` | Structured JSON for AI tools, LLMs, and LangChain apps |
+| `fund_momentum_sep2024_may2025.csv` | Spreadsheet format |
+| `README.md` | This file – overview and guidance |
 
 ---
 
@@ -43,6 +44,5 @@ This repo is built for:
 
 ---
 
-📫 Want to get updates? Subscribe: [seedraisr.substack.com](https://seedraisr.substack.com)  
-📎 Maintained by [@schneidavie](https://www.linkedin.com/in/schneidavie)
-
+📫 Subscribe: [seedraisr.substack.com](https://seedraisr.substack.com)  
+🔗 Maintained by [@schneidavie](https://www.linkedin.com/in/schneidavie)

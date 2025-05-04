@@ -44,7 +44,7 @@
 
   <script>
     async function loadFunds() {
-      const response = await fetch('fund_momentum_sep2024_may2025.json');
+      const response = await fetch('fund_momentum_cleaned.json');
       const data = await response.json();
 
       const searchInput = document.getElementById('search');

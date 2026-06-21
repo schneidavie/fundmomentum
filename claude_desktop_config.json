@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "fund-momentum": {
+      "url": "https://fundmomentum.vc/_api/mcp",
+      "headers": {
+        "X-API-Key": "YOUR_API_KEY"
+      }
+    }
+  }
+}

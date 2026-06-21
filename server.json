@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.schneidavie/fund-momentum",
   "title": "Fund Momentum",
-  "description": "VC intelligence for AI assistants. 960+ active VC funds, live investor signals, AI-powered startup matching.",
+  "description": "920+ active VC funds with live investor signals",
   "version": "1.0.0",
   "repository": {
     "url": "https://github.com/schneidavie/fundmomentum",
@@ -15,7 +15,7 @@
       "headers": [
         {
           "name": "X-API-Key",
-          "description": "API key for authentication (get one at https://fundmomentum.vc/pricing)",
+          "description": "API key for authentication (get one at https://fundmomentum.vc/account-settings)",
           "isRequired": true,
           "isSecret": true
         }

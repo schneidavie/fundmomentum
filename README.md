@@ -1,6 +1,6 @@
 # Fund Momentum MCP Server
 
-> 960+ active VC funds. Live investor signals. AI-powered matching.
+> 920+ active VC funds. Live investor signals. AI-powered matching.
 
 The Fund Momentum MCP server connects Claude, Cursor, or any MCP-compatible AI to our database of active venture capital funds — all raised capital since September 2024.
 
@@ -37,7 +37,7 @@ Get your API key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing). 
 
 | Tool | Tier | Description |
 |------|------|-------------|
-| `search_funds` | Starter | Filter 960+ active VC funds by stage, country, industry |
+| `search_funds` | Starter | Filter 920+ active VC funds by stage, country, industry |
 | `get_fund` | Starter | Full fund profile with thesis, check size, team |
 | `get_fund_signals` | Pro | Live GP signals, deployment status, founder playbook |
 | `get_gp_profile` | Pro | Individual partner backgrounds, character tags, thesis |
@@ -222,7 +222,7 @@ Error response:
 ## Pricing
 
 | Tier | Price | Calls/month | Tools |
-|------|------|-------------|-------|
+|------|-------|-------------|-------|
 | Free | €0 | 0 (manifest only) | - |
 | Starter | €49/mo | 1,000 | search_funds, get_fund |
 | Pro | €299/mo | 10,000 | All tools incl. signals & matching |
@@ -273,52 +273,4 @@ Returns full manifest with all tools, pricing, and Claude Desktop config.
 
 ---
 
-*Fund Momentum tracks 960+ active VC funds. All funds raised capital since September 2024.*
-# 🧠 Fund Momentum – VC & PE Tracker (Sep 2024–May 2025 Edition)
-
-This is the open-data dataset maintained by **Fund Momentum**, your go-to resource for discovering fresh VC & PE funds **actively deploying capital**.
-
----
-
-## 📊 What’s Included?
-
-- 140+ verified VC/PE funds
-- Fund Size & Currency
-- Stage & Industry Focus
-- Team LinkedIn Contacts
-- Website URLs
-- Hiring Status (for talent)
-
----
-
-## 💼 Use Cases
-
-- 🚀 **Founders**: Identify funds actively deploying in Q1/Q2 2025
-- 🧠 **Job Seekers**: Find funds currently hiring
-- 🤝 **VCs/PEs**: Spot co-investors and fund-of-fund targets
-
----
-
-## 🔗 Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Live HTML view (loads all funds from JSON) |
-| `fund_momentum_sep2024_may2025.json` | Structured JSON for AI tools, LLMs, and LangChain apps |
-| `fund_momentum_sep2024_may2025.csv` | Spreadsheet format |
-| `README.md` | This file – overview and guidance |
-
----
-
-## 🤖 Optimized for AI & Agents
-
-This repo is built for:
-- LLM ingestion (ChatGPT, Claude, Gemini)
-- AI agents and LangChain apps
-- CRM enrichment
-- Deal sourcing automations
-
----
-
-📫 Subscribe: [seedraisr.substack.com](https://seedraisr.substack.com)  
-🔗 Maintained by [@schneidavie](https://www.linkedin.com/in/schneidavie)
+*Fund Momentum tracks 920+ active VC funds. All funds raised capital since September 2024.*

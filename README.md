@@ -1,21 +1,28 @@
-# Fund Momentum MCP Server
+# Fund Momentum — Live VC Intelligence Platform
 
-> 960+ active VC funds. Live investor signals. AI-powered matching.
+> 1000+ actively deploying VC funds · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
 
-The Fund Momentum MCP server connects Claude, Cursor, or any MCP-compatible AI to our database of active venture capital funds — all raised capital since September 2024.
-
-[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-gold)](https://fundmomentum.vc/mcp)
-[![API Version](https://img.shields.io/badge/API-v1.0-black)](https://fundmomentum.vc/_api/mcp)
-[![Starter](https://img.shields.io/badge/Starter-49%2Fmo-blue)](https://fundmomentum.vc/pricing)
-[![Agent](https://img.shields.io/badge/Agent-0.01%2Fcall-green)](https://fundmomentum.vc/for-agents)
+**[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
 
 ---
 
-## Quickstart
+## What is Fund Momentum?
 
-### Claude Desktop
+Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **985+ actively deploying VC funds** — all raised capital since September 2024 — with weekly-updated GP Signal Profiles that go beyond fund basics.
 
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+**The problem:** Most VC databases are graveyard tours. Funds that stopped deploying 18 months ago, GPs who moved on, theses that haven't been updated since the fund closed. Founders pitch 40 investors and discover half of them aren't writing checks anymore.
+
+**The solution:** Fund Momentum only lists funds that raised capital since September 2024. Every fund has verified deployment signals, not scraped summaries.
+
+---
+
+## MCP Server
+
+Connect Claude, Cursor, or any MCP-compatible AI directly to Fund Momentum.
+
+### Quick Setup (Claude Desktop)
+
+Add to your `claude_desktop_config.json`:
 
 ```json
 {
@@ -30,118 +37,33 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 }
 ```
 
-Get your API key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) or register an agent key at [fundmomentum.vc/for-agents](https://fundmomentum.vc/for-agents). Restart Claude Desktop. Done.
+Get your API key at **[fundmomentum.vc/account-settings](https://fundmomentum.vc/account-settings)**. Restart Claude Desktop. Done.
 
----
+### Example Queries
 
-## Available Tools
+```
+"Which seed funds in DACH invest in B2B SaaS and are deploying now?"
+"What is Speedinvest bullish on right now?"
+"Match my startup: AI-native fintech, seed stage, raising €3M, Vienna"
+"What should I know before pitching Point Nine Capital?"
+"Show me active pre-seed funds in the UK focused on deep tech"
+```
+
+### Available Tools (5)
 
 | Tool | Tier | Description |
-|------|------|-------------|
-| `search_funds` | Starter | Filter 960+ active VC funds by stage, country, industry |
-| `get_fund` | Starter | Full fund profile with thesis, check size, team |
-| `get_fund_signals` | Pro / Agent | Live GP signals, deployment status, founder playbook |
-| `get_gp_profile` | Pro / Agent | Individual partner backgrounds, character tags, thesis |
-| `match_startup` | Pro / Agent | AI matching — describe your startup, get top 10 investor matches |
+|---|---|---|
+| `search_funds` | Starter | Search 985+ funds by stage, country, industry |
+| `get_fund` | Starter | Full fund profile with GP intelligence |
+| `get_fund_signals` | Pro | Bullish/contrarian signals, deployment status, thesis tags |
+| `get_gp_profile` | Pro | Individual GP profiles and backgrounds |
+| `match_startup` | Pro | AI-powered fund matching based on startup description |
 
----
+### API Reference
 
-## Pricing
-
-| Tier | Price | Calls | Tools | Best for |
-|------|-------|-------|-------|----------|
-| Free | 0 | 0 manifest only | - | Browsing the API |
-| Starter | 49/mo | 1,000/mo | search_funds, get_fund | Founders researching investors |
-| Pro | 299/mo | 10,000/mo | All tools | Power users and small tools |
-| **Agent** | **0.01/call** | **Unlimited** | **All tools** | **Autonomous agents and workflows** |
-| Enterprise | Custom | Unlimited | All + SLA | Accelerators and platforms |
-
-### Agent Tier - Credit Bundles
-
-No subscription. Credits never expire.
-
-| Pack | Calls | Price | Rate |
-|------|-------|-------|------|
-| Starter | 1,000 | 10 | 0.010/call |
-| Standard | 10,000 | 80 | 0.008/call - 20% off |
-| Volume | 100,000 | 500 | 0.005/call - 50% off |
-
-Buy agent credits: https://fundmomentum.vc/for-agents
-
-### Agent Self-Registration
-
-Agents can register themselves without human approval:
-
-```bash
-curl -X POST https://fundmomentum.vc/_api/agent/register \
-  -H "Content-Type: application/json" \
-  -d '{"agent_name": "my-workflow", "email": "ops@yourcompany.com"}'
-```
-
-Response:
-
-```json
-{
-  "api_key": "abc123...",
-  "agent_credits": 0,
-  "status": "registered",
-  "mcp_endpoint": "https://fundmomentum.vc/_api/mcp"
-}
-```
-
-Every MCP response includes credit balance:
-
-```json
-{
-  "_meta": {
-    "credits_remaining": 9847,
-    "cost_per_call": "0.01",
-    "billing": "per_call"
-  }
-}
-```
-
-When credits run out, the MCP returns:
-
-```json
-{
-  "error": {
-    "code": -32001,
-    "message": "Insufficient credits. Buy more at https://fundmomentum.vc/for-agents",
-    "buy_url": "https://fundmomentum.vc/for-agents"
-  }
-}
-```
-
----
-
-## Example Prompts (Claude Desktop)
-
-**For founders:**
-```
-Which seed funds in Austria invest in B2B SaaS?
-What is Speedinvest bullish on right now?
-Match my startup: AI-native fintech, seed stage, raising 3M, Vienna
-What should I know before pitching Point Nine Capital?
-Show me active pre-seed funds in the UK focused on deep tech
-```
-
-**For developers and agents:**
-```
-Search for 20 seed funds in Germany and return as JSON
-Get the GP signal profile for Accel latest fund
-Match this description to investors: [paste startup description]
-```
-
----
-
-## API Reference
-
-**Endpoint:** POST https://fundmomentum.vc/_api/mcp  
+**Endpoint:** `POST https://fundmomentum.vc/_api/mcp`  
 **Protocol:** JSON-RPC 2.0  
-**Auth:** X-API-Key header
-
-### search_funds
+**Auth:** `X-API-Key` header or `Authorization: Bearer <key>`
 
 ```python
 import requests
@@ -150,7 +72,8 @@ r = requests.post(
     "https://fundmomentum.vc/_api/mcp",
     headers={"X-API-Key": "YOUR_KEY", "Content-Type": "application/json"},
     json={
-        "jsonrpc": "2.0", "method": "tools/call",
+        "jsonrpc": "2.0",
+        "method": "tools/call",
         "params": {
             "name": "search_funds",
             "arguments": {"stage": "seed", "country": "Germany", "limit": 10}
@@ -158,74 +81,77 @@ r = requests.post(
         "id": 1
     }
 )
-funds = r.json()["result"]["content"][0]["text"]
+print(r.json())
 ```
 
-**Arguments:** stage, country, industry, limit (max 20)
-
-Stage values: pre_seed, seed, series_a, series_b, series_c, growth, late_stage
-
-### get_fund (Starter)
-
-Full fund profile including name, country, fundingStage, fundSize, website, linkedin, fundManager, description, industries. Pro and Agent tiers also receive signal data.
-
-### get_fund_signals (Pro / Agent)
-
-Returns: thesisTags, bullishSignals, contrarianSignals, founderDos, founderDonts, sweetSpot, activeStatus, deploymentProgress, freshnessScore (1-10), lastUpdated
-
-### get_gp_profile (Pro / Agent)
-
-Returns: name, initials, role, characterTags, knownFor, linkedinUrl
-
-### match_startup (Pro / Agent)
-
-```python
-r = requests.post(url, headers=headers, json={
-    "jsonrpc": "2.0", "method": "tools/call",
-    "params": {
-        "name": "match_startup",
-        "arguments": {
-            "description": "B2B SaaS for estate management, DACH, pre-seed, raising 500K",
-            "stage": "pre_seed",
-            "country": "Austria"
-        }
-    }, "id": 1
-})
-# Returns top 10 matches with name, slug, match_reason, match_score, url
+```typescript
+const r = await fetch("https://fundmomentum.vc/_api/mcp", {
+  method: "POST",
+  headers: { "X-API-Key": "YOUR_KEY", "Content-Type": "application/json" },
+  body: JSON.stringify({
+    jsonrpc: "2.0",
+    method: "tools/call",
+    params: { name: "get_fund_signals", arguments: { slug: "speedinvest" } },
+    id: 1
+  })
+});
+const data = await r.json();
 ```
 
 ---
 
-## n8n Integration
+## GP Signal Profiles
 
-HTTP Request Node, Method POST, URL https://fundmomentum.vc/_api/mcp, Header X-API-Key from env.
+Beyond fund size and portfolio, Fund Momentum extracts how each GP actually thinks:
 
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "tools/call",
-  "params": { "name": "search_funds", "arguments": { "stage": "seed", "limit": 20 } },
-  "id": 1
-}
-```
+- **Thesis Tags** — specific investment focus areas
+- **Bullish Signals** — what they're excited about right now
+- **Contrarian Signals** — where they're betting against the consensus
+- **Deployment Score** — how actively they're writing checks
+- **Founder Dos & Don'ts** — how to pitch this specific fund
+
+Built from primary research: GP blog posts, fund websites, LinkedIn, published interviews. Not scraped summaries.
 
 ---
 
-## Compatible With
+## FM15 — Founder Alignment Ranking
 
-LangChain, CrewAI, n8n, AutoGPT, LangGraph, OpenAI Agents SDK, Claude, Any MCP Client
+The FM15 is our semi-annual ranking of the 15 best **emerging** VC managers, scored on four dimensions:
+
+| Dimension | What we measure |
+|---|---|
+| LP Trust Signal | LP quality, re-ups, fund size trajectory |
+| Early Track Record | Portfolio performance, notable exits |
+| Thesis Sharpness | Specificity and differentiation of investment focus |
+| Founder Alignment | GP background, check size fit, post-investment support |
+
+**No AUM sorting. No paid inclusion. Primary research only.**
+
+→ [View FM15 H1 2026](https://fundmomentum.vc/fm15-2026)
+
+---
+
+## Pricing
+
+| Tier | Price | API Calls | Access |
+|---|---|---|---|
+| Free | €0 | — | Platform browsing |
+| Starter | €49/mo | 1,000/mo | search_funds, get_fund |
+| Pro | €299/mo | 10,000/mo | All tools incl. signals |
+| Agent | €0.01/call | Pay-per-call | All tools, credit-based |
+
+→ [Get API Key](https://fundmomentum.vc/account-settings) · [Pricing](https://fundmomentum.vc/pricing)
 
 ---
 
 ## Links
 
-- Website: https://fundmomentum.vc
-- MCP Overview: https://fundmomentum.vc/mcp
-- For Agents: https://fundmomentum.vc/for-agents
-- Pricing: https://fundmomentum.vc/pricing
-- GitHub examples: https://github.com/schneidavie/fundmomentum/tree/main/examples
-- Contact: michael@fundmomentum.vc
+- **Platform:** [fundmomentum.vc](https://fundmomentum.vc)
+- **MCP Docs:** [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp)
+- **FM15 Ranking:** [fundmomentum.vc/fm15-2026](https://fundmomentum.vc/fm15-2026)
+- **Newsletter:** [schneida.substack.com](https://schneida.substack.com)
+- **Smithery:** [smithery.ai/servers/djschneida/fundmomentum](https://smithery.ai/servers/djschneida/fundmomentum)
 
 ---
 
-Fund Momentum tracks 960+ active VC funds raised since September 2024.
+*Maintained by [Michael Schneider](https://www.linkedin.com/in/schneidavie) · Vienna, Austria*

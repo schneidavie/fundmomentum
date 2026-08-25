@@ -22,11 +22,30 @@ jobs:
       - name: Authenticate to MCP Registry (GitHub OIDC)
         run: ./mcp-publisher login github-oidc
 
+      # Refresh counts from the live server card before publishing, so a
+      # release can never ship the stale fund count that v1.0.1 shipped.
+      # Runs before the tag-version step below, which stays authoritative
+      # for the version being published.
+      - name: Sync counts from live server card
+        run: scripts/sync-counts.sh
+
       - name: Sync server.json version from tag
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
           jq --arg v "$VERSION" '.version = $v' server.json > server.tmp && mv server.tmp server.json
+
+      # A tag that does not match the version the live server reports usually
+      # means the deploy has not landed yet. Warn, do not block.
+      - name: Warn if tag and live server version disagree
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          LIVE_VERSION=$(curl -fsSL --max-time 30 \
+            https://fundmomentum.vc/_api/well-known/mcp/server-card | jq -er '.serverInfo.version')
+          if [ "$TAG_VERSION" != "$LIVE_VERSION" ]; then
+            echo "::warning::Publishing $TAG_VERSION but the live server card reports $LIVE_VERSION. Is the deploy live yet?"
+          fi
 
       - name: Publish to MCP Registry
         run: ./mcp-publisher publish

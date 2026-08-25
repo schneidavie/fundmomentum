@@ -1,0 +1,9 @@
+# Keep the repo LF everywhere. scripts/sync-counts.sh runs on ubuntu-latest in
+# CI: a CRLF checkout would fail there with a bad-interpreter error, and CRLF
+# also made the drift check report every line as changed on Windows.
+* text=auto eol=lf
+
+*.sh  text eol=lf
+*.yml text eol=lf
+*.md  text eol=lf
+*.json text eol=lf

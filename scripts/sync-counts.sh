@@ -19,6 +19,14 @@
 # The fund count is published rounded down ("1000+"), matching the site's own
 # marketing copy and the server card's note that it rounds the live figure
 # down. It is still derived from the card on every run, never typed by hand.
+#
+# NOT sourced from the card: the Starter and Enterprise rows of the README
+# pricing table. The card exposes authentication.free_tier and a Pro price via
+# tools[].price, but it has no tier block -- there is literally no "starter"
+# string in it -- so there is nothing to read those two from. They are typed by
+# hand and can drift. If the card ever grows a tier block, wrap the values in
+# <!--fm:starter_price--> / <!--fm:starter_calls--> marker pairs in README.md
+# and add matching -e lines to render_markdown below.
 
 set -euo pipefail
 
@@ -48,6 +56,19 @@ PRO_PRICE="$(printf '%s' "$card"    | jq -er '[.tools[] | select(.requiredTier =
 case "$FUNDS$LPS$KEYLESS$FREE_CALLS" in *[!0-9]*) echo "sync-counts: non-numeric count in card" >&2; exit 2;; esac
 [ "$FUNDS" -gt 0 ] && [ "$LPS" -gt 0 ] || { echo "sync-counts: implausible counts (funds=$FUNDS lps=$LPS)" >&2; exit 2; }
 [ -n "$PRO_PRICE" ] && [ "$PRO_PRICE" != "null" ] || { echo "sync-counts: no pro price in card" >&2; exit 2; }
+
+# Never let the card drag server.json's version backwards. A doc-only bump
+# (1.1.0 -> 1.1.1) is committed here before any deploy makes the card report
+# it, so rewriting .version to the card's value would silently undo the bump --
+# and the weekly workflow would commit that revert. Take whichever is higher.
+# The tag step in publish-mcp.yml runs after this and stays authoritative for
+# the version actually published.
+if [ -f "$ROOT/server.json" ]; then
+  LOCAL_VERSION="$(jq -r '.version // empty' "$ROOT/server.json")"
+  if [ -n "$LOCAL_VERSION" ]; then
+    VERSION="$(printf '%s\n%s\n' "$VERSION" "$LOCAL_VERSION" | sort -V | tail -1)"
+  fi
+fi
 
 # 1045 -> 1,045
 group() { printf '%s' "$1" | sed -E ':a;s/([0-9])([0-9]{3})($|,)/\1,\2\3/;ta'; }

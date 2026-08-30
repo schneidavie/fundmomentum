@@ -1,14 +1,26 @@
 # Fund Momentum — Live VC Intelligence Platform
 
-> <!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->367<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
+> <!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->399<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
 
 **[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
+
+## Try it right now — no key, no signup
+
+`search_funds` and `get_fund` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day with **no credential at all**. Paste this:
+
+```bash
+curl -s https://fundmomentum.vc/_api/mcp \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"stage":"seed","country":"Germany","limit":5}},"id":1}'
+```
+
+Real data, no card, no email address. Quota headers, the free key and the other four tools: [MCP Server](#mcp-server).
 
 ---
 
 ## What is Fund Momentum?
 
-Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->367<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
+Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->399<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
 
 **The problem:** Most VC databases are graveyard tours. Funds that stopped deploying 18 months ago, GPs who moved on, theses that haven't been updated since the fund closed. Founders pitch 40 investors and discover half of them aren't writing checks anymore.
 
@@ -25,15 +37,9 @@ Fund Momentum is a live VC intelligence platform built for founders raising capi
 
 Connect Claude, Cursor, or any MCP-compatible AI directly to Fund Momentum.
 
-### Try it with no API key
+### The keyless trial
 
-`search_funds` and `get_fund` answer **<!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day with no credential at all**. No signup, no card, no key. This is the front door — see real data before you decide anything.
-
-```bash
-curl -s https://fundmomentum.vc/_api/mcp \
-  -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"stage":"seed","country":"Germany","limit":5}},"id":1}'
-```
+`search_funds` and `get_fund` answer **<!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day with no credential at all**. No signup, no card, no key. This is the front door — see real data before you decide anything. The curl at the top of this README is a complete, working call.
 
 Every response carries a `_meta` block telling you where you stand:
 
@@ -53,7 +59,7 @@ The keyless trial covers `search_funds` and `get_fund` only. `get_changes` is fr
 
 Both routes are free and take under a minute.
 
-**Humans:** [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) — MCP plans and keys live here, not on the main pricing page.
+**Humans:** [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) documents the MCP plans and the client setup; you subscribe and copy the key itself at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing).
 
 **Autonomous agents:** self-register and get a key back in the same response.
 
@@ -252,10 +258,16 @@ These tiers cover the MCP server and API only.
 |---|---|---|---|
 | Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund` |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
+| Starter | €9/mo | 1,000/mo | `search_funds`, `get_fund`, `get_changes` |
 | Pro | <!--fm:pro_price-->€29/mo<!--/fm:pro_price--> | 10,000/mo | All six tools incl. signals |
-| Agent | €0.01/call | Pay-per-call | All six tools, credit-based |
+| Enterprise | Custom | Unlimited | All six tools, custom contract & SLA |
 
-→ [MCP plans & API keys](https://fundmomentum.vc/mcp)
+The keyless, Free and Pro rows are generated from the server card. The Starter
+and Enterprise rows are still typed by hand — the card exposes no tier block for
+them, so treat [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) as
+authoritative if those two ever disagree with this table.
+
+→ [MCP plans & client setup](https://fundmomentum.vc/mcp) · [Subscribe & get a key](https://fundmomentum.vc/pricing)
 
 Founder and investor-signal plans for the platform itself are priced separately
 → [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing)
@@ -264,7 +276,9 @@ Founder and investor-signal plans for the platform itself are priced separately
 
 ## Keeping the numbers honest
 
-Fund and LP counts, tier allowances and the Pro price in this README are **generated, not typed**. [`scripts/sync-counts.sh`](scripts/sync-counts.sh) reads them from the live server card and rewrites the values between the `<!--fm:*-->` marker pairs, plus `version` and `description` in [`server.json`](server.json).
+Fund and LP counts, the keyless and Free allowances and the Pro price in this README are **generated, not typed**. [`scripts/sync-counts.sh`](scripts/sync-counts.sh) reads them from the live server card and rewrites the values between the `<!--fm:*-->` marker pairs, plus `version` and `description` in [`server.json`](server.json).
+
+Two numbers are **not** covered: the **Starter** and **Enterprise** rows in the pricing table. The server card exposes `authentication.free_tier` and a Pro price via `tools[].price`, but no tier block, so there is nothing to read them from. They stay hand-typed until the card grows one — see the note at the top of [`scripts/sync-counts.sh`](scripts/sync-counts.sh) for how to wire them up when it does.
 
 The fund count is published rounded down to the nearest hundred — `1000+` today — matching the site's own copy and the server card's note that marketing figures round the live count down. It still moves on its own as the database grows; it is simply never ahead of the truth.
 

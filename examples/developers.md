@@ -13,7 +13,7 @@ curl -s https://fundmomentum.vc/_api/mcp \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"stage":"seed","country":"Germany","limit":5}},"id":1}'
 ```
 
-Once you hit the daily cap, a free key raises it to <!--fm:free_calls-->100<!--/fm:free_calls--> calls/month and unlocks `get_changes`. Humans get one at [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) — MCP plans live there, not on the main pricing page. Agents can self-register:
+Once you hit the daily cap, a free key raises it to <!--fm:free_calls-->100<!--/fm:free_calls--> calls/month and unlocks `get_changes`. Humans subscribe and copy a key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing); [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) has the plans and client setup. Agents can self-register:
 
 ```bash
 curl -s https://fundmomentum.vc/_api/agent/register \

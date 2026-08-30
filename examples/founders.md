@@ -5,7 +5,7 @@ Use these prompts in Claude Desktop after connecting Fund Momentum.
 You do not need an API key to start. `search_funds` and `get_fund` — which cover
 everything in Investor Research below — answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->
 calls per day with no credential at all. A free key at
-[fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) raises that to
+[fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) raises that to
 <!--fm:free_calls-->100<!--/fm:free_calls--> calls/month.
 
 ## Investor Research

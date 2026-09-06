@@ -1,6 +1,6 @@
 # Fund Momentum — Live VC Intelligence Platform
 
-> <!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->399<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
+> <!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->413<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
 
 **[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
 
@@ -20,7 +20,7 @@ Real data, no card, no email address. Quota headers, the free key and the other 
 
 ## What is Fund Momentum?
 
-Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->399<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
+Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->413<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
 
 **The problem:** Most VC databases are graveyard tours. Funds that stopped deploying 18 months ago, GPs who moved on, theses that haven't been updated since the fund closed. Founders pitch 40 investors and discover half of them aren't writing checks anymore.
 
@@ -61,13 +61,93 @@ Both routes are free and take under a minute.
 
 **Humans:** [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) documents the MCP plans and the client setup; you subscribe and copy the key itself at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing).
 
-**Autonomous agents:** self-register and get a key back in the same response.
+**Autonomous agents:** self-register and get a key **and 25 free credits** back in the same response.
 
 ```bash
 curl -s https://fundmomentum.vc/_api/agent/register \
   -H "Content-Type: application/json" \
   -d '{"agent_name":"your-agent-name","email":"you@example.com"}'
 ```
+
+`201 Created`:
+
+```json
+{
+  "api_key": "...",
+  "agent_credits": 25,
+  "status": "registered",
+  "free_credits_granted": 25,
+  "email_verified": false,
+  "credits_usable_now_on": ["search_funds", "get_fund", "get_changes"],
+  "locked_until_email_verified": ["get_fund_signals", "get_gp_profile", "match_startup"],
+  "cost_per_call": "€0.01",
+  "credits_never_expire": true,
+  "mcp_endpoint": "https://fundmomentum.vc/_api/mcp",
+  "auth_header": "X-API-Key",
+  "buy_more": "https://fundmomentum.vc/for-agents"
+}
+```
+
+No payment, no approval step: an agent registers and makes a useful call in the same second. The 25 credits work **immediately** on `search_funds`, `get_fund` and `get_changes`.
+
+#### Unlocking the Pro tools
+
+Clicking the verification link in the registration email unlocks `get_fund_signals`, `get_gp_profile` and `match_startup` **on the same 25 credits**. It is free, one click, and not an upgrade — it only proves the mailbox is real. Calling a locked tool before then returns `403`:
+
+```json
+{
+  "error_reason": "email_verification_required",
+  "credits_remaining": 25,
+  "tools_available_now": ["search_funds", "get_fund", "get_changes"],
+  "tools_locked_until_verified": ["get_fund_signals", "get_gp_profile", "match_startup"],
+  "cost_to_unlock": "€0"
+}
+```
+
+The split exists because an unmetered grant of 25 calls against the €29/mo tools was worth farming. Verification is the cheapest thing that makes a throwaway address useless without putting a human in the path of the first call.
+
+Registration is idempotent by mailbox. POSTing again with an address that already exists returns `200` with `"status": "existing"` and your **current** balance; it does not grant another 25. Matching is on the normalised mailbox, so `you+1@gmail.com`, `you+2@gmail.com` and `y.o.u@gmail.com` all resolve to the same account.
+
+New accounts are capped at **3 per IP per UTC day**. Over that, registration answers `429` and names the keyless fallback rather than leaving you stuck. Re-registering an existing address does not count against it.
+
+Every agent-tier response then carries its balance in `_meta`:
+
+```json
+"_meta": {
+  "credits_remaining": 24,
+  "cost_per_call": "€0.01",
+  "billing": "per_call"
+}
+```
+
+`buy_more` is added to that block once `credits_remaining` drops below 100.
+
+#### When the credits run out
+
+Calls cost **€0.01** each beyond the free 25, and credits never expire. An exhausted balance answers **HTTP `402`**:
+
+```json
+{
+  "error_reason": "no_credits",
+  "credits_remaining": 0,
+  "free_credits_on_registration": 25,
+  "cost_per_call": "€0.01",
+  "credits_never_expire": true,
+  "autonomous_payment_available": false,
+  "buy_url": "https://fundmomentum.vc/for-agents",
+  "fallback": {
+    "tools": ["search_funds", "get_fund"],
+    "calls_per_day": 10,
+    "how": "send the request without an X-API-Key header"
+  }
+}
+```
+
+This used to surface as JSON-RPC error `-32001`. It is now an HTTP `402` — update any handler that matches on the old code.
+
+**A human has to top up.** Top-ups run through Stripe Checkout, which needs a person once; an agent cannot pay for itself. Machine payment (MPP / x402 pay-per-call) is planned but **not live**, which is why the error carries `autonomous_payment_available: false` — do not build a flow that assumes an agent can buy its own credits. Once a human has topped up, the agent spends the balance unattended.
+
+Until then the fallback in that payload is real: drop the `X-API-Key` header and `search_funds` and `get_fund` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
 
 ### Quick Setup (Claude Desktop)
 

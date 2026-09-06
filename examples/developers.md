@@ -21,6 +21,24 @@ curl -s https://fundmomentum.vc/_api/agent/register \
   -d '{"agent_name":"your-agent-name","email":"you@example.com"}'
 ```
 
+That returns `201` with `"api_key"` **and `"agent_credits": 25`** — no payment, no approval step, so
+an agent can register and make a useful call in the same second. Those credits work immediately on
+`search_funds`, `get_fund` and `get_changes`. Clicking the verification link in the registration
+email unlocks `get_fund_signals`, `get_gp_profile` and `match_startup` on the same 25 credits — free,
+one click, not an upgrade. Calling a locked tool before that answers `403` with
+`error_reason: "email_verification_required"`.
+
+Re-registering an existing address returns `200`, `"status": "existing"` and the current balance,
+not another 25 — matched on the normalised mailbox, so `+tag` and dotted Gmail aliases resolve to
+the same account. New accounts are capped at 3 per IP per UTC day (`429` beyond that); repeat
+registrations of an existing address do not count against the cap.
+
+Beyond the free 25 it is €0.01/call and credits never expire. An exhausted balance answers
+**HTTP `402`** (previously JSON-RPC `-32001`) carrying `autonomous_payment_available: false`:
+top-ups go through Stripe Checkout and need a human once. An agent cannot pay for itself — machine
+payment (MPP / x402) is planned but **not live**. The 402 payload also names the fallback: drop the
+`X-API-Key` header and the keyless allowance still answers `search_funds` and `get_fund`.
+
 ## Python — Search Funds
 
 ```python
@@ -184,16 +202,36 @@ For a scheduled workflow, poll `get_changes` — not `search_funds`.
 
 ## Check Call Usage
 
-Quota lives in the `_meta` block of every response — note the leading underscore.
+Quota lives in the `_meta` block of every response — note the leading underscore. Its **shape
+depends on how you authenticated**, so read it with `.get()` rather than indexing:
+
+| Auth | Keys in `_meta` |
+|---|---|
+| Keyless trial | `auth: "keyless_trial"`, `calls_used`, `calls_limit`, `calls_remaining`, `resets_at`, `upgrade_note` |
+| Agent (credits) | `credits_remaining`, `cost_per_call`, `billing: "per_call"`, plus `buy_more` once below 100 |
+| Free / Starter / Pro | `calls_used`, `calls_limit`, `calls_remaining` |
+
+Only the keyless branch carries `auth` and `resets_at`; only the agent branch carries
+`credits_remaining`.
 
 ```python
 result = r.json()["result"]
 meta = result.get("_meta", {})
-print(f"Auth mode: {meta['auth']}")                       # keyless_trial | api_key
-print(f"Calls used: {meta['calls_used']}/{meta['calls_limit']}")
-print(f"Remaining: {meta['calls_remaining']}")
-print(f"Resets at: {meta['resets_at']}")
+
+if "credits_remaining" in meta:                 # agent tier, billed per call
+    print(f"Credits left: {meta['credits_remaining']} at {meta.get('cost_per_call')}")
+    if meta.get("buy_more"):
+        print(f"Running low — a human can top up at {meta['buy_more']}")
+else:                                           # keyless trial or a monthly tier
+    print(f"Auth mode: {meta.get('auth', 'api_key')}")
+    print(f"Calls used: {meta.get('calls_used')}/{meta.get('calls_limit')}")
+    print(f"Remaining: {meta.get('calls_remaining')}")
+    if meta.get("resets_at"):
+        print(f"Resets at: {meta['resets_at']}")
 ```
+
+The matching failure modes are HTTP status codes: `402` when an agent is out of credits, `429`
+when a monthly quota is exhausted, `401` for an unrecognised key.
 
 ## Tool reference
 

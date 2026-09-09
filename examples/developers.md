@@ -18,26 +18,38 @@ Once you hit the daily cap, a free key raises it to <!--fm:free_calls-->100<!--/
 ```bash
 curl -s https://fundmomentum.vc/_api/agent/register \
   -H "Content-Type: application/json" \
-  -d '{"agent_name":"your-agent-name","email":"you@example.com"}'
+  -d '{"agent_name":"your-agent-name"}'
 ```
 
-That returns `201` with `"api_key"` **and `"agent_credits": 25`** — no payment, no approval step, so
-an agent can register and make a useful call in the same second. Those credits work immediately on
-`search_funds`, `get_fund` and `get_changes`. Clicking the verification link in the registration
-email unlocks `get_fund_signals`, `get_gp_profile` and `match_startup` on the same 25 credits — free,
-one click, not an upgrade. Calling a locked tool before that answers `403` with
-`error_reason: "email_verification_required"`.
+There is **no `email` field**. That returns `201` with `"api_key"`, `"agent_id"` and
+`"agent_credits": 25` — no payment, no approval, no human — so an agent can register and make a
+useful call in the same second. The credits work on all six tools. The key is returned once; only a
+hash is stored.
 
-Re-registering an existing address returns `200`, `"status": "existing"` and the current balance,
-not another 25 — matched on the normalised mailbox, so `+tag` and dotted Gmail aliases resolve to
-the same account. New accounts are capped at 3 per IP per UTC day (`429` beyond that); repeat
-registrations of an existing address do not count against the cap.
+New keys are capped at 3 per IP and 10 per /24 per UTC day (`429` beyond that, naming both escape
+routes).
 
-Beyond the free 25 it is €0.01/call and credits never expire. An exhausted balance answers
-**HTTP `402`** (previously JSON-RPC `-32001`) carrying `autonomous_payment_available: false`:
-top-ups go through Stripe Checkout and need a human once. An agent cannot pay for itself — machine
-payment (MPP / x402) is planned but **not live**. The 402 payload also names the fallback: drop the
-`X-API-Key` header and the keyless allowance still answers `search_funds` and `get_fund`.
+Beyond the free 25, calls cost €0.01 (free tools) or €0.10–€0.25 (Pro tools) and credits never
+expire. An exhausted balance — or a Pro tool called with **no key at all** — answers **HTTP `402`**
+(previously JSON-RPC `-32001`) carrying an [MPP](https://mpp.dev) challenge over Tempo USDC. Pay it,
+retry, and you get the data plus a receipt, with no account anywhere in the flow:
+
+```bash
+curl -fsSL https://tempo.xyz/install | bash
+tempo wallet login
+tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_fund_signals","arguments":{"slug":"speedinvest"}},"id":1}' https://fundmomentum.vc/_api/mcp
+```
+
+To buy a balance up front instead, `POST /_api/agent/credits/topup` with `{"amount_eur":20}`
+(5/20/50/100) and pay the same challenge. Spending is capped at €100 per payer per UTC day, checked
+*before* any challenge is issued.
+
+> **Header caveat.** This host runs behind AWS API Gateway, which renames `WWW-Authenticate` to
+> `x-amzn-remapped-www-authenticate`. The same challenge value is also on `X-Payment-Challenge` and
+> as `www_authenticate` in the JSON body. Prefer `WWW-Authenticate`; fall back to those.
+
+The 402 payload also names the free fallback: drop the `X-API-Key` header and the keyless allowance
+still answers `search_funds` and `get_fund`.
 
 ## Python — Search Funds
 

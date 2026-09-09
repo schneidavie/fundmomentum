@@ -55,60 +55,77 @@ Every response carries a `_meta` block telling you where you stand:
 
 The keyless trial covers `search_funds` and `get_fund` only. `get_changes` is free but needs a key — see below.
 
+### Access without registration
+
+There is no signup wall. An agent can discover this server, pay for what it needs and get data with **no human, no account and no email** at any point.
+
+| Access | How you get it | What works | Limits |
+|---|---|---|---|
+| **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund` | 10 calls/caller/UTC day |
+| **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All six tools on credits. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
+| **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | All six tools, priced per call | €100 per payer per day |
+| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six tools on credits | €5 / €20 / €50 / €100 |
+| **Linked** *(optional)* | `POST /_api/agent/link` with an email | Everything above, plus invoices and a dashboard | Grants no extra access |
+
+Per-call prices: free tools €0.01, `get_fund_signals` €0.10, `get_gp_profile` €0.10, `match_startup` €0.25.
+
 ### Getting a key
 
 Both routes are free and take under a minute.
 
 **Humans:** [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) documents the MCP plans and the client setup; you subscribe and copy the key itself at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing).
 
-**Autonomous agents:** self-register and get a key **and 25 free credits** back in the same response.
+**Autonomous agents:** no registration and no email are required at all. There is **no `email` field** on this endpoint.
 
 ```bash
 curl -s https://fundmomentum.vc/_api/agent/register \
   -H "Content-Type: application/json" \
-  -d '{"agent_name":"your-agent-name","email":"you@example.com"}'
+  -d '{"agent_name":"your-agent-name"}'
 ```
 
 `201 Created`:
 
 ```json
 {
-  "api_key": "...",
-  "agent_credits": 25,
+  "api_key": "fm_agent_...",
+  "agent_id": "agt_...",
   "status": "registered",
+  "agent_credits": 25,
   "free_credits_granted": 25,
-  "email_verified": false,
-  "credits_usable_now_on": ["search_funds", "get_fund", "get_changes"],
-  "locked_until_email_verified": ["get_fund_signals", "get_gp_profile", "match_startup"],
-  "cost_per_call": "€0.01",
+  "cost_per_free_call": "€0.01",
   "credits_never_expire": true,
-  "mcp_endpoint": "https://fundmomentum.vc/_api/mcp",
-  "auth_header": "X-API-Key",
-  "buy_more": "https://fundmomentum.vc/for-agents"
+  "tools_on_credits": ["search_funds", "get_fund", "get_changes"],
+  "tools_paid_per_call": {
+    "get_fund_signals": "€0.10",
+    "get_gp_profile": "€0.10",
+    "match_startup": "€0.25"
+  },
+  "payment": {
+    "protocol": "mpp",
+    "methods": ["tempo_usdc"],
+    "topup_endpoint": "/_api/agent/credits/topup",
+    "daily_spend_limit": "€100.00"
+  },
+  "link_email_endpoint": "/_api/agent/link",
+  "mcp_endpoint": "https://fundmomentum.vc/_api/mcp"
 }
 ```
 
-No payment, no approval step: an agent registers and makes a useful call in the same second. The 25 credits work **immediately** on `search_funds`, `get_fund` and `get_changes`.
+No payment, no approval, no human: an agent registers and makes a useful call in the same second. The key is returned **once** — only a SHA-256 hash is stored, so a lost key cannot be recovered.
 
-#### Unlocking the Pro tools
+`operator_url` and `contact` are optional free text and are never verified. Send an `email` and it is ignored with a note rather than rejected, so callers written against the old contract keep working.
 
-Clicking the verification link in the registration email unlocks `get_fund_signals`, `get_gp_profile` and `match_startup` **on the same 25 credits**. It is free, one click, and not an upgrade — it only proves the mailbox is real. Calling a locked tool before then returns `403`:
+The 25 credits work on **all six tools**. Free tools cost 1 credit (€0.01); the Pro tools are priced per call.
 
-```json
-{
-  "error_reason": "email_verification_required",
-  "credits_remaining": 25,
-  "tools_available_now": ["search_funds", "get_fund", "get_changes"],
-  "tools_locked_until_verified": ["get_fund_signals", "get_gp_profile", "match_startup"],
-  "cost_to_unlock": "€0"
-}
-```
+#### Why there is no email step
 
-The split exists because an unmetered grant of 25 calls against the €29/mo tools was worth farming. Verification is the cheapest thing that makes a throwaway address useless without putting a human in the path of the first call.
+An earlier release gated the Pro tools behind a clicked verification link. That was wrong for three reasons, and it is gone.
 
-Registration is idempotent by mailbox. POSTing again with an address that already exists returns `200` with `"status": "existing"` and your **current** balance; it does not grant another 25. Matching is on the normalised mailbox, so `you+1@gmail.com`, `you+2@gmail.com` and `y.o.u@gmail.com` all resolve to the same account.
+Most agents cannot read email, so it put a human step inside a flow that promises "register and call in the same second". It shared the `users` table with the human Google sign-up, so a person who had signed in with Google and then called this endpoint got back `status: "existing"`, a **null** API key, zero credits, and a response claiming all six tools were available. And it bought almost no protection anyway: throwaway addresses are free.
 
-New accounts are capped at **3 per IP per UTC day**. Over that, registration answers `429` and names the keyless fallback rather than leaving you stuck. Re-registering an existing address does not count against it.
+**Access control is pricing.** Pro data costs money per call, always, with no free path. Identity is the API key — or, for inline payments, the paying wallet.
+
+New keys are capped at **3 per IP** and **10 per /24** per UTC day. Over that, registration answers `429` naming both escape routes rather than leaving you stuck: the keyless tools, and inline payment, neither of which needs a key.
 
 Every agent-tier response then carries its balance in `_meta`:
 
@@ -122,32 +139,37 @@ Every agent-tier response then carries its balance in `_meta`:
 
 `buy_more` is added to that block once `credits_remaining` drops below 100.
 
-#### When the credits run out
+#### Paying, with no account at all
 
-Calls cost **€0.01** each beyond the free 25, and credits never expire. An exhausted balance answers **HTTP `402`**:
+**Autonomous machine payment is live.** A Pro tool called with **no key whatsoever** answers HTTP `402` carrying a payment challenge over [MPP](https://mpp.dev) (Tempo USDC). Pay it, retry, and you get the data plus a receipt. Nothing is registered and no account exists at any point.
 
-```json
-{
-  "error_reason": "no_credits",
-  "credits_remaining": 0,
-  "free_credits_on_registration": 25,
-  "cost_per_call": "€0.01",
-  "credits_never_expire": true,
-  "autonomous_payment_available": false,
-  "buy_url": "https://fundmomentum.vc/for-agents",
-  "fallback": {
-    "tools": ["search_funds", "get_fund"],
-    "calls_per_day": 10,
-    "how": "send the request without an X-API-Key header"
-  }
-}
+```bash
+curl -fsSL https://tempo.xyz/install | bash
+tempo wallet login
+tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_fund_signals","arguments":{"slug":"speedinvest"}},"id":1}' https://fundmomentum.vc/_api/mcp
 ```
 
-This used to surface as JSON-RPC error `-32001`. It is now an HTTP `402` — update any handler that matches on the old code.
+The same flow tops up a key, so an agent never has to stop:
 
-**A human has to top up.** Top-ups run through Stripe Checkout, which needs a person once; an agent cannot pay for itself. Machine payment (MPP / x402 pay-per-call) is planned but **not live**, which is why the error carries `autonomous_payment_available: false` — do not build a flow that assumes an agent can buy its own credits. Once a human has topped up, the agent spends the balance unattended.
+```bash
+curl -s -X POST https://fundmomentum.vc/_api/agent/credits/topup \
+  -H "X-API-Key: fm_agent_..." -H "Content-Type: application/json" \
+  -d '{"amount_eur":20}'
+```
 
-Until then the fallback in that payload is real: drop the `X-API-Key` header and `search_funds` and `get_fund` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
+`amount_eur` is 5, 20, 50 or 100. €20 buys 2,000 credits. The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€100 per payer per UTC day**.
+
+Prices are quoted in EUR and settle in USDC, converted at the ECB daily reference rate plus a 1.5% buffer for intraday movement and fees. There is no rounding up to the cent: €0.01 charges $0.0118, not $0.02.
+
+> **Header caveat.** This host runs behind AWS API Gateway, which **renames `WWW-Authenticate`** to `x-amzn-remapped-www-authenticate`. The identical challenge value is therefore repeated on `X-Payment-Challenge` and as `www_authenticate` in the JSON body. Prefer `WWW-Authenticate`; fall back to those.
+
+Out of credits used to surface as JSON-RPC error `-32001`. It is now an HTTP `402` — update any handler matching the old code.
+
+If you would rather not pay at all, the fallback is real: drop the `X-API-Key` header and `search_funds` and `get_fund` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
+
+#### Linking an email (optional)
+
+`POST /_api/agent/link` with `{"email":"..."}` attaches a key to a human account for **invoices and a dashboard only**. It grants no access and changes no credits. An address already verified — a Google sign-in, say — links immediately and no mail is sent. This endpoint and `/_api/agent/link/resend` (3/day) are the only places the agent path ever sends email.
 
 ### Quick Setup (Claude Desktop)
 
@@ -334,8 +356,11 @@ The FM15 is our semi-annual ranking of the 15 best **emerging** VC managers, sco
 
 These tiers cover the MCP server and API only.
 
+**Agents are not on these plans.** They pay per call — €0.01 for a free tool, €0.10–€0.25 for a Pro tool — with no subscription and no account. See [Access without registration](#access-without-registration) above. The monthly plans below are for people.
+
 | Tier | Price | API Calls | Tools |
 |---|---|---|---|
+| Agents (per call) | €0.01–€0.25/call | Unmetered, pay as you go | All six tools, no account needed |
 | Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund` |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Starter | €9/mo | 1,000/mo | `search_funds`, `get_fund`, `get_changes` |

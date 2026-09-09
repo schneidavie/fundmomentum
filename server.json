@@ -3,7 +3,7 @@
   "name": "io.github.schneidavie/fund-momentum",
   "title": "Fund Momentum",
   "description": "1000+ actively deploying VC funds and 413 disclosed LPs, with live investor signals",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "repository": {
     "url": "https://github.com/schneidavie/fundmomentum",
     "source": "github"
@@ -15,7 +15,7 @@
       "headers": [
         {
           "name": "X-API-Key",
-          "description": "API key. Optional: search_funds and get_fund answer 10 calls per caller per UTC day with no key at all. A free key (100 calls/month, adds get_changes) is at https://fundmomentum.vc/pricing, or agents can self-register at https://fundmomentum.vc/_api/agent/register and get a key plus 25 free credits back in the same response, no payment. Those work immediately on search_funds, get_fund and get_changes; verifying the emailed link unlocks the three Pro tools on the same credits, free.",
+          "description": "API key. Optional: search_funds and get_fund answer 10 calls per caller per UTC day with no key at all. No registration or email is required. Agents self-register at https://fundmomentum.vc/_api/agent/register with just an agent_name and get a key plus 25 free credits usable on all six tools, or skip keys entirely and pay per call over MPP (Tempo USDC) when a paid tool answers HTTP 402. A free human key (100 calls/month) is at https://fundmomentum.vc/pricing.",
           "isRequired": false,
           "isSecret": true
         }

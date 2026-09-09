@@ -112,16 +112,53 @@ $0.0118, not $0.02, because ceiling would be a 69% markup on the cheapest call.
 If the ECB is unreachable and no rate is cached, payment endpoints answer `503
 fx_unavailable` rather than guessing a rate.
 
-## Known platform constraint
+## Known platform constraints — BLOCKING for standard MPP clients
 
-AWS API Gateway **renames** `WWW-Authenticate` to
-`x-amzn-remapped-www-authenticate` on the way out. The identical challenge value
-is therefore also sent on `X-Payment-Challenge` and as `www_authenticate` in the
-JSON body, by `helpers/paymentChallengeResponse.tsx`.
+Two hosting behaviours, neither fixable from inside the project. Together they
+mean a **standard MPP wallet cannot currently pay this server**, even though the
+server itself is behaving correctly.
 
-This is a hosting behaviour, not something the application can fix, and it may
-cause a spec-conformance checker to flag the missing canonical header. If the
-platform ever stops rewriting, that workaround can be deleted in one place.
+### 1. `WWW-Authenticate` is renamed
+
+AWS API Gateway rewrites it to `x-amzn-remapped-www-authenticate`. The identical
+challenge is therefore also sent on `X-Payment-Challenge` and as
+`www_authenticate` in the JSON body, by `helpers/paymentChallengeResponse.tsx` —
+but a client that reads only the standard header sees a 402 with no challenge
+and cannot pay.
+
+### 2. `/openapi.json` cannot be served at the web root
+
+MPP discovery requires it. Floot endpoint routes reject `.` in a route name, and
+static files allow only `.txt` / `.xml` / `.md` / `manifest.json`, so neither
+`/openapi.json` nor `/_api/mcp/openapi.json` is expressible. The document is
+served at **`/_api/mcp/openapi`** instead, which tooling must be pointed at
+manually.
+
+### Evidence
+
+```
+$ npx mppx@latest validate <base> --endpoint POST:/_api/mcp --body '<valid jsonrpc>'
+
+Discovery (/openapi.json)
+  ✗ Document found (Invalid JSON)
+
+POST /_api/mcp
+  Challenge
+  ✓ Returns 402 without credentials
+  ○ Not an MPP endpoint (No WWW-Authenticate header)
+```
+
+The 402 itself is correct; only its discoverability is broken.
+
+### What to ask Floot for
+
+1. Stop API Gateway remapping `WWW-Authenticate`, or provide a passthrough for it.
+2. Allow an arbitrary `.json` static file at the web root, or permit `.` in an
+   endpoint route.
+
+Until at least (1) is resolved, treat autonomous payment as **working but not
+discoverable by standard clients**. Clients that read `X-Payment-Challenge` or
+the response body can pay today.
 
 ## When payments break
 

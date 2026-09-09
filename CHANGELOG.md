@@ -66,9 +66,13 @@ Registration-free agent access and autonomous pay-per-call.
 
 ### Known issues
 
-- AWS API Gateway renames `WWW-Authenticate` to `x-amzn-remapped-www-authenticate`.
-  The identical challenge is repeated on `X-Payment-Challenge` and as
-  `www_authenticate` in the body. Prefer the standard header; fall back to those.
+- **Standard MPP clients cannot yet discover the challenge on this host.** AWS
+  API Gateway renames `WWW-Authenticate` to `x-amzn-remapped-www-authenticate`,
+  and Floot cannot serve `/openapi.json` at the web root. The 402 itself is
+  correct and `npx mppx validate` confirms "Returns 402 without credentials";
+  only its discoverability is broken. The identical challenge is repeated on
+  `X-Payment-Challenge` and as `www_authenticate` in the body, so clients that
+  read those can pay today. See `docs/ops-mpp.md`.
 - `get_fund` on a tracer slug returns not-found, so following a tracer's profile
   URL distinguishes it from a real record.
 

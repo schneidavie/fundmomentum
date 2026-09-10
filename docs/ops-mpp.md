@@ -15,8 +15,8 @@ project and the Stripe dashboard.
 | `STRIPE_PROFILE_ID` | Live profile id. Optional -- defaults to the account constant in `helpers/mppCharge`. |
 | `TEMPO_DEPOSIT_ADDRESS` | Live Tempo address (**mainnet -- real funds**). Optional, same default. |
 | `MPP_ENABLED` | `false` disables payments entirely |
-| `MPP_DAILY_LIMIT_EUR_PER_PAYER` | Default 100 |
-| `MPP_DAILY_LIMIT_EUR_GLOBAL` | Default 100. Launch kill switch. |
+| `MPP_DAILY_LIMIT_EUR_PER_PAYER` | Default 1000 |
+| `MPP_DAILY_LIMIT_EUR_GLOBAL` | Default 1000. Launch kill switch. |
 
 `livemode` is derived from the key itself (`sk_test_` -> testnet), exactly as
 Stripe's own sample does, so a test key cannot produce a mainnet challenge.
@@ -73,7 +73,7 @@ account id and the request id from the error.
    no cleanup; they are ignored outside sandbox mode.
 6. Re-run the health check. It must report `mode: "live"`, `mpp_livemode: true`,
    `deposit_address_livemode: true`, and no problems.
-7. Leave `MPP_DAILY_LIMIT_EUR_GLOBAL` at 100 for the first days. It bounds
+7. Leave `MPP_DAILY_LIMIT_EUR_GLOBAL` at its default for the first days. It bounds
    total site-wide exposure while settlement is watched.
 
 ## Rotating the Tempo deposit address

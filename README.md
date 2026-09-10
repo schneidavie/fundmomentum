@@ -63,7 +63,7 @@ There is no signup wall. An agent can discover this server, pay for what it need
 |---|---|---|---|
 | **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund` | 10 calls/caller/UTC day |
 | **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All six tools on credits. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
-| **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | All six tools, priced per call | €100 per payer per day |
+| **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | All six tools, priced per call | €1,000 per payer per day |
 | **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six tools on credits | €5 / €20 / €50 / €100 |
 | **Linked** *(optional)* | `POST /_api/agent/link` with an email | Everything above, plus invoices and a dashboard | Grants no extra access |
 
@@ -104,7 +104,7 @@ curl -s https://fundmomentum.vc/_api/agent/register \
     "protocol": "mpp",
     "methods": ["tempo_usdc"],
     "topup_endpoint": "/_api/agent/credits/topup",
-    "daily_spend_limit": "€100.00"
+    "daily_spend_limit": "€1000.00"
   },
   "link_email_endpoint": "/_api/agent/link",
   "mcp_endpoint": "https://fundmomentum.vc/_api/mcp"
@@ -157,7 +157,7 @@ curl -s -X POST https://fundmomentum.vc/_api/agent/credits/topup \
   -d '{"amount_eur":20}'
 ```
 
-`amount_eur` is 5, 20, 50 or 100. €20 buys 2,000 credits. The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€100 per payer per UTC day**.
+`amount_eur` is 5, 20, 50 or 100. €20 buys 2,000 credits. The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€1,000 per payer per UTC day**.
 
 Prices are quoted in EUR and settle in USDC, converted at the ECB daily reference rate plus a 1.5% buffer for intraday movement and fees. There is no rounding up to the cent: €0.01 charges $0.0118, not $0.02.
 

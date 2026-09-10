@@ -41,7 +41,7 @@ tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"
 ```
 
 To buy a balance up front instead, `POST /_api/agent/credits/topup` with `{"amount_eur":20}`
-(5/20/50/100) and pay the same challenge. Spending is capped at €100 per payer per UTC day, checked
+(5/20/50/100) and pay the same challenge. Spending is capped at €1,000 per payer per UTC day, checked
 *before* any challenge is issued.
 
 The challenge is on a standard `WWW-Authenticate: Payment ...` header. A paid response carries

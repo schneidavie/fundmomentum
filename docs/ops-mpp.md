@@ -7,21 +7,31 @@ project and the Stripe dashboard.
 
 | Variable | Purpose |
 |---|---|
-| `STRIPE_SECRET_KEY_TEST` | Sandbox key. **Takes precedence when set.** |
+| `MPP_USE_SANDBOX` | `true` selects the sandbox set below. **Unset means live.** |
+| `STRIPE_SECRET_KEY_TEST` | Sandbox key (`sk_test_…`), only read in sandbox mode |
 | `STRIPE_PROFILE_ID_TEST` | Sandbox Machine Payments profile (`profile_test_…`) |
 | `TEMPO_DEPOSIT_ADDRESS_TEST` | Sandbox Tempo address (testnet) |
-| `STRIPE_SECRET_KEY` | Live key. Already present; used by existing subscriptions. |
-| `STRIPE_PROFILE_ID` | Live profile id (`profile_…`) |
-| `TEMPO_DEPOSIT_ADDRESS` | Live Tempo address (**mainnet — real funds**) |
+| `STRIPE_SECRET_KEY` | Live key. Shared with the subscription code. |
+| `STRIPE_PROFILE_ID` | Live profile id. Optional -- defaults to the account constant in `helpers/mppCharge`. |
+| `TEMPO_DEPOSIT_ADDRESS` | Live Tempo address (**mainnet -- real funds**). Optional, same default. |
 | `MPP_ENABLED` | `false` disables payments entirely |
 | `MPP_DAILY_LIMIT_EUR_PER_PAYER` | Default 100 |
 | `MPP_DAILY_LIMIT_EUR_GLOBAL` | Default 100. Launch kill switch. |
 
-`livemode` is derived from the key itself (`sk_test_` → testnet), exactly as
+`livemode` is derived from the key itself (`sk_test_` -> testnet), exactly as
 Stripe's own sample does, so a test key cannot produce a mainnet challenge.
 
-**The `*_TEST` variables win whenever they are set.** Going live means removing
-them, not adding anything.
+**The two sets are read as a unit and never mixed.** Sandbox mode takes all
+three values from `*_TEST`; live mode takes none of them. This is deliberate.
+It used to be per-variable precedence -- any `*_TEST` that existed won -- and
+during the go-live the live profile id and the mainnet deposit address were
+entered under the `*_TEST` names while `STRIPE_SECRET_KEY_TEST` still held a
+test key. The result was testnet challenges (chainId 42431) naming a mainnet
+recipient: nothing paid against them could ever have settled, and only the
+config check noticed. A test key outside sandbox mode is now refused outright.
+
+**Going live therefore means: do not set `MPP_USE_SANDBOX`.** Leftover `*_TEST`
+variables are simply ignored, so a half-finished cleanup cannot break anything.
 
 ## Health check
 
@@ -37,19 +47,33 @@ Run it first for any payment problem. It distinguishes "misconfigured" from
 
 ## Going live
 
+**Prerequisite: the `crypto_payments` capability must be active in livemode.** A
+sandbox has it by default, the live account does not, so everything passes in
+test and then `/v1/crypto/deposit_addresses` answers *"The crypto_payments
+capability must be active on your account to use this endpoint."* It is switched
+on by enabling **Stablecoins and Crypto** under Settings -> Payment methods **with
+the dashboard in live mode** -- a separate toggle from the test-mode one, and easy
+to leave unset after building the integration against a sandbox. If that toggle is
+already on and the error persists, only Stripe can clear it: ask them, naming the
+account id and the request id from the error.
+
 1. Confirm `mppx validate` passes against the sandbox.
 2. Create a **mainnet** deposit address on the live account:
    ```bash
    curl.exe https://api.stripe.com/v1/crypto/deposit_addresses \
      -u "sk_live_YOUR_KEY:" -H "Stripe-Version: 2026-07-29.preview" -d network=tempo
    ```
-3. Store it as `TEMPO_DEPOSIT_ADDRESS`, and the live profile id as
-   `STRIPE_PROFILE_ID`.
-4. **Remove** `STRIPE_SECRET_KEY_TEST`, `STRIPE_PROFILE_ID_TEST` and
-   `TEMPO_DEPOSIT_ADDRESS_TEST`.
-5. Re-run the health check. `mpp_livemode` must be `true` and
-   `deposit_address_livemode` must be `true`.
-6. Leave `MPP_DAILY_LIMIT_EUR_GLOBAL` at 100 for the first days. It bounds
+3. Record both values. Either set `TEMPO_DEPOSIT_ADDRESS` and `STRIPE_PROFILE_ID`,
+   or update `LIVE_DEPOSIT_ADDRESS` / `LIVE_PROFILE_ID` in `helpers/mppCharge`.
+   Neither is a secret: the address is broadcast in every challenge.
+4. Update the token contract address in `static/openapi.json`. It is
+   NETWORK-SPECIFIC and differs between testnet and mainnet -- read it from
+   `supported_tokens[].token_contract_address` on the deposit address object.
+5. Make sure `MPP_USE_SANDBOX` is **not** set. Leftover `*_TEST` variables need
+   no cleanup; they are ignored outside sandbox mode.
+6. Re-run the health check. It must report `mode: "live"`, `mpp_livemode: true`,
+   `deposit_address_livemode: true`, and no problems.
+7. Leave `MPP_DAILY_LIMIT_EUR_GLOBAL` at 100 for the first days. It bounds
    total site-wide exposure while settlement is watched.
 
 ## Rotating the Tempo deposit address
@@ -169,9 +193,37 @@ $ npx mppx@latest validate https://fundmomentum.vc
 Summary: 25 passed
 ```
 
-Including a real on-chain payment and a verified `Payment-Receipt`. Note the
-validator's own closing tip: **also validate the mainnet server**, since the run
-above proves testnet only.
+Including a real on-chain payment and a verified `Payment-Receipt`. That run
+proves TESTNET only.
+
+**Live since 2026-09-10.** The health check reports `mode: "live"`,
+`mpp_livemode: true`, `deposit_address_livemode: true` and no problems, and
+challenges carry Tempo mainnet `chainId 4217` with the mainnet USDC token
+address.
+
+The validator was re-run against mainnet:
+
+```
+Summary: 15 passed, 1 skipped
+```
+
+Everything checkable without funds passes, including **`Valid currency address
+(mainnet)`** and a valid recipient -- the two values most likely to be wrong
+after a network switch, and the ones a testnet run cannot prove. The skip is
+`Payment [tempo]: no wallet configured`.
+
+**The mppx wallet commands do not run on Windows.** `mppx account list` answers
+`Unsupported platform: win32`, so the payment leg cannot be exercised from a
+Windows machine at all -- installing Node does not help. Closing that last gap
+needs a Linux or macOS host (WSL counts) plus real USDC on Tempo, since mainnet
+has no faucet. Do NOT do it on a throwaway VM: the account key dies with the
+machine and any unspent balance goes with it, and exporting the key to move it
+means handling a funded private key in a chat transcript.
+
+Until then the evidence is: 25/25 on testnet including a real on-chain payment
+and a verified receipt, plus 15/15 of the structural checks on mainnet. The
+unproven step is settlement against the live Stripe account -- watch the first
+real payment land in `agent_payments` and on the Stripe balance.
 
 ## When payments break
 

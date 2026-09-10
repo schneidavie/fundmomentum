@@ -85,9 +85,6 @@ Three things had to be right, each of which failed silently at first:
 
 ### Known issues
 
-- **Production currently issues testnet challenges.** Until the Stripe live
-  switch (see `docs/ops-mpp.md`), Pro data can be paid for with free faucet
-  USDC.
 - `get_fund` on a tracer slug returns not-found, so following a tracer's profile
   URL distinguishes it from a real record.
 

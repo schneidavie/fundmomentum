@@ -1,6 +1,6 @@
 # Fund Momentum — Live VC Intelligence Platform
 
-> <!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->413<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
+> <!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->415<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
 
 **[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
 
@@ -20,7 +20,7 @@ Real data, no card, no email address. Quota headers, the free key and the other 
 
 ## What is Fund Momentum?
 
-Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->413<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
+Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->415<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
 
 **The problem:** Most VC databases are graveyard tours. Funds that stopped deploying 18 months ago, GPs who moved on, theses that haven't been updated since the fund closed. Founders pitch 40 investors and discover half of them aren't writing checks anymore.
 

@@ -44,9 +44,14 @@ To buy a balance up front instead, `POST /_api/agent/credits/topup` with `{"amou
 (5/20/50/100) and pay the same challenge. Spending is capped at €100 per payer per UTC day, checked
 *before* any challenge is issued.
 
-> **Header caveat.** This host runs behind AWS API Gateway, which renames `WWW-Authenticate` to
-> `x-amzn-remapped-www-authenticate`. The same challenge value is also on `X-Payment-Challenge` and
-> as `www_authenticate` in the JSON body. Prefer `WWW-Authenticate`; fall back to those.
+The challenge is on a standard `WWW-Authenticate: Payment ...` header. A paid response carries
+`Payment-Receipt` (base64url JSON with `method`, `reference`, `status`, `timestamp`), and the same
+receipt is mirrored into `result._meta.payment_receipt` so an MCP client need not read HTTP headers.
+
+**A paid call that then fails still returns its receipt.** Inline payments settle on-chain and are
+not auto-refunded, so a `not_found` on a paid call comes back with `paid: true` and the
+`Payment-Receipt` header — you are never charged without proof. Credit-funded calls are refunded
+instead, and carry no receipt.
 
 The 402 payload also names the free fallback: drop the `X-API-Key` header and the keyless allowance
 still answers `search_funds` and `get_fund`.

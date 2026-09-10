@@ -161,7 +161,12 @@ curl -s -X POST https://fundmomentum.vc/_api/agent/credits/topup \
 
 Prices are quoted in EUR and settle in USDC, converted at the ECB daily reference rate plus a 1.5% buffer for intraday movement and fees. There is no rounding up to the cent: €0.01 charges $0.0118, not $0.02.
 
-> **Header caveat.** This host runs behind AWS API Gateway, which **renames `WWW-Authenticate`** to `x-amzn-remapped-www-authenticate`. The identical challenge value is therefore repeated on `X-Payment-Challenge` and as `www_authenticate` in the JSON body. Prefer `WWW-Authenticate`; fall back to those.
+The challenge arrives on a standard `WWW-Authenticate: Payment ...` header, and a paid response carries a `Payment-Receipt` header with the on-chain reference. Verified end to end by the protocol's own validator:
+
+```
+$ npx mppx@latest validate https://fundmomentum.vc
+Summary: 25 passed
+```
 
 Out of credits used to surface as JSON-RPC error `-32001`. It is now an HTTP `402` — update any handler matching the old code.
 

@@ -64,15 +64,30 @@ Registration-free agent access and autonomous pay-per-call.
   calls that never touch payments. Payments now load on demand.
 - `viem`, a peer dependency of the MPP rail, was pruned from the deploy.
 
+### Validation
+
+`npx mppx@latest validate https://fundmomentum.vc` — **25 passed**, including a
+real on-chain payment from an ephemeral wallet and a verified `Payment-Receipt`.
+Discovery is served from `static/openapi.json` at `/openapi.json`.
+
+Three things had to be right, each of which failed silently at first:
+
+- The app must return **`200`** with `x-floot-status: 402` and
+  `x-floot-www-authenticate`; the CDN assembles the real 402 with a standard
+  `WWW-Authenticate`. Returning a real 402 from the app means AWS renames the
+  header and stock wallets never see the challenge.
+- `mppx.charge()` must be called **without** `currency` on an EVM rail — mppx
+  resolves the Tempo USDC token address itself, and `currency: "usd"` (correct
+  in Stripe's SPT sample) makes every wallet fail with `Address "usd" is invalid`.
+- A **failed** paid call must still return its `Payment-Receipt`. Inline payments
+  settle on-chain and are not auto-refunded, so withholding the receipt left the
+  payer charged with no proof.
+
 ### Known issues
 
-- **Standard MPP clients cannot yet discover the challenge on this host.** AWS
-  API Gateway renames `WWW-Authenticate` to `x-amzn-remapped-www-authenticate`,
-  and Floot cannot serve `/openapi.json` at the web root. The 402 itself is
-  correct and `npx mppx validate` confirms "Returns 402 without credentials";
-  only its discoverability is broken. The identical challenge is repeated on
-  `X-Payment-Challenge` and as `www_authenticate` in the body, so clients that
-  read those can pay today. See `docs/ops-mpp.md`.
+- **Production currently issues testnet challenges.** Until the Stripe live
+  switch (see `docs/ops-mpp.md`), Pro data can be paid for with free faucet
+  USDC.
 - `get_fund` on a tracer slug returns not-found, so following a tracer's profile
   URL distinguishes it from a real record.
 

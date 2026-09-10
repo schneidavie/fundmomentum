@@ -112,53 +112,66 @@ $0.0118, not $0.02, because ceiling would be a 69% markup on the cheapest call.
 If the ECB is unreachable and no rate is cached, payment endpoints answer `503
 fx_unavailable` rather than guessing a rate.
 
-## Known platform constraints — BLOCKING for standard MPP clients
+## Two platform rules you must not break
 
-Two hosting behaviours, neither fixable from inside the project. Together they
-mean a **standard MPP wallet cannot currently pay this server**, even though the
-server itself is behaving correctly.
+Both of these look like platform bugs when you hit them. Neither is. An earlier
+version of this file recorded them as blocking constraints and drafted a support
+request; that was wrong, and the guide `auth-and-payment-challenges` documents
+both. Recorded here so nobody re-derives the wrong conclusion.
 
-### 1. `WWW-Authenticate` is renamed
+### 1. Never return a real 402 — return 200 and let the edge do it
 
-AWS API Gateway rewrites it to `x-amzn-remapped-www-authenticate`. The identical
-challenge is therefore also sent on `X-Payment-Challenge` and as
-`www_authenticate` in the JSON body, by `helpers/paymentChallengeResponse.tsx` —
-but a client that reads only the standard header sees a 402 with no challenge
-and cannot pay.
+A Floot backend **cannot send `WWW-Authenticate` directly**. AWS renames it to
+`x-amzn-remapped-www-authenticate` on the way out, on every status code. Floot
+repairs this at the CDN, but the edge step only runs on responses that leave the
+Lambda as **2xx** — AWS skips it entirely once the app has marked the response
+`>= 400`.
 
-### 2. `/openapi.json` cannot be served at the web root
-
-MPP discovery requires it. Floot endpoint routes reject `.` in a route name, and
-static files allow only `.txt` / `.xml` / `.md` / `manifest.json`, so neither
-`/openapi.json` nor `/_api/mcp/openapi.json` is expressible. The document is
-served at **`/_api/mcp/openapi`** instead, which tooling must be pointed at
-manually.
-
-### Evidence
+So `helpers/paymentChallengeResponse.tsx` returns **`status: 200`** with:
 
 ```
-$ npx mppx@latest validate <base> --endpoint POST:/_api/mcp --body '<valid jsonrpc>'
-
-Discovery (/openapi.json)
-  ✗ Document found (Invalid JSON)
-
-POST /_api/mcp
-  Challenge
-  ✓ Returns 402 without credentials
-  ○ Not an MPP endpoint (No WWW-Authenticate header)
+x-floot-status: 402
+x-floot-www-authenticate: Payment id="…", realm="…", method="tempo", intent="charge"
 ```
 
-The 402 itself is correct; only its discoverability is broken.
+The client receives a genuine `402` with a standard `WWW-Authenticate`, and
+neither `x-floot-*` header is visible to it. `Content-Type` is preserved, so
+`application/problem+json` survives.
 
-### What to ask Floot for
+**Do not** "fix" a missing challenge by duplicating it into a custom header or
+the JSON body. That was tried; stock wallets read only `WWW-Authenticate`, so it
+helps only clients you can reach in advance, and `mppx validate` reports the
+endpoint as *"Not an MPP endpoint"*.
 
-1. Stop API Gateway remapping `WWW-Authenticate`, or provide a passthrough for it.
-2. Allow an arbitrary `.json` static file at the web root, or permit `.` in an
-   endpoint route.
+### 2. Root-path discovery documents are static files
 
-Until at least (1) is resolved, treat autonomous payment as **working but not
-discoverable by standard clients**. Clients that read `X-Payment-Challenge` or
-the response body can pay today.
+`/openapi.json` is served from **`static/openapi.json`**. Endpoints live under
+`/_api/` and cannot serve a root path, and endpoint route names reject `.`, so do
+not try to build one as an endpoint.
+
+That file is hand-maintained. If `MCP_TOOLS` or `helpers/agentPricing` change,
+update its tool enum and `x-payment-info` offers to match. Two details the
+validator is strict about: `amount` must be a **smallest-unit integer string**
+(6 decimals for USDC, so €0.10 ≈ `"120000"`), and `currency` must be the **token
+contract address**, not a currency code.
+
+### 3. Never pass `currency` to `mppx.charge()`
+
+On an EVM rail, `currency` is a token contract address. mppx resolves the right
+one from the configured deposit address. Passing `currency: "usd"` — which is
+correct in Stripe's SPT sample — overrides that with a value that is not an
+address, and every wallet then fails with `Address "usd" is invalid`. Omit it.
+
+### Current state
+
+```
+$ npx mppx@latest validate https://fundmomentum.vc
+Summary: 25 passed
+```
+
+Including a real on-chain payment and a verified `Payment-Receipt`. Note the
+validator's own closing tip: **also validate the mainnet server**, since the run
+above proves testnet only.
 
 ## When payments break
 

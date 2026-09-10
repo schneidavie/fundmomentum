@@ -70,10 +70,17 @@ tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"
 The first attempt returns `402`; the CLI pays and retries. Expect real signal
 data and `_meta.auth: "mpp_inline"` with a `receipt`.
 
-If your client cannot see the challenge, remember this host **renames**
-`WWW-Authenticate` to `x-amzn-remapped-www-authenticate`; the same value is on
-`X-Payment-Challenge` and as `www_authenticate` in the body. FAIL only if the
-challenge is absent from **all three** places.
+The challenge arrives on a standard `WWW-Authenticate: Payment ...` header and the
+paid response carries `Payment-Receipt`. FAIL if either is missing.
+
+A quicker equivalent of this whole step:
+
+```bash
+npx mppx@latest validate https://fundmomentum.vc
+```
+
+It provisions a throwaway testnet wallet, funds it from a faucet, pays, and
+checks the receipt. Expect `25 passed`.
 
 ## 6 — Top-up (2 of 3)
 

@@ -49,7 +49,21 @@ FUNDS="$(printf '%s' "$card"        | jq -er '.counts.funds')"
 LPS="$(printf '%s' "$card"          | jq -er '.counts.limited_partners')"
 VERSION="$(printf '%s' "$card"      | jq -er '.serverInfo.version')"
 KEYLESS="$(printf '%s' "$card"      | jq -er '.authentication.keyless_trial.calls_per_caller_per_utc_day')"
-FREE_CALLS="$(printf '%s' "$card"   | jq -er '.authentication.free_tier.calls_per_month')"
+# The free monthly allowance moved when the card was restructured for v1.3.0:
+# the old `authentication.free_tier` block was replaced by
+# `authentication.human_subscriptions`. Removing it broke THIS script, which
+# failed the v1.3.0 publish before it reached the registry. Both locations are
+# accepted so the script keeps working against an older card too.
+FREE_CALLS="$(printf '%s' "$card"   | jq -er '
+  .authentication.human_subscriptions.free_calls_per_month
+  // .authentication.free_tier.calls_per_month
+')" || {
+  echo "sync-counts: could not read the free monthly call allowance from the card." >&2
+  echo "  Looked at .authentication.human_subscriptions.free_calls_per_month" >&2
+  echo "        and .authentication.free_tier.calls_per_month" >&2
+  echo "  If the card was restructured again, update this script to match." >&2
+  exit 2
+}
 PRO_PRICE="$(printf '%s' "$card"    | jq -er '[.tools[] | select(.requiredTier == "pro") | .price] | unique | .[0]')"
 
 # Never let a broken or empty response blank out the docs.

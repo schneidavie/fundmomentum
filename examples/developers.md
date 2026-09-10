@@ -31,7 +31,7 @@ routes).
 
 Beyond the free 25, calls cost €0.01 (free tools) or €0.10–€0.25 (Pro tools) and credits never
 expire. An exhausted balance — or a Pro tool called with **no key at all** — answers **HTTP `402`**
-(previously JSON-RPC `-32001`) carrying an [MPP](https://mpp.dev) challenge over Tempo USDC. Pay it,
+(previously JSON-RPC `-32001`) carrying an [MPP](https://mpp.dev) challenge payable in USDC on Tempo mainnet (chain `4217`). Pay it,
 retry, and you get the data plus a receipt, with no account anywhere in the flow:
 
 ```bash

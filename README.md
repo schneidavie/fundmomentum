@@ -141,7 +141,7 @@ Every agent-tier response then carries its balance in `_meta`:
 
 #### Paying, with no account at all
 
-**Autonomous machine payment is live.** A Pro tool called with **no key whatsoever** answers HTTP `402` carrying a payment challenge over [MPP](https://mpp.dev) (Tempo USDC). Pay it, retry, and you get the data plus a receipt. Nothing is registered and no account exists at any point.
+**Autonomous machine payment is live on Tempo mainnet.** A Pro tool called with **no key whatsoever** answers HTTP `402` carrying a payment challenge over [MPP](https://mpp.dev). Pay it in USDC on Tempo (chain `4217`), retry, and you get the data plus a receipt. Nothing is registered and no account exists at any point.
 
 ```bash
 curl -fsSL https://tempo.xyz/install | bash
@@ -161,12 +161,14 @@ curl -s -X POST https://fundmomentum.vc/_api/agent/credits/topup \
 
 Prices are quoted in EUR and settle in USDC, converted at the ECB daily reference rate plus a 1.5% buffer for intraday movement and fees. There is no rounding up to the cent: €0.01 charges $0.0118, not $0.02.
 
-The challenge arrives on a standard `WWW-Authenticate: Payment ...` header, and a paid response carries a `Payment-Receipt` header with the on-chain reference. Verified end to end by the protocol's own validator:
+The challenge arrives on a standard `WWW-Authenticate: Payment ...` header, and a paid response carries a `Payment-Receipt` header with the on-chain reference. Checked by the protocol's own validator against this server:
 
 ```
-$ npx mppx@latest validate https://fundmomentum.vc
-Summary: 25 passed
+$ mppx validate https://fundmomentum.vc
+Summary: 15 passed, 0 failed, 1 skipped
 ```
+
+Everything structural passes, including the mainnet token and recipient addresses. The one skip is the payment step itself: the validator provisions a funded wallet on testnet only, and mainnet has no faucet. That step passes on the identical testnet deployment, with a real on-chain payment and a verified receipt (25/25).
 
 Out of credits used to surface as JSON-RPC error `-32001`. It is now an HTTP `402` — update any handler matching the old code.
 

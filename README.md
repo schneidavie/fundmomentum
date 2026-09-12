@@ -161,7 +161,11 @@ curl -s -X POST https://fundmomentum.vc/_api/agent/credits/topup \
 
 Prices are quoted in EUR and settle in USDC, converted at the ECB daily reference rate plus a 1.5% buffer for intraday movement and fees. There is no rounding up to the cent: €0.01 charges $0.0118, not $0.02.
 
-The challenge arrives on a standard `WWW-Authenticate: Payment ...` header, and a paid response carries a `Payment-Receipt` header with the on-chain reference. Checked by the protocol's own validator against this server:
+The challenge arrives on a standard `WWW-Authenticate: Payment ...` header, and a paid response carries a `Payment-Receipt` header with the on-chain reference.
+
+**Over MCP the shape is different, because it has to be.** An MCP client ignores the body of a `402` — it decides on the status line. So a caller that speaks MCP over Streamable HTTP (an `mcp-method` header, or an `Accept` listing both `application/json` and `text/event-stream`) gets HTTP `200` carrying a JSON-RPC error instead: `error.code` `-32042`, the challenges in `error.data.challenges`, and the request `id` echoed back. Pay and retry with the credential in `params._meta["org.paymentauth/credential"]`; the receipt comes back in `result._meta["org.paymentauth/receipt"]`. A credential that does not verify answers `-32043`, never `-32042` — you are not asked to pay twice.
+
+Checked by the protocol's own validator against this server:
 
 ```
 $ mppx validate https://fundmomentum.vc

@@ -239,3 +239,54 @@ real payment land in `agent_payments` and on the Stripe balance.
    payments_unavailable` and **free traffic is unaffected** — payments are
    imported on demand precisely so an outage cannot take down the whole server.
 4. `MPP_ENABLED=false` disables payments cleanly if needed.
+
+## Two transports, two challenge formats
+
+A challenge that is perfectly correct over HTTP can still be invisible to the
+callers that actually matter. This endpoint issued 55 challenges in seven days
+and took zero payments, with `mppx validate` passing the whole time.
+
+The HTTP surface was never wrong. The body was: a bare RFC 9457 problem
+document with no `jsonrpc`, no `id` and no `error`. 51 of the 55 challenges were
+for `get_fund_signals`, which is reached almost only over MCP, so every one of
+them went to a client that could not parse it as a response to its own request.
+
+**A 402 cannot carry an MCP challenge.** mppx's client protocol returns early on
+the status line, before reading the body:
+
+```js
+// The 402 schemes own status 402; MCP challenges arrive in a normal 200 body.
+if (response.status === paymentRequiredStatus || id === undefined) return []
+```
+
+So the two audiences need opposite responses and `endpoints/mcp_POST.ts`
+branches on the transport. `helpers/mcpPayment.isMcpTransport` reproduces mppx's
+own test — an `mcp-method` header, or an `Accept` listing both
+`application/json` and `text/event-stream`.
+
+| Caller | Status | Where the challenge lives |
+|---|---|---|
+| Plain HTTP wallet | `402` | `WWW-Authenticate: Payment …` |
+| MCP over Streamable HTTP | `200` | JSON-RPC `error.code -32042`, challenges in `error.data.challenges` |
+
+Three details the client validates and silently discards the challenge over:
+
+- `error.data.challenges` must be a **non-empty array** of objects passing
+  `Challenge.Schema`. Not the problem document, not a single object.
+- The response `id` must equal the request `id`. `paymentRequiredChallenges`
+  begins `if (message.id !== id) return []`.
+- `error.data._meta[...]` is **not** a path anything reads. `paymentRequiredData`
+  accepts `error.data` directly (codes -32042/-32043) or
+  `result._meta["org.paymentauth/payment-required"]`, and nothing in between.
+
+**The credential comes back in the body, not a header.** An MCP client's
+`setCredential` rewrites `params._meta["org.paymentauth/credential"]` and sets no
+header at all, while mppx reads credentials with `Credential.fromRequest`, which
+inspects headers only. Without `bridgeMcpCredential` re-attaching it, an MCP
+payment settles on-chain and is then refused as unpaid. A credential that
+arrives and still does not verify answers **-32043**, never -32042: the agent has
+already paid, and "payment required" would charge it twice.
+
+`mppx validate` does not cover any of this — it exercises the HTTP surface,
+which is why the bug shipped green. Verify the MCP path by feeding a real
+response to mppx's own `paymentRequiredData`.

@@ -231,6 +231,34 @@ and a verified receipt, plus 15/15 of the structural checks on mainnet. The
 unproven step is settlement against the live Stripe account -- watch the first
 real payment land in `agent_payments` and on the Stripe balance.
 
+## Watching for payments that were taken and not honoured
+
+Until a real payment has been observed end to end, this is the failure to
+watch for: a credential settles on-chain, verification rejects it, and the
+caller gets nothing. It used to leave no trace at all.
+
+```sql
+SELECT created_at, tool_name, status
+  FROM mcp_api_logs
+ WHERE status = 'payment_verification_failed'
+ ORDER BY created_at DESC LIMIT 50;
+```
+
+Any row here means an agent may be out of pocket. The matching
+`console.error` line carries the transaction hash, which is what makes the
+payment findable on-chain so the credits can be granted by hand.
+
+Do NOT rely on the console log alone: Floot keeps it for an hour, it resets
+on every backend deploy, and during testing `get_logs` returned nothing at
+all for requests that had demonstrably been served. The `mcp_api_logs` row is
+the durable record -- verified by triggering three failures and counting
+three rows.
+
+The top-up endpoint has its own version of this: a paid response whose
+receipt cannot be read logs `[topup] paid response carried no usable receipt
+reference` with the agent id and amount, and deliberately withholds the
+credits rather than granting them twice.
+
 ## When payments break
 
 1. `GET /_api/debug/mpp-config-check`.

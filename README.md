@@ -67,7 +67,7 @@ There is no signup wall. An agent can discover this server, pay for what it need
 | **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six tools on credits | €5 / €20 / €50 / €100 |
 | **Linked** *(optional)* | `POST /_api/agent/link` with an email | Everything above, plus invoices and a dashboard | Grants no extra access |
 
-Per-call prices: free tools €0.01, `get_fund_signals` €0.10, `get_gp_profile` €0.10, `match_startup` €0.25.
+Per-call prices are not repeated here, because a typed price drifts. Each tool states its own in its description, and [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools) is generated from the live tool definitions.
 
 ### Getting a key
 
@@ -96,9 +96,9 @@ curl -s https://fundmomentum.vc/_api/agent/register \
   "credits_never_expire": true,
   "tools_on_credits": ["search_funds", "get_fund", "get_changes"],
   "tools_paid_per_call": {
-    "get_fund_signals": "€0.10",
-    "get_gp_profile": "€0.10",
-    "match_startup": "€0.25"
+    "get_fund_signals": "…",
+    "get_gp_profile": "…",
+    "match_startup": "…"
   },
   "payment": {
     "protocol": "mpp",
@@ -115,7 +115,7 @@ No payment, no approval, no human: an agent registers and makes a useful call in
 
 `operator_url` and `contact` are optional free text and are never verified. Send an `email` and it is ignored with a note rather than rejected, so callers written against the old contract keep working.
 
-The 25 credits work on **all six tools**. Free tools cost 1 credit (€0.01); the Pro tools are priced per call.
+The 25 credits work on **all six tools**. Free tools cost 1 credit (€0.01); the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools).
 
 #### Why there is no email step
 
@@ -146,7 +146,7 @@ Every agent-tier response then carries its balance in `_meta`:
 ```bash
 curl -fsSL https://tempo.xyz/install | bash
 tempo wallet login
-tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_fund_signals","arguments":{"slug":"speedinvest"}},"id":1}' https://fundmomentum.vc/_api/mcp
+tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_fund_signals","arguments":{"slug":"speedinvest-africa-fund"}},"id":1}' https://fundmomentum.vc/_api/mcp
 ```
 
 The same flow tops up a key, so an agent never has to stop:
@@ -181,6 +181,31 @@ If you would rather not pay at all, the fallback is real: drop the `X-API-Key` h
 #### Linking an email (optional)
 
 `POST /_api/agent/link` with `{"email":"..."}` attaches a key to a human account for **invoices and a dashboard only**. It grants no access and changes no credits. An address already verified — a Google sign-in, say — links immediately and no mail is sent. This endpoint and `/_api/agent/link/resend` (3/day) are the only places the agent path ever sends email.
+
+### Timeouts and retries
+
+**Retrying never costs twice.** The same call returns the same challenge, never a new one. Once that challenge is paid, the same call returns the stored result free. A timeout followed by a retry cannot produce two payments.
+
+The boundary is derived from the payer, the tool and the canonical arguments, so you do not have to set anything. Argument order does not matter: keys are sorted before comparison. To choose the boundary yourself:
+
+```json
+{ "params": { "_meta": { "vc.fundmomentum/idempotency-key": "your-id" } } }
+```
+
+An agent does not need this README to find that out: every challenge carries the same guarantee in `error.data.idempotency`, with `guaranteed`, `meta_key`, `meta_key_optional` and a `note`.
+
+Set your timeout generously for `match_startup`. Three to ten seconds is normal, not a hang: it reasons over the whole database. The retry guard is a safety net, not a substitute for a sensible timeout.
+
+| Response | Meaning | Were you charged? |
+|---|---|---|
+| `-32042` | Payment required. Challenge in `error.data.challenges` | No |
+| `-32043` | Credential failed verification | **Possibly yes.** Send us the transaction hash and we settle it by hand |
+| `-32000` with `error.data.error_reason: "not_found"` and `checked_before_payment: true` | Slug does not exist, or that fund has no published signals | No, never |
+| `-32602` with `error.data.error_reason: "invalid_args"` and `checked_before_payment: true` | Unknown, missing or malformed parameter | No, never |
+
+A wrong slug or a bad argument is refused **before** any payment. The message names the closest real slugs, or the parameters the tool accepts.
+
+What each tool costs is in its own description. [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools) is generated from the live tool definitions, so it is always the current price. The same section is on [fundmomentum.vc/mpp-wallet](https://fundmomentum.vc/mpp-wallet) as section 5.
 
 ### Quick Setup (Claude Desktop)
 
@@ -321,7 +346,7 @@ const r = await fetch("https://fundmomentum.vc/_api/mcp", {
   body: JSON.stringify({
     jsonrpc: "2.0",
     method: "tools/call",
-    params: { name: "get_fund_signals", arguments: { slug: "speedinvest" } },
+    params: { name: "get_fund_signals", arguments: { slug: "speedinvest-africa-fund" } },
     id: 1
   })
 });
@@ -367,11 +392,11 @@ The FM15 is our semi-annual ranking of the 15 best **emerging** VC managers, sco
 
 These tiers cover the MCP server and API only.
 
-**Agents are not on these plans.** They pay per call — €0.01 for a free tool, €0.10–€0.25 for a Pro tool — with no subscription and no account. See [Access without registration](#access-without-registration) above. The monthly plans below are for people.
+**Agents are not on these plans.** They pay per call, at the price each tool states in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools), with no subscription and no account. See [Access without registration](#access-without-registration) above. The monthly plans below are for people.
 
 | Tier | Price | API Calls | Tools |
 |---|---|---|---|
-| Agents (per call) | €0.01–€0.25/call | Unmetered, pay as you go | All six tools, no account needed |
+| Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six tools, no account needed |
 | Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund` |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Starter | €9/mo | 1,000/mo | `search_funds`, `get_fund`, `get_changes` |

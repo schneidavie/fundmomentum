@@ -29,7 +29,8 @@ hash is stored.
 New keys are capped at 3 per IP and 10 per /24 per UTC day (`429` beyond that, naming both escape
 routes).
 
-Beyond the free 25, calls cost €0.01 (free tools) or €0.10–€0.25 (Pro tools) and credits never
+Beyond the free 25, calls cost 1 credit (€0.01) on the free tools, and each Pro tool states its price in
+[`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools); credits never
 expire. An exhausted balance — or a Pro tool called with **no key at all** — answers **HTTP `402`**
 (previously JSON-RPC `-32001`) carrying an [MPP](https://mpp.dev) challenge payable in USDC on Tempo mainnet (chain `4217`). Pay it,
 retry, and you get the data plus a receipt, with no account anywhere in the flow:
@@ -37,7 +38,7 @@ retry, and you get the data plus a receipt, with no account anywhere in the flow
 ```bash
 curl -fsSL https://tempo.xyz/install | bash
 tempo wallet login
-tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_fund_signals","arguments":{"slug":"speedinvest"}},"id":1}' https://fundmomentum.vc/_api/mcp
+tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_fund_signals","arguments":{"slug":"speedinvest-africa-fund"}},"id":1}' https://fundmomentum.vc/_api/mcp
 ```
 
 To buy a balance up front instead, `POST /_api/agent/credits/topup` with `{"amount_eur":20}`
@@ -185,7 +186,7 @@ async function getFundSignals(slug) {
   return JSON.parse(result.content[0].text);
 }
 
-const signals = await getFundSignals("speedinvest");
+const signals = await getFundSignals("speedinvest-africa-fund");
 console.log(signals.thesisTags);
 console.log(signals.founderDos);
 ```

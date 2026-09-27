@@ -140,9 +140,5 @@ change** — this endpoint is never billed.
 
 ## Not covered here
 
-- **Enumeration limits** (200 slow-mode / 500 refusal distinct funds per day)
-  need hundreds of calls; exercise them by seeding `agent_slug_views` directly.
 - **Global spend cap** needs `MPP_DAILY_LIMIT_EUR_GLOBAL` lowered in a test
   environment.
-- **Tracer records** are deliberately undocumented in public. See the internal
-  note; do not name them in a bug report that might be shared.

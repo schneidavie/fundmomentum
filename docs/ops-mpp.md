@@ -111,17 +111,6 @@ UPDATE agents SET revoked_at = now(), revoked_reason = 'why' WHERE id = 'agt_...
 Every subsequent call answers `401 key_revoked`. Credits are left intact so the
 balance survives if the revocation is reversed.
 
-To find a key by behaviour rather than id:
-
-```sql
-SELECT a.id, a.agent_name, a.credits, a.trust_score, COUNT(v.slug) AS distinct_funds_today
-  FROM agents a
-  LEFT JOIN agent_slug_views v
-    ON v.subject_key = 'agent:' || a.id
-   AND v.usage_day = (now() AT TIME ZONE 'utc')::date
- GROUP BY a.id ORDER BY distinct_funds_today DESC LIMIT 20;
-```
-
 ## Where receipts live
 
 Every settled payment writes one `agent_payments` row: `receipt_id` (unique,

@@ -59,10 +59,6 @@ Registration-free agent access and autonomous pay-per-call.
 - **Spend caps.** €100 per payer per UTC day and a global daily ceiling, both
   checked *before* a challenge is issued — never invite a payment that would then
   be refused.
-- **Enumeration detection.** Tracks distinct funds retrieved per caller per day:
-  slow-mode above 200, refusal above 500. Paid callers are exempt.
-- **Tracer records.** Three fictitious funds, mixed into free results only, to
-  detect scraping. Never shown to a paying caller.
 - **Response shaping.** Unpaid callers get 10 `search_funds` rows (50 when paid),
   20 `get_changes` items and a 30-day lookback floor. A shortened window is
   declared as `since_floor_applied` rather than silently truncated.
@@ -79,6 +75,7 @@ Registration-free agent access and autonomous pay-per-call.
   stays pinned at `2024-06-20`: the 2025 versions move `current_period_end` off
   the Subscription object, which live subscription code reads.
 - Human Free / Starter / Pro subscriptions are unchanged and unaffected.
+- Existing agent keys keep authenticating with their previous balance.
 
 ### Removed
 
@@ -115,18 +112,6 @@ Three things had to be right, each of which failed silently at first:
 - A **failed** paid call must still return its `Payment-Receipt`. Inline payments
   settle on-chain and are not auto-refunded, so withholding the receipt left the
   payer charged with no proof.
-
-### Known issues
-
-- `get_fund` on a tracer slug returns not-found, so following a tracer's profile
-  URL distinguishes it from a real record.
-
-### Migration
-
-Additive only; nothing was deleted and `users` was not modified. New tables:
-`agents`, `agent_payments`, `agent_usage_daily`, `agent_slug_views`, `fx_rates`,
-`mpp_store`, `tracer_funds`. Existing agent keys were copied into `agents` and
-continue to authenticate with their previous balance.
 
 ## [1.2.0] — 2026-09-06
 

@@ -15,7 +15,8 @@ LP data over MCP, and LP Radar you can actually buy.
   emerging-manager backing), max 25 per call, unlimited calls, on the key of an
   account holding **LP Radar** (€199/month or €1,499/year). Not sold per call,
   on agent credits, over MPP or on the keyless trial; without LP Radar it answers
-  `lp_access_required` with the coverage count and the purchase link.
+  HTTP `403` / JSON-RPC `-32001` with `error_reason: "lp_access_required"`, the
+  coverage count and the purchase link — no payment challenge, nothing charged.
 - **Self-serve LP Radar checkout.** Card payment via Stripe on
   [fundmomentum.vc/lp-radar](https://fundmomentum.vc/lp-radar). Access and an
   API key switch on right after payment; no account needed beforehand. Replaces
@@ -34,6 +35,16 @@ LP data over MCP, and LP Radar you can actually buy.
   server card renamed to `counts.disclosed_lps`, so it failed under `jq -e`
   before rendering anything — including in the weekly sync and pre-publish
   workflows. It now reads `disclosed_lps` and falls back to the old key.
+- **Docs: keyless trial.** The README said the keyless trial covered
+  `search_funds` and `get_fund` only, and that `get_changes` needed a key. It
+  covers four tools: `search_funds`, `get_fund`, `get_changes` (at most 7 days
+  back; a free key widens that to 30) and `check_lp_coverage`, sharing 10 calls
+  per caller per UTC day.
+- **Docs: six fund tools.** Credits and MPP rows now say "six fund tools"
+  throughout, and the developer tool reference lists all eight tools.
+- **Docs: LP example.** `examples/developers.md` gains a Python example for
+  `check_lp_coverage` and for handling the `lp_access_required` refusal of
+  `search_lps`.
 
 ## [1.3.0] — 2026-09-09
 

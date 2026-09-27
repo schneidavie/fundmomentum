@@ -1,8 +1,8 @@
 # Fund Momentum — Live VC Intelligence Platform
 
-> <!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->424<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
+> <!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->608<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
 
-**[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
+**[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [LP Radar](https://fundmomentum.vc/lp-radar) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
 
 ## Try it right now — no key, no signup
 
@@ -14,13 +14,15 @@ curl -s https://fundmomentum.vc/_api/mcp \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"stage":"seed","country":"Germany","limit":5}},"id":1}'
 ```
 
-Real data, no card, no email address. Quota headers, the free key and the other four tools: [MCP Server](#mcp-server).
+Real data, no card, no email address. Quota headers, the free key and the other six tools: [MCP Server](#mcp-server).
+
+**New: LP data over MCP.** `check_lp_coverage` tells you, free and with no key, how many limited partners match a country and LP type. `search_lps` returns the LP records themselves for [LP Radar](https://fundmomentum.vc/lp-radar) subscribers (€199/month or €1,499/year, card checkout). See [LP Radar over MCP](#lp-radar-over-mcp).
 
 ---
 
 ## What is Fund Momentum?
 
-Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->424<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
+Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1000+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->608<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
 
 **The problem:** Most VC databases are graveyard tours. Funds that stopped deploying 18 months ago, GPs who moved on, theses that haven't been updated since the fund closed. Founders pitch 40 investors and discover half of them aren't writing checks anymore.
 
@@ -236,7 +238,7 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 "What changed in the fund database since last Monday?"
 ```
 
-### Available Tools (6)
+### Available Tools (8)
 
 | Tool | Title | Tier | Description |
 |---|---|---|---|
@@ -246,12 +248,24 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 | `get_fund_signals` | Get fund investor signals | Pro | Bullish/contrarian signals, deployment status, thesis tags |
 | `get_gp_profile` | Get General Partner profiles | Pro | Individual GP profiles and backgrounds |
 | `match_startup` | Match startup to funds | Pro | AI-powered fund matching based on startup description |
+| `check_lp_coverage` | Check LP coverage | Free, keyless | How many LPs match a country and LP type. Counts only, never a name |
+| `search_lps` | Search LP records | LP Radar | LP records (name, type, HQ, focus, website, emerging-manager backing), max 25 per call, unlimited calls |
 
-All six tools are read-only and non-destructive, and advertise it:
+All eight tools are read-only and non-destructive, and advertise it:
 `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`, `openWorldHint: false`.
 An agent can call any of them without a confirmation prompt — nothing here mutates state.
 
 `search_funds` and `get_fund` were previously documented as **Starter**. They are **Free**.
+
+### LP Radar over MCP
+
+LP data is a separate product with its own entitlement, not a rung above Pro.
+
+- **`check_lp_coverage` is free.** No key, no credit, also on the keyless trial. It answers "do you cover my geography and LP type" with counts only: never a name, website or commitment. Counts under 5 show as `"<5"`, zero as `"none"`. Call it first.
+- **`search_lps` needs [LP Radar](https://fundmomentum.vc/lp-radar)** on the caller's own account key: **€199/month or €1,499/year**, same access on both, cancel any month. Unlimited calls, up to 25 records per call; a larger `limit` is rejected, not clamped.
+- **Not sold per call.** LP records are never available on agent credits, over MPP or on the keyless trial. Without LP Radar, `search_lps` answers `error_reason: "lp_access_required"` with the free coverage count and the purchase link, never a payment challenge.
+- **Buying it.** Self-serve card checkout on [fundmomentum.vc/lp-radar](https://fundmomentum.vc/lp-radar), no account needed beforehand. Access and an API key switch on right after payment under the checkout email; a new account is created if none exists and a welcome email carries the setup link. Manage or cancel in the Stripe billing portal.
+- **What stays in the web app.** Commitment history, fund sizes, dates and allocation patterns are not served over MCP. There is no LP export on any tier.
 
 ### Incremental sync — use `get_changes`, not a polling loop
 
@@ -396,12 +410,13 @@ These tiers cover the MCP server and API only.
 
 | Tier | Price | API Calls | Tools |
 |---|---|---|---|
-| Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six tools, no account needed |
+| Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six fund tools, no account needed |
 | Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund` |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Starter | €9/mo | 1,000/mo | `search_funds`, `get_fund`, `get_changes` |
-| Pro | <!--fm:pro_price-->€29/mo<!--/fm:pro_price--> | 10,000/mo | All six tools incl. signals |
-| Enterprise | Custom | Unlimited | All six tools, custom contract & SLA |
+| Pro | <!--fm:pro_price-->€29/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals |
+| Enterprise | Custom | Unlimited | All six fund tools, custom contract & SLA |
+| **LP Radar** | **€199/mo or €1,499/yr** | Unlimited | `search_lps` (`check_lp_coverage` is free on every row). Separate subscription, [card checkout](https://fundmomentum.vc/lp-radar) |
 
 The keyless, Free and Pro rows are generated from the server card. The Starter
 and Enterprise rows are still typed by hand — the card exposes no tier block for
@@ -441,6 +456,7 @@ To sync a number in a new spot, wrap it in a marker pair and it is picked up on 
 
 - **Platform:** [fundmomentum.vc](https://fundmomentum.vc)
 - **MCP docs, plans & API keys:** [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp)
+- **LP Radar (limited partner data, `search_lps`):** [fundmomentum.vc/lp-radar](https://fundmomentum.vc/lp-radar)
 - **Founder / investor-signal pricing:** [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing)
 - **Server card:** [fundmomentum.vc/_api/well-known/mcp/server-card](https://fundmomentum.vc/_api/well-known/mcp/server-card)
 - **Registry:** `io.github.schneidavie/fund-momentum`

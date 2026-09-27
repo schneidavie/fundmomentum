@@ -2,6 +2,31 @@
 
 All notable changes to the Fund Momentum MCP server.
 
+## [1.4.0] — 2026-09-27
+
+LP data over MCP, and LP Radar you can actually buy.
+
+### Added
+
+- **`check_lp_coverage`** — free and keyless. How many limited partners match a
+  country and LP type, as counts only; never a name, website or commitment.
+  Counts under 5 show as `"<5"`, zero as `"none"`. Costs no credit.
+- **`search_lps`** — LP records (name, type, HQ, geographic focus, website,
+  emerging-manager backing), max 25 per call, unlimited calls, on the key of an
+  account holding **LP Radar** (€199/month or €1,499/year). Not sold per call,
+  on agent credits, over MPP or on the keyless trial; without LP Radar it answers
+  `lp_access_required` with the coverage count and the purchase link.
+- **Self-serve LP Radar checkout.** Card payment via Stripe on
+  [fundmomentum.vc/lp-radar](https://fundmomentum.vc/lp-radar). Access and an
+  API key switch on right after payment; no account needed beforehand. Replaces
+  the request-and-invoice flow.
+
+### Changed
+
+- Tool count 6 → 8. The per-call ladder, credits and MPP cover the six fund
+  tools only; the two LP tools sit outside it.
+- `server.json`: 608 disclosed LPs, version 1.4.0.
+
 ## [1.3.0] — 2026-09-09
 
 Registration-free agent access and autonomous pay-per-call.

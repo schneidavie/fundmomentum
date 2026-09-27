@@ -26,6 +26,14 @@ LP data over MCP, and LP Radar you can actually buy.
 - Tool count 6 → 8. The per-call ladder, credits and MPP cover the six fund
   tools only; the two LP tools sit outside it.
 - `server.json`: 608 disclosed LPs, version 1.4.0.
+- Published fund count 1000+ → 1100+ (1,106 live), synced from the server card.
+
+### Fixed
+
+- `scripts/sync-counts.sh` read `counts.limited_partners`, which the 1.4.0
+  server card renamed to `counts.disclosed_lps`, so it failed under `jq -e`
+  before rendering anything — including in the weekly sync and pre-publish
+  workflows. It now reads `disclosed_lps` and falls back to the old key.
 
 ## [1.3.0] — 2026-09-09
 

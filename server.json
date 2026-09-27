@@ -3,7 +3,7 @@
   "name": "io.github.schneidavie/fund-momentum",
   "title": "Fund Momentum",
   "description": "1100+ actively deploying VC funds and 608 disclosed LPs, with live investor signals",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "repository": {
     "url": "https://github.com/schneidavie/fundmomentum",
     "source": "github"

@@ -2,6 +2,15 @@
 
 All notable changes to the Fund Momentum MCP server.
 
+## [1.4.1] — 2026-09-28
+
+Documentation only; the server is unchanged. Tags the docs fixes listed under
+1.4.0 → Fixed, which landed after the 1.4.0 tag: the keyless trial covers four
+tools, "six fund tools" wherever credits or MPP apply, the eight-tool reference
+and the LP example in `examples/developers.md`. The v1.3.0 changelog entry is
+trimmed of anti-scraping internals, and the internal ops runbooks have moved
+out of this repo.
+
 ## [1.4.0] — 2026-09-27
 
 LP data over MCP, and LP Radar you can actually buy.

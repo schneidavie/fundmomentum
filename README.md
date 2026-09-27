@@ -6,7 +6,7 @@
 
 ## Try it right now — no key, no signup
 
-`search_funds` and `get_fund` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day with **no credential at all**. Paste this:
+`search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them with **no credential at all**. Paste this:
 
 ```bash
 curl -s https://fundmomentum.vc/_api/mcp \
@@ -14,7 +14,7 @@ curl -s https://fundmomentum.vc/_api/mcp \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"stage":"seed","country":"Germany","limit":5}},"id":1}'
 ```
 
-Real data, no card, no email address. Quota headers, the free key and the other six tools: [MCP Server](#mcp-server).
+Real data, no card, no email address. Quota headers, the free key and the other four tools: [MCP Server](#mcp-server).
 
 **New: LP data over MCP.** `check_lp_coverage` tells you, free and with no key, how many limited partners match a country and LP type. `search_lps` returns the LP records themselves for [LP Radar](https://fundmomentum.vc/lp-radar) subscribers (€199/month or €1,499/year, card checkout). See [LP Radar over MCP](#lp-radar-over-mcp).
 
@@ -41,7 +41,7 @@ Connect Claude, Cursor, or any MCP-compatible AI directly to Fund Momentum.
 
 ### The keyless trial
 
-`search_funds` and `get_fund` answer **<!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day with no credential at all**. No signup, no card, no key. This is the front door — see real data before you decide anything. The curl at the top of this README is a complete, working call.
+`search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer **<!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them, with no credential at all**. No signup, no card, no key. This is the front door — see real data before you decide anything. The curl at the top of this README is a complete, working call.
 
 Every response carries a `_meta` block telling you where you stand:
 
@@ -55,7 +55,7 @@ Every response carries a `_meta` block telling you where you stand:
 }
 ```
 
-The keyless trial covers `search_funds` and `get_fund` only. `get_changes` is free but needs a key — see below.
+The keyless trial covers those four tools. Keyless `get_changes` looks back at most **7 days** and answers `since_floor_applied: true` when it shortens your window; a free key widens that to 30 days — see [Incremental sync](#incremental-sync--use-get_changes-not-a-polling-loop).
 
 ### Access without registration
 
@@ -63,10 +63,10 @@ There is no signup wall. An agent can discover this server, pay for what it need
 
 | Access | How you get it | What works | Limits |
 |---|---|---|---|
-| **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund` | 10 calls/caller/UTC day |
-| **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All six tools on credits. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
-| **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | All six tools, priced per call | €1,000 per payer per day |
-| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six tools on credits | €5 / €20 / €50 / €100 |
+| **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund`, `get_changes` (7-day window), `check_lp_coverage` | 10 calls/caller/UTC day |
+| **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All six fund tools on credits. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
+| **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | All six fund tools, priced per call | €1,000 per payer per day |
+| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six fund tools on credits | €5 / €20 / €50 / €100 |
 | **Linked** *(optional)* | `POST /_api/agent/link` with an email | Everything above, plus invoices and a dashboard | Grants no extra access |
 
 Per-call prices are not repeated here, because a typed price drifts. Each tool states its own in its description, and [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools) is generated from the live tool definitions.
@@ -117,7 +117,7 @@ No payment, no approval, no human: an agent registers and makes a useful call in
 
 `operator_url` and `contact` are optional free text and are never verified. Send an `email` and it is ignored with a note rather than rejected, so callers written against the old contract keep working.
 
-The 25 credits work on **all six tools**. Free tools cost 1 credit (€0.01); the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools).
+The 25 credits work on **all six fund tools**. Free tools cost 1 credit (€0.01); the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools). `check_lp_coverage` never costs a credit, and `search_lps` is never sold on credits — see [LP Radar over MCP](#lp-radar-over-mcp).
 
 #### Why there is no email step
 
@@ -178,7 +178,7 @@ Everything structural passes, including the mainnet token and recipient addresse
 
 Out of credits used to surface as JSON-RPC error `-32001`. It is now an HTTP `402` — update any handler matching the old code.
 
-If you would rather not pay at all, the fallback is real: drop the `X-API-Key` header and `search_funds` and `get_fund` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
+If you would rather not pay at all, the fallback is real: drop the `X-API-Key` header and `search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
 
 #### Linking an email (optional)
 
@@ -411,7 +411,7 @@ These tiers cover the MCP server and API only.
 | Tier | Price | API Calls | Tools |
 |---|---|---|---|
 | Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six fund tools, no account needed |
-| Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund` |
+| Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund`, `get_changes` (7 days back), `check_lp_coverage` |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Starter | €9/mo | 1,000/mo | `search_funds`, `get_fund`, `get_changes` |
 | Pro | <!--fm:pro_price-->€29/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals |

@@ -5,7 +5,7 @@ Auth: `X-API-Key: <key>`, or `Authorization: Bearer <key>`, or nothing at all on
 
 ## No API key at all
 
-`search_funds` and `get_fund` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day with no credential. Start here.
+`search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them with no credential. Keyless `get_changes` looks back at most 7 days. Start here.
 
 ```bash
 curl -s https://fundmomentum.vc/_api/mcp \
@@ -13,7 +13,7 @@ curl -s https://fundmomentum.vc/_api/mcp \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"stage":"seed","country":"Germany","limit":5}},"id":1}'
 ```
 
-Once you hit the daily cap, a free key raises it to <!--fm:free_calls-->100<!--/fm:free_calls--> calls/month and unlocks `get_changes`. Humans subscribe and copy a key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing); [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) has the plans and client setup. Agents can self-register:
+Once you hit the daily cap, a free key raises it to <!--fm:free_calls-->100<!--/fm:free_calls--> calls/month and widens the `get_changes` window to 30 days. Humans subscribe and copy a key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing); [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) has the plans and client setup. Agents can self-register:
 
 ```bash
 curl -s https://fundmomentum.vc/_api/agent/register \
@@ -23,7 +23,7 @@ curl -s https://fundmomentum.vc/_api/agent/register \
 
 There is **no `email` field**. That returns `201` with `"api_key"`, `"agent_id"` and
 `"agent_credits": 25` — no payment, no approval, no human — so an agent can register and make a
-useful call in the same second. The credits work on all six tools. The key is returned once; only a
+useful call in the same second. The credits work on all six fund tools. The key is returned once; only a
 hash is stored.
 
 New keys are capped at 3 per IP and 10 per /24 per UTC day (`429` beyond that, naming both escape
@@ -55,7 +55,7 @@ not auto-refunded, so a `not_found` on a paid call comes back with `paid: true` 
 instead, and carry no receipt.
 
 The 402 payload also names the free fallback: drop the `X-API-Key` header and the keyless allowance
-still answers `search_funds` and `get_fund`.
+still answers `search_funds`, `get_fund`, `get_changes` and `check_lp_coverage`.
 
 ## Python — Search Funds
 
@@ -218,6 +218,48 @@ For a scheduled workflow, poll `get_changes` — not `search_funds`.
 6. IF Node: stop when `unchanged` is true
 7. Store `next_since` and `etag` for the next run, then loop over `changes`
 
+## Python — LP coverage and LP Radar
+
+Check coverage first. `check_lp_coverage` is free, works with no key and returns counts only —
+never a name or website. Counts under 5 come back as the string `"<5"` and zero as `"none"`, so do
+not treat them as integers.
+
+```python
+cov = mcp_call("check_lp_coverage", {"country": "Germany", "lp_type": "Family office / Holding"})
+print(f"{cov['matched']} of {cov['of_total_disclosed']} disclosed LPs match; "
+      f"{cov['backs_emerging_managers']} have backed emerging managers")
+# {"matched": "<5", "of_total_disclosed": 608, "backs_emerging_managers": "<5",
+#  "undisclosed_hq_count": "<5", "filters_applied": {...}, "next_step": "https://fundmomentum.vc/lp-radar"}
+```
+
+`lp_type` is one of the values listed in the tool's input schema (`Pension fund`,
+`Family office / Holding`, `Fund-of-Funds`, …); common spellings such as `family office` are
+normalised. `country` is spelled out in full; two-letter ISO codes are accepted too.
+
+`search_lps` returns the records themselves, up to 25 per call, for the key of an account holding
+[LP Radar](https://fundmomentum.vc/lp-radar) (€199/month or €1,499/year). Agent keys cannot hold it,
+and it is never sold per call, on credits or over MPP. Without it the call fails with HTTP `403` and
+JSON-RPC `-32001` — no payment challenge, nothing charged — and `error.data` still carries the
+coverage for your filters:
+
+```python
+r = requests.post(BASE_URL, headers={"X-API-Key": API_KEY, "Content-Type": "application/json"}, json={
+    "jsonrpc": "2.0", "method": "tools/call", "id": 1,
+    "params": {"name": "search_lps", "arguments": {"country": "Germany", "limit": 25}},
+})
+body = r.json()
+if "error" in body and body["error"].get("data", {}).get("error_reason") == "lp_access_required":
+    data = body["error"]["data"]
+    print(f"{data['coverage']['matched']} LPs match — LP Radar needed: {data['lp_radar']['url']}")
+else:
+    lps = json.loads(body["result"]["content"][0]["text"])
+```
+
+The record fields (name, slug, LP type, HQ country and city, geographic focus, website,
+emerging-manager backing, verified flag) are described in the tool's own definition on the
+[server card](https://fundmomentum.vc/_api/well-known/mcp/server-card). `website` is `null` when
+none is on record, never omitted.
+
 ## Check Call Usage
 
 Quota lives in the `_meta` block of every response — note the leading underscore. Its **shape
@@ -249,7 +291,8 @@ else:                                           # keyless trial or a monthly tie
 ```
 
 The matching failure modes are HTTP status codes: `402` when an agent is out of credits, `429`
-when a monthly quota is exhausted, `401` for an unrecognised key.
+when a monthly quota is exhausted, `401` for an unrecognised key, `403` (`lp_access_required`) for
+`search_lps` without LP Radar.
 
 ## Tool reference
 
@@ -261,8 +304,10 @@ when a monthly quota is exhausted, `401` for an unrecognised key.
 | `get_fund_signals` | Get fund investor signals | Pro | `slug` (required) |
 | `get_gp_profile` | Get General Partner profiles | Pro | `fund_slug` (required), `gp_name` |
 | `match_startup` | Match startup to funds | Pro | `description` (required, max 500 chars), `stage`, `country` |
+| `check_lp_coverage` | Check LP coverage | Free, keyless | `country`, `lp_type` |
+| `search_lps` | Search LP records | LP Radar | `country`, `lp_type`, `limit` (1–25, default 10; above 25 is rejected) |
 
-All six are `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`,
+All eight are `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`,
 `openWorldHint: false` — safe for an agent to call unattended.
 
 The authoritative, always-current version of this table is the

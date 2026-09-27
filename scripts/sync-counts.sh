@@ -46,7 +46,9 @@ card="$(curl -fsSL --max-time 30 -H 'Accept: application/json' "$CARD_URL")" || 
 }
 
 FUNDS="$(printf '%s' "$card"        | jq -er '.counts.funds')"
-LPS="$(printf '%s' "$card"          | jq -er '.counts.limited_partners')"
+# The card renamed counts.limited_partners to counts.disclosed_lps in v1.4.0.
+# Both are accepted so the script keeps working against an older card too.
+LPS="$(printf '%s' "$card"          | jq -er '.counts.disclosed_lps // .counts.limited_partners')"
 VERSION="$(printf '%s' "$card"      | jq -er '.serverInfo.version')"
 KEYLESS="$(printf '%s' "$card"      | jq -er '.authentication.keyless_trial.calls_per_caller_per_utc_day')"
 # The free monthly allowance moved when the card was restructured for v1.3.0:

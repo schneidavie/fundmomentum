@@ -2,9 +2,9 @@
 
 Use these prompts in Claude Desktop after connecting Fund Momentum.
 
-You do not need an API key to start. `search_funds` and `get_fund` — which cover
-everything in Investor Research below — answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->
-calls per day with no credential at all. A free key at
+You do not need an API key to start. `search_funds`, `get_fund`, `get_changes` and
+`check_lp_coverage` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with
+no credential at all. That covers everything in Investor Research and Staying Current below. A free key at
 [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) raises that to
 <!--fm:free_calls-->100<!--/fm:free_calls--> calls/month.
 
@@ -59,7 +59,7 @@ Rather than re-running the same search every week, ask for what actually moved.
 Claude will use `get_changes` for these.
 
 ```
-What changed in the Fund Momentum database since last Monday?
+Which funds did Fund Momentum add or update since last Monday?
 ```
 
 ```

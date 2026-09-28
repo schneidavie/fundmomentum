@@ -102,7 +102,7 @@ FREE_CALLS_H="$(group "$FREE_CALLS")"
 
 # server.json has no room for HTML markers, so its description is rendered
 # from this template. This is the one place to edit that sentence.
-DESCRIPTION_TEMPLATE="__FUNDS__ actively deploying VC funds and __LPS__ disclosed LPs, with live investor signals"
+DESCRIPTION_TEMPLATE="Agentic fundraising intelligence: __FUNDS__ tracked VC funds and __LPS__ disclosed LPs over MCP"
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT

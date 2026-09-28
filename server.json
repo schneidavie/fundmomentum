@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.schneidavie/fund-momentum",
   "title": "Fund Momentum",
-  "description": "1100+ actively deploying VC funds and 608 disclosed LPs, with live investor signals",
+  "description": "Agentic fundraising intelligence: 1100+ tracked VC funds and 608 disclosed LPs over MCP",
   "version": "1.4.1",
   "repository": {
     "url": "https://github.com/schneidavie/fundmomentum",
@@ -15,7 +15,7 @@
       "headers": [
         {
           "name": "X-API-Key",
-          "description": "API key. Optional: search_funds and get_fund answer 10 calls per caller per UTC day with no key at all. No registration or email is required. Agents self-register at https://fundmomentum.vc/_api/agent/register with just an agent_name and get a key plus 25 free credits usable on all six fund tools, or skip keys entirely and pay per call over MPP (Tempo USDC) when a paid tool answers HTTP 402. check_lp_coverage is free and keyless; LP records (search_lps) need an LP Radar subscription at https://fundmomentum.vc/lp-radar and are never sold per call. A free human key (100 calls/month) is at https://fundmomentum.vc/pricing.",
+          "description": "API key. Optional: search_funds, get_fund, get_changes (7-day window) and check_lp_coverage answer 10 calls per caller per UTC day with no key at all. No registration or email is required. Agents self-register at https://fundmomentum.vc/_api/agent/register with just an agent_name and get a key plus 25 free credits usable on all six fund tools, or skip keys entirely and pay per call over MPP (Tempo USDC) when a paid tool answers HTTP 402. check_lp_coverage is free and keyless; LP records (search_lps) need an LP Radar subscription at https://fundmomentum.vc/lp-radar and are never sold per call. A free human key (100 calls/month) is at https://fundmomentum.vc/pricing.",
           "isRequired": false,
           "isSecret": true
         }

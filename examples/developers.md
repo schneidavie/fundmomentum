@@ -22,7 +22,7 @@ curl -s https://fundmomentum.vc/_api/agent/register \
 ```
 
 There is **no `email` field**. That returns `201` with `"api_key"`, `"agent_id"` and
-`"agent_credits": 25` — no payment, no approval, no human — so an agent can register and make a
+`"agent_credits": 25` with no payment, no approval and no human, so an agent can register and make a
 useful call in the same second. The credits work on all six fund tools. The key is returned once; only a
 hash is stored.
 
@@ -31,7 +31,7 @@ routes).
 
 Beyond the free 25, calls cost 1 credit (€0.01) on the free tools, and each Pro tool states its price in
 [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools); credits never
-expire. An exhausted balance — or a Pro tool called with **no key at all** — answers **HTTP `402`**
+expire. An exhausted balance, or a Pro tool called with **no key at all**, answers **HTTP `402`**
 (previously JSON-RPC `-32001`) carrying an [MPP](https://mpp.dev) challenge payable in USDC on Tempo mainnet (chain `4217`). Pay it,
 retry, and you get the data plus a receipt, with no account anywhere in the flow:
 
@@ -51,13 +51,13 @@ receipt is mirrored into `result._meta.payment_receipt` so an MCP client need no
 
 **A paid call that then fails still returns its receipt.** Inline payments settle on-chain and are
 not auto-refunded, so a `not_found` on a paid call comes back with `paid: true` and the
-`Payment-Receipt` header — you are never charged without proof. Credit-funded calls are refunded
+`Payment-Receipt` header. You are never charged without proof. Credit-funded calls are refunded
 instead, and carry no receipt.
 
 The 402 payload also names the free fallback: drop the `X-API-Key` header and the keyless allowance
 still answers `search_funds`, `get_fund`, `get_changes` and `check_lp_coverage`.
 
-## Python — Search Funds
+## Python: Search Funds
 
 ```python
 import requests
@@ -91,12 +91,12 @@ for fund in funds:
     print(f"{fund['name']} | {fund['country']} | {fund['fundingStage']}")
 ```
 
-`stage` and `industry` are enums — lowercase with underscores (`pre_seed`, `series_a`, `ai_ml`,
+`stage` and `industry` are enums: lowercase with underscores (`pre_seed`, `series_a`, `ai_ml`,
 `climate_sustainability`). Common spellings like `Pre-Seed` or `AI/ML` are normalised. `country` is
 spelled out in full (`United States`), not an ISO code. `slug` values are not derivable from a fund's
 display name, so call `search_funds` before `get_fund` rather than guessing.
 
-## Python — Incremental sync with get_changes
+## Python: Incremental sync with get_changes
 
 Do not re-run `search_funds` on a schedule. `get_changes` returns only what moved, and an unchanged
 window costs a few bytes because the previous `etag` goes back as `if_none_match`.
@@ -141,7 +141,7 @@ Each change row carries `slug`, `name`, `country`, `fundingStage`, `fundSize`, `
 `changed_at`, `confidence` and `url`. Fetch the full record with `get_fund(slug)` only for the rows
 you actually care about.
 
-## HTTP — Incremental sync without MCP
+## HTTP: Incremental sync without MCP
 
 The same data is on `GET /_api/changes` as an ordinary conditional request. Keep the `ETag` response
 header, send it back as `If-None-Match`, and an unchanged window answers `304 Not Modified` with an
@@ -153,7 +153,7 @@ curl -s -D - -o /dev/null \
   "https://fundmomentum.vc/_api/changes?since=2026-08-20T00:00:00Z&limit=50"
 ```
 
-## Python — Match Startup
+## Python: Match Startup
 
 ```python
 matches = mcp_call("match_startup", {
@@ -165,7 +165,7 @@ for m in matches.get("matches", []):
     print(f"{m['match_score']}/100 — {m['name']}: {m['match_reason']}")
 ```
 
-## JavaScript — Get Fund Signals
+## JavaScript: Get Fund Signals
 
 ```javascript
 async function getFundSignals(slug) {
@@ -193,7 +193,7 @@ console.log(signals.founderDos);
 
 ## n8n Workflow
 
-For a scheduled workflow, poll `get_changes` — not `search_funds`.
+For a scheduled workflow, poll `get_changes`, not `search_funds`.
 
 1. Schedule Trigger Node
 2. HTTP Request Node (POST `https://fundmomentum.vc/_api/mcp`)
@@ -218,9 +218,9 @@ For a scheduled workflow, poll `get_changes` — not `search_funds`.
 6. IF Node: stop when `unchanged` is true
 7. Store `next_since` and `etag` for the next run, then loop over `changes`
 
-## Python — LP coverage and LP Radar
+## Python: LP coverage and LP Radar
 
-Check coverage first. `check_lp_coverage` is free, works with no key and returns counts only —
+Check coverage first. `check_lp_coverage` is free, works with no key and returns counts only:
 never a name or website. Counts under 5 come back as the string `"<5"` and zero as `"none"`, so do
 not treat them as integers.
 
@@ -239,7 +239,7 @@ normalised. `country` is spelled out in full; two-letter ISO codes are accepted 
 `search_lps` returns the records themselves, up to 25 per call, for the key of an account holding
 [LP Radar](https://fundmomentum.vc/lp-radar) (€199/month or €1,499/year). Agent keys cannot hold it,
 and it is never sold per call, on credits or over MPP. Without it the call fails with HTTP `403` and
-JSON-RPC `-32001` — no payment challenge, nothing charged — and `error.data` still carries the
+JSON-RPC `-32001` (no payment challenge, nothing charged), and `error.data` still carries the
 coverage for your filters:
 
 ```python
@@ -262,7 +262,7 @@ none is on record, never omitted.
 
 ## Check Call Usage
 
-Quota lives in the `_meta` block of every response — note the leading underscore. Its **shape
+Quota lives in the `_meta` block of every response. Note the leading underscore. Its **shape
 depends on how you authenticated**, so read it with `.get()` rather than indexing:
 
 | Auth | Keys in `_meta` |
@@ -308,7 +308,7 @@ when a monthly quota is exhausted, `401` for an unrecognised key, `403` (`lp_acc
 | `search_lps` | Search LP records | LP Radar | `country`, `lp_type`, `limit` (1–25, default 10; above 25 is rejected) |
 
 All eight are `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`,
-`openWorldHint: false` — safe for an agent to call unattended.
+`openWorldHint: false`, so they are safe for an agent to call unattended.
 
 The authoritative, always-current version of this table is the
 [server card](https://fundmomentum.vc/_api/well-known/mcp/server-card).

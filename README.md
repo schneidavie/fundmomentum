@@ -1,10 +1,10 @@
-# Fund Momentum — Live VC Intelligence Platform
+# Fund Momentum: the agentic pulse of Venture Capital
 
-> <!--fm:funds-->1100+<!--/fm:funds--> actively deploying VC funds · <!--fm:lps-->608<!--/fm:lps--> disclosed LPs · GP Signal Profiles · FM15 Ranking · MCP Server for AI agents
+> Agentic fundraising intelligence for founders and emerging fund managers · <!--fm:funds-->1100+<!--/fm:funds--> tracked VC funds · <!--fm:lps-->608<!--/fm:lps--> disclosed LPs · LP Radar · Remote MCP server with pay-per-call
 
 **[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [LP Radar](https://fundmomentum.vc/lp-radar) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
 
-## Try it right now — no key, no signup
+## Try it now: no key, no signup
 
 `search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them with **no credential at all**. Paste this:
 
@@ -22,16 +22,16 @@ Real data, no card, no email address. Quota headers, the free key and the other 
 
 ## What is Fund Momentum?
 
-Fund Momentum is a live VC intelligence platform built for founders raising capital. We track **<!--fm:funds-->1100+<!--/fm:funds--> actively deploying VC funds** — all raised capital since September 2024 — plus **<!--fm:lps-->608<!--/fm:lps--> disclosed institutional LPs**, with weekly-updated GP Signal Profiles that go beyond fund basics.
+Fund Momentum is agentic fundraising intelligence for founders and emerging fund managers. It tracks **<!--fm:funds-->1100+<!--/fm:funds--> VC funds**, every one of which raised capital since September 2024. Around 300 fund closings are covered as primary research, not scraped rows. **LP Radar** maps **<!--fm:lps-->608<!--/fm:lps--> disclosed LPs** and shows which of them back Fund I and II managers.
 
-**The problem:** Most VC databases are graveyard tours. Funds that stopped deploying 18 months ago, GPs who moved on, theses that haven't been updated since the fund closed. Founders pitch 40 investors and discover half of them aren't writing checks anymore.
+Your agent queries it over a remote MCP server. A founder asks Claude or ChatGPT who backs their round. An autonomous agent registers itself and pays per call.
 
-**The solution:** Fund Momentum only lists funds that raised capital since September 2024. Every fund has verified deployment signals, not scraped summaries, and every fund profile carries a provenance block naming its source, last verification date and confidence.
+**Why it exists:** a fund list ages fast. Funds stop deploying, GPs move on and theses drift. A fund that just closed has capital to deploy, so that is where Fund Momentum starts. Every fund profile carries a provenance block naming its source, the date it was last checked and a confidence level.
 
 > The counts above are generated, not typed. [`scripts/sync-counts.sh`](scripts/sync-counts.sh)
 > reads a live `SELECT COUNT(*)` from the [server card](https://fundmomentum.vc/_api/well-known/mcp/server-card)
 > and rounds the fund count down, so the published figure is always an
-> understatement rather than a stale boast — see [Keeping the numbers honest](#keeping-the-numbers-honest).
+> understatement rather than a stale boast. See [Keeping the numbers honest](#keeping-the-numbers-honest).
 
 ---
 
@@ -41,7 +41,7 @@ Connect Claude, Cursor, or any MCP-compatible AI directly to Fund Momentum.
 
 ### The keyless trial
 
-`search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer **<!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them, with no credential at all**. No signup, no card, no key. This is the front door — see real data before you decide anything. The curl at the top of this README is a complete, working call.
+`search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer **<!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them, with no credential at all**. No signup, no card, no key. This is the front door: see real data before you decide anything. The curl at the top of this README is a complete, working call.
 
 Every response carries a `_meta` block telling you where you stand:
 
@@ -55,7 +55,7 @@ Every response carries a `_meta` block telling you where you stand:
 }
 ```
 
-The keyless trial covers those four tools. Keyless `get_changes` looks back at most **7 days** and answers `since_floor_applied: true` when it shortens your window; a free key widens that to 30 days — see [Incremental sync](#incremental-sync--use-get_changes-not-a-polling-loop).
+The keyless trial covers those four tools. Keyless `get_changes` looks back at most **7 days** and answers `since_floor_applied: true` when it shortens your window; a free key widens that to 30 days. See [Incremental sync](#incremental-sync-use-get_changes-not-a-polling-loop).
 
 ### Access without registration
 
@@ -113,11 +113,11 @@ curl -s https://fundmomentum.vc/_api/agent/register \
 }
 ```
 
-No payment, no approval, no human: an agent registers and makes a useful call in the same second. The key is returned **once** — only a SHA-256 hash is stored, so a lost key cannot be recovered.
+No payment, no approval, no human: an agent registers and makes a useful call in the same second. The key is returned **once**. Only a SHA-256 hash is stored, so a lost key cannot be recovered.
 
 `operator_url` and `contact` are optional free text and are never verified. Send an `email` and it is ignored with a note rather than rejected, so callers written against the old contract keep working.
 
-The 25 credits work on **all six fund tools**. Free tools cost 1 credit (€0.01); the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools). `check_lp_coverage` never costs a credit, and `search_lps` is never sold on credits — see [LP Radar over MCP](#lp-radar-over-mcp).
+The 25 credits work on **all six fund tools**. Free tools cost 1 credit (€0.01); the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools). `check_lp_coverage` never costs a credit, and `search_lps` is never sold on credits. See [LP Radar over MCP](#lp-radar-over-mcp).
 
 #### Why there is no email step
 
@@ -125,7 +125,7 @@ An earlier release gated the Pro tools behind a clicked verification link. That 
 
 Most agents cannot read email, so it put a human step inside a flow that promises "register and call in the same second". It shared the `users` table with the human Google sign-up, so a person who had signed in with Google and then called this endpoint got back `status: "existing"`, a **null** API key, zero credits, and a response claiming all six tools were available. And it bought almost no protection anyway: throwaway addresses are free.
 
-**Access control is pricing.** Pro data costs money per call, always, with no free path. Identity is the API key — or, for inline payments, the paying wallet.
+**Access control is pricing.** Pro data costs money per call, always, with no free path. Identity is the API key or, for inline payments, the paying wallet.
 
 New keys are capped at **3 per IP** and **10 per /24** per UTC day. Over that, registration answers `429` naming both escape routes rather than leaving you stuck: the keyless tools, and inline payment, neither of which needs a key.
 
@@ -165,7 +165,7 @@ Prices are quoted in EUR and settle in USDC, converted at the ECB daily referenc
 
 The challenge arrives on a standard `WWW-Authenticate: Payment ...` header, and a paid response carries a `Payment-Receipt` header with the on-chain reference.
 
-**Over MCP the shape is different, because it has to be.** An MCP client ignores the body of a `402` — it decides on the status line. So a caller that speaks MCP over Streamable HTTP (an `mcp-method` header, or an `Accept` listing both `application/json` and `text/event-stream`) gets HTTP `200` carrying a JSON-RPC error instead: `error.code` `-32042`, the challenges in `error.data.challenges`, and the request `id` echoed back. Pay and retry with the credential in `params._meta["org.paymentauth/credential"]`; the receipt comes back in `result._meta["org.paymentauth/receipt"]`. A credential that does not verify answers `-32043`, never `-32042` — you are not asked to pay twice.
+**Over MCP the shape is different, because it has to be.** An MCP client ignores the body of a `402`: it decides on the status line. So a caller that speaks MCP over Streamable HTTP (an `mcp-method` header, or an `Accept` listing both `application/json` and `text/event-stream`) gets HTTP `200` carrying a JSON-RPC error instead: `error.code` `-32042`, the challenges in `error.data.challenges`, and the request `id` echoed back. Pay and retry with the credential in `params._meta["org.paymentauth/credential"]`; the receipt comes back in `result._meta["org.paymentauth/receipt"]`. A credential that does not verify answers `-32043`, never `-32042`, so you are not asked to pay twice.
 
 Checked by the protocol's own validator against this server:
 
@@ -176,13 +176,13 @@ Summary: 15 passed, 0 failed, 1 skipped
 
 Everything structural passes, including the mainnet token and recipient addresses. The one skip is the payment step itself: the validator provisions a funded wallet on testnet only, and mainnet has no faucet. That step passes on the identical testnet deployment, with a real on-chain payment and a verified receipt (25/25).
 
-Out of credits used to surface as JSON-RPC error `-32001`. It is now an HTTP `402` — update any handler matching the old code.
+Out of credits used to surface as JSON-RPC error `-32001`. It is now an HTTP `402`. Update any handler matching the old code.
 
 If you would rather not pay at all, the fallback is real: drop the `X-API-Key` header and `search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
 
 #### Linking an email (optional)
 
-`POST /_api/agent/link` with `{"email":"..."}` attaches a key to a human account for **invoices and a dashboard only**. It grants no access and changes no credits. An address already verified — a Google sign-in, say — links immediately and no mail is sent. This endpoint and `/_api/agent/link/resend` (3/day) are the only places the agent path ever sends email.
+`POST /_api/agent/link` with `{"email":"..."}` attaches a key to a human account for **invoices and a dashboard only**. It grants no access and changes no credits. An address already verified, a Google sign-in say, links immediately and no mail is sent. This endpoint and `/_api/agent/link/resend` (3/day) are the only places the agent path ever sends email.
 
 ### Timeouts and retries
 
@@ -196,7 +196,7 @@ The boundary is derived from the payer, the tool and the canonical arguments, so
 
 An agent does not need this README to find that out: every challenge carries the same guarantee in `error.data.idempotency`, with `guaranteed`, `meta_key`, `meta_key_optional` and a `note`.
 
-Set your timeout generously for `match_startup`. Three to ten seconds is normal, not a hang: it reasons over the whole database. The retry guard is a safety net, not a substitute for a sensible timeout.
+Set your timeout generously for `match_startup`. Three to ten seconds is normal, not a hang: it reasons over every tracked fund. The retry guard is a safety net, not a substitute for a sensible timeout.
 
 | Response | Meaning | Were you charged? |
 |---|---|---|
@@ -235,7 +235,7 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 "What is Speedinvest bullish on right now?"
 "Match my startup: AI-native fintech, seed stage, raising €3M, Vienna"
 "What should I know before pitching Point Nine Capital?"
-"What changed in the fund database since last Monday?"
+"Which funds were added or updated since last Monday?"
 ```
 
 ### Available Tools (8)
@@ -244,7 +244,7 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 |---|---|---|---|
 | `search_funds` | Search VC funds | Free | Search actively deploying funds by stage, country, industry |
 | `get_fund` | Get fund profile | Free | Full fund profile with GP intelligence and a provenance block |
-| `get_changes` | Get changed funds since | Free | Only the funds that changed since a timestamp — for incremental sync |
+| `get_changes` | Get changed funds since | Free | Only the funds that changed since a timestamp, for incremental sync |
 | `get_fund_signals` | Get fund investor signals | Pro | Bullish/contrarian signals, deployment status, thesis tags |
 | `get_gp_profile` | Get General Partner profiles | Pro | Individual GP profiles and backgrounds |
 | `match_startup` | Match startup to funds | Pro | AI-powered fund matching based on startup description |
@@ -253,7 +253,7 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 
 All eight tools are read-only and non-destructive, and advertise it:
 `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`, `openWorldHint: false`.
-An agent can call any of them without a confirmation prompt — nothing here mutates state.
+An agent can call any of them without a confirmation prompt. Nothing here mutates state.
 
 `search_funds` and `get_fund` were previously documented as **Starter**. They are **Free**.
 
@@ -267,7 +267,7 @@ LP data is a separate product with its own entitlement, not a rung above Pro.
 - **Buying it.** Self-serve card checkout on [fundmomentum.vc/lp-radar](https://fundmomentum.vc/lp-radar), no account needed beforehand. Access and an API key switch on right after payment under the checkout email; a new account is created if none exists and a welcome email carries the setup link. Manage or cancel in the Stripe billing portal.
 - **What stays in the web app.** Commitment history, fund sizes, dates and allocation patterns are not served over MCP. There is no LP export on any tier.
 
-### Incremental sync — use `get_changes`, not a polling loop
+### Incremental sync: use `get_changes`, not a polling loop
 
 **Do not re-run `search_funds` on a schedule.** `get_changes` exists for exactly that job and is dramatically cheaper.
 
@@ -276,7 +276,7 @@ The loop:
 1. Call `get_changes` with a `since` timestamp. Omit `since` to get the last 7 days.
 2. Keep the `next_since` and `etag` from the response.
 3. Next poll, send `next_since` as `since` and the previous `etag` as `if_none_match`.
-4. If nothing changed in that window, the reply is `unchanged: true` with zero rows — a few bytes instead of a full page.
+4. If nothing changed in that window, the reply is `unchanged: true` with zero rows: a few bytes instead of a full page.
 
 ```json
 {
@@ -325,14 +325,14 @@ A changed window answers with the cursor fields plus the rows:
 
 When `has_more` is `true`, call again with the returned `next_since` before sleeping.
 
-**Plain HTTP alternative.** The same data is on `GET /_api/changes`, with the cursor as an ordinary conditional request — keep the `ETag` response header and send it back as `If-None-Match`. An unchanged window answers `304 Not Modified` with an empty body.
+**Plain HTTP alternative.** The same data is on `GET /_api/changes`, with the cursor as an ordinary conditional request. Keep the `ETag` response header and send it back as `If-None-Match`. An unchanged window answers `304 Not Modified` with an empty body.
 
 ### API Reference
 
 **Endpoint:** `POST https://fundmomentum.vc/_api/mcp`
 **Protocol:** JSON-RPC 2.0 over streamable HTTP
 **Server card:** [`/_api/well-known/mcp/server-card`](https://fundmomentum.vc/_api/well-known/mcp/server-card)
-**Auth:** `X-API-Key` header, or `Authorization: Bearer <key>` — or nothing at all on the keyless trial
+**Auth:** `X-API-Key` header, or `Authorization: Bearer <key>`, or nothing at all on the keyless trial
 
 ```python
 import requests
@@ -375,19 +375,19 @@ More in [examples/developers.md](examples/developers.md) and [examples/founders.
 
 Beyond fund size and portfolio, Fund Momentum extracts how each GP actually thinks:
 
-- **Thesis Tags** — specific investment focus areas
-- **Bullish Signals** — what they're excited about right now
-- **Contrarian Signals** — where they're betting against the consensus
-- **Deployment Score** — how actively they're writing checks
-- **Founder Dos & Don'ts** — how to pitch this specific fund
+- **Thesis Tags:** specific investment focus areas
+- **Bullish Signals:** what they're excited about right now
+- **Contrarian Signals:** where they're betting against the consensus
+- **Deployment Score:** how actively they're writing checks
+- **Founder Dos & Don'ts:** how to pitch this specific fund
 
 Built from primary research: GP blog posts, fund websites, LinkedIn, published interviews. Not scraped summaries.
 
 ---
 
-## FM15 — Founder Alignment Ranking
+## FM15: Founder Alignment Ranking
 
-The FM15 is our semi-annual ranking of the 15 best **emerging** VC managers, scored on four dimensions:
+The FM15 is our semi-annual ranking of 15 **emerging** VC managers, scored on four dimensions:
 
 | Dimension | What we measure |
 |---|---|
@@ -419,7 +419,7 @@ These tiers cover the MCP server and API only.
 | **LP Radar** | **€199/mo or €1,499/yr** | Unlimited | `search_lps` (`check_lp_coverage` is free on every row). Separate subscription, [card checkout](https://fundmomentum.vc/lp-radar) |
 
 The keyless, Free and Pro rows are generated from the server card. The Starter
-and Enterprise rows are still typed by hand — the card exposes no tier block for
+and Enterprise rows are still typed by hand. The card exposes no tier block for
 them, so treat [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) as
 authoritative if those two ever disagree with this table.
 
@@ -434,9 +434,9 @@ Founder and investor-signal plans for the platform itself are priced separately
 
 Fund and LP counts, the keyless and Free allowances and the Pro price in this README are **generated, not typed**. [`scripts/sync-counts.sh`](scripts/sync-counts.sh) reads them from the live server card and rewrites the values between the `<!--fm:*-->` marker pairs, plus `version` and `description` in [`server.json`](server.json).
 
-Two numbers are **not** covered: the **Starter** and **Enterprise** rows in the pricing table. The server card exposes `authentication.free_tier` and a Pro price via `tools[].price`, but no tier block, so there is nothing to read them from. They stay hand-typed until the card grows one — see the note at the top of [`scripts/sync-counts.sh`](scripts/sync-counts.sh) for how to wire them up when it does.
+Two numbers are **not** covered: the **Starter** and **Enterprise** rows in the pricing table. The server card exposes `authentication.free_tier` and a Pro price via `tools[].price`, but no tier block, so there is nothing to read them from. They stay hand-typed until the card grows one. See the note at the top of [`scripts/sync-counts.sh`](scripts/sync-counts.sh) for how to wire them up when it does.
 
-The fund count is published rounded down to the nearest hundred — `1000+` today — matching the site's own copy and the server card's note that marketing figures round the live count down. It still moves on its own as the database grows; it is simply never ahead of the truth.
+The fund count is published rounded down to the nearest hundred (`1000+` today), matching the site's own copy and the server card's note that marketing figures round the live count down. It still moves on its own as the index grows; it is simply never ahead of the truth.
 
 ```bash
 scripts/sync-counts.sh

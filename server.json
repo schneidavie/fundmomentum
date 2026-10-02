@@ -3,7 +3,7 @@
   "name": "io.github.schneidavie/fund-momentum",
   "title": "Fund Momentum",
   "description": "Agentic fundraising intelligence: 1100+ tracked VC funds and 608 disclosed LPs over MCP",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "repository": {
     "url": "https://github.com/schneidavie/fundmomentum",
     "source": "github"

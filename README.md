@@ -202,10 +202,14 @@ Set your timeout generously for `match_startup`. Three to ten seconds is normal,
 |---|---|---|
 | `-32042` | Payment required. Challenge in `error.data.challenges` | No |
 | `-32043` | Credential failed verification | **Possibly yes.** Send us the transaction hash and we settle it by hand |
-| `-32000` with `error.data.error_reason: "not_found"` and `checked_before_payment: true` | Slug does not exist, or that fund has no published signals | No, never |
+| `-32000` with `error.data.error_reason: "not_found"` and `checked_before_payment: true` | Slug does not exist, matches several funds (they are listed, none is picked), or that fund has no published signals | No, never |
 | `-32602` with `error.data.error_reason: "invalid_args"` and `checked_before_payment: true` | Unknown, missing or malformed parameter | No, never |
 
 A wrong slug or a bad argument is refused **before** any payment. The message names the closest real slugs, or the parameters the tool accepts.
+
+**Near-miss names are resolved only when there is no doubt.** `get_fund`, `get_fund_signals` and `get_gp_profile` accept a name that differs from the real slug only in case or spacing, or that is a hyphen-boundary prefix of exactly one real slug (`speedinvest-africa` resolves to `speedinvest-africa-fund`). It is served and the result carries `resolved_from` (and `_meta.resolved_from` / `resolved_to`) so you learn the real slug. A name that matches several funds (`speedinvest`) is listed, never guessed; no match is `not_found`. Resolution runs before any payment challenge, so a wrong name is never charged. Calling `search_funds` first is still the right way to get a slug.
+
+**Refusal messages** (keyless limit, no key, wrong tier, payment required, LP Radar needed) open with the route for a person, a free key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing), and then the route for automated callers. Every structured field in `error.data` / `_meta` is unchanged; parse those, not the prose.
 
 What each tool costs is in its own description. [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools) is generated from the live tool definitions, so it is always the current price. The same section is on [fundmomentum.vc/mpp-wallet](https://fundmomentum.vc/mpp-wallet) as section 5.
 

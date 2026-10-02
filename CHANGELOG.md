@@ -2,6 +2,30 @@
 
 All notable changes to the Fund Momentum MCP server.
 
+## [1.5.0] — 2026-10-02
+
+Closing the gap for people who hit a refusal in a chat client, and fewer wasted
+calls on near-miss fund names.
+
+### Added
+
+- **Fund name resolution** in `get_fund`, `get_fund_signals` and
+  `get_gp_profile`. When the exact slug misses and exactly one fund is a close
+  match (case or spacing differences, or a hyphen-boundary prefix of one real
+  slug), it is served and the result carries `resolved_from` naming what was
+  requested. Several matches are listed and none is picked; no match is
+  `not_found`. Resolution happens before any payment challenge, so a wrong name
+  is never charged. Deliberately not fuzzy.
+
+### Changed
+
+- Refusal messages (`missing_key`, `anon_quota_exceeded`,
+  `anon_ip_ceiling_exceeded`, `insufficient_tier`, payment required,
+  `lp_access_required`) now open with the route for a person (a free key at
+  fundmomentum.vc/pricing) and give the agent route second. Everything in
+  `error.data` / `_meta` is unchanged, as are the facts each message carried
+  (what was not charged, coverage counts, the keyless fallback).
+
 ## [1.4.1] — 2026-09-28
 
 Documentation only; the server is unchanged. Tags the docs fixes listed under

@@ -2,6 +2,15 @@
 
 All notable changes to the Fund Momentum MCP server.
 
+## [Unreleased]
+
+### Changed
+
+- The person-facing sign-up line in refusal messages now also says where the
+  key goes once you have it: add `?api_key=<your key>` to the end of the
+  connector URL (Claude Code: `--header "X-API-Key: <your key>"`). Message text
+  only; `error.data` / `_meta` are unchanged. Already live on the hosted server.
+
 ## [1.5.0] — 2026-10-02
 
 Closing the gap for people who hit a refusal in a chat client, and fewer wasted

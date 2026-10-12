@@ -4,12 +4,47 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+## [1.6.0] — 2026-10-12
+
+Fund closes become a feed: pull them with `closed_since`, or have them pushed.
+
+### Added
+
+- **`last_close` in `get_fund`**: the latest close Fund Momentum covered for the
+  fund, with `type` (`launch`, `first`, `interim`, `final`,
+  `closed_unspecified`, `target_only`), `date`, `amount_m` and `currency` as the
+  fund stated them, `size_display`, `target_m`, `source_url` and `primary_url`.
+  `null` when no close of that fund has been covered.
+- **`closed_since` in `search_funds`** (`YYYY-MM-DD`): funds whose latest
+  covered close is on or after the date, newest first. Every `search_funds`
+  result now carries `lastCloseDate` and `lastCloseType`. A malformed date is
+  refused before any charge with `invalid_args`.
+- **`close_updated` in `get_changes`** (and `GET /_api/changes`): a new
+  `change_type` for funds whose current close changed, with a `last_close`
+  summary. Re-reading an unchanged close never produces one.
+- **`provenance.field_sources` in `get_fund`**: the source of fund size, stage
+  (with a confidence) and GP names, ranked claim > admin > blog > website > llm.
+- **Webhooks (Pro and Enterprise)**: `POST /_api/webhooks/subscribe`,
+  `GET /_api/webhooks/list`, `POST /_api/webhooks/test`,
+  `POST /_api/webhooks/delete`. Signed `close_updated` pushes (HMAC-SHA256 in
+  `FM-Signature`), filters by stage, country and industry, retries with backoff
+  for about two days, max 5 subscriptions per key. These are HTTPS endpoints next
+  to the MCP server; all eight MCP tools remain read-only.
+
 ### Changed
 
+- Fund sizes from a covered close are stored in the currency the fund
+  announced, never as a conversion. A launch or target never overwrites an
+  announced size, and a figure combined across several vehicles is never stored
+  as one fund's size.
+- GP names from automated extraction are kept only when they appear in a
+  fetched source with a first and last name; unsourced names are dropped.
+- `get_changes` ETags changed with this release, so a poller re-reads its
+  current window once.
 - The person-facing sign-up line in refusal messages now also says where the
   key goes once you have it: add `?api_key=<your key>` to the end of the
   connector URL (Claude Code: `--header "X-API-Key: <your key>"`). Message text
-  only; `error.data` / `_meta` are unchanged. Already live on the hosted server.
+  only; `error.data` / `_meta` are unchanged.
 
 ## [1.5.0] — 2026-10-02
 

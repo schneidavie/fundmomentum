@@ -294,11 +294,54 @@ The matching failure modes are HTTP status codes: `402` when an agent is out of 
 when a monthly quota is exhausted, `401` for an unrecognised key, `403` (`lp_access_required`) for
 `search_lps` without LP Radar.
 
+## Recent closes, pulled or pushed
+
+Which seed funds announced a close since 1 September, newest first:
+
+```python
+funds = mcp_call("search_funds", {"closed_since": "2026-09-01", "stage": "seed"})
+for f in funds["results"] if isinstance(funds, dict) else funds:
+    print(f["lastCloseDate"], f["lastCloseType"], f["name"], f["fundSize"])
+```
+
+`get_fund` then has the full `last_close` block (amount and currency as stated,
+source URLs). On a Pro key you can have every new close pushed instead:
+
+```python
+# Flask receiver for close_updated webhooks.
+import hmac, hashlib, os, time
+from flask import Flask, request, abort
+
+SECRET = os.environ["FM_WEBHOOK_SECRET"].encode()  # returned once by /_api/webhooks/subscribe
+app = Flask(__name__)
+
+def valid(raw: bytes, header: str, tolerance: int = 300) -> bool:
+    parts = dict(p.split("=", 1) for p in header.split(","))
+    t = int(parts.get("t", 0))
+    if abs(time.time() - t) > tolerance:
+        return False
+    expected = hmac.new(SECRET, f"{t}.".encode() + raw, hashlib.sha256).hexdigest()
+    return hmac.compare_digest(expected, parts.get("v1", ""))
+
+@app.post("/fm-hook")
+def fm_hook():
+    if not valid(request.get_data(), request.headers.get("FM-Signature", "")):
+        abort(400)
+    event = request.get_json()
+    if event["type"] == "close_updated":
+        fund, close = event["data"]["fund"], event["data"]["last_close"]
+        print(f'{fund["name"]}: {close["type"]} close {close["size_display"]} on {close["date"]}')
+    return "", 204  # answer within 10 seconds; de-duplicate on FM-Event-Id
+```
+
+Subscribe, test, list and delete are documented in the
+[README](../README.md#webhooks-pro-and-enterprise).
+
 ## Tool reference
 
 | Tool | Title | Tier | Key arguments |
 |---|---|---|---|
-| `search_funds` | Search VC funds | Free | `stage`, `country`, `industry`, `limit` (1–20, default 10) |
+| `search_funds` | Search VC funds | Free | `stage`, `country`, `industry`, `closed_since` (`YYYY-MM-DD`), `limit`, `offset` |
 | `get_fund` | Get fund profile | Free | `slug` (required) |
 | `get_changes` | Get changed funds since | Free | `since`, `if_none_match`, `limit` (1–200, default 50) |
 | `get_fund_signals` | Get fund investor signals | Pro | `slug` (required) |

@@ -246,16 +246,16 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 
 | Tool | Title | Tier | Description |
 |---|---|---|---|
-| `search_funds` | Search VC funds | Free | Search actively deploying funds by stage, country, industry |
-| `get_fund` | Get fund profile | Free | Full fund profile with GP intelligence and a provenance block |
-| `get_changes` | Get changed funds since | Free | Only the funds that changed since a timestamp, for incremental sync |
+| `search_funds` | Search VC funds | Free | Search actively deploying funds by stage, country, industry, or by recent close (`closed_since`) |
+| `get_fund` | Get fund profile | Free | Full fund profile with the latest covered close (`last_close`) and a provenance block with per-field sources |
+| `get_changes` | Get changed funds since | Free | Only the funds that changed since a timestamp (`created`, `signal_updated`, `close_updated`), for incremental sync |
 | `get_fund_signals` | Get fund investor signals | Pro | Bullish/contrarian signals, deployment status, thesis tags |
 | `get_gp_profile` | Get General Partner profiles | Pro | Individual GP profiles and backgrounds |
 | `match_startup` | Match startup to funds | Pro | AI-powered fund matching based on startup description |
 | `check_lp_coverage` | Check LP coverage | Free, keyless | How many LPs match a country and LP type. Counts only, never a name |
 | `search_lps` | Search LP records | LP Radar | LP records (name, type, HQ, focus, website, emerging-manager backing), max 25 per call, unlimited calls |
 
-All eight tools are read-only and non-destructive, and advertise it:
+All eight tools are read-only and non-destructive, and advertise it (webhook subscriptions are separate HTTPS endpoints, see below):
 `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`, `openWorldHint: false`.
 An agent can call any of them without a confirmation prompt. Nothing here mutates state.
 
@@ -330,6 +330,87 @@ A changed window answers with the cursor fields plus the rows:
 When `has_more` is `true`, call again with the returned `next_since` before sleeping.
 
 **Plain HTTP alternative.** The same data is on `GET /_api/changes`, with the cursor as an ordinary conditional request. Keep the `ETag` response header and send it back as `If-None-Match`. An unchanged window answers `304 Not Modified` with an empty body.
+
+
+`change_type` is `created`, `signal_updated` or `close_updated`. A `close_updated` row means Fund Momentum published a new first, interim or final close for that fund, and carries a `last_close` summary (`type`, `date`, `size_display`, `source_url`).
+
+### Fund closes: `last_close`, `closed_since` and webhooks
+
+Fund Momentum covers fund closes as primary research, and every covered close is written back into the fund record. That makes "which funds just closed" a query, not a crawl.
+
+- **`get_fund` → `last_close`**: `type` (`launch`, `first`, `interim`, `final`, `closed_unspecified`, `target_only`), `date`, `amount_m` and `currency` exactly as the fund stated them (never converted), `size_display`, `target_m`, `source_url` (the Fund Momentum post) and `primary_url` (the press release). `null` means the close has not been covered by Fund Momentum, not that the fund has not closed.
+- **`search_funds` with `closed_since`** (`YYYY-MM-DD`): funds whose latest covered close is on or after that date, newest first, each with `lastCloseDate` and `lastCloseType`.
+
+```json
+{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"closed_since":"2026-09-01","stage":"seed"}},"id":1}
+```
+
+- **Provenance per field**: `get_fund.provenance.field_sources` names the source of `fundSize`, `fundingStage` (with `fundingStage_confidence`) and GP names, ranked `claim` (fund-verified) > `admin` > `blog` (Fund Momentum close coverage) > `website` > `llm`. A lower-ranked source never overwrites a higher one. GP names are kept only when a fetched source names them with a first and last name.
+
+#### Webhooks (Pro and Enterprise)
+
+Push instead of poll. Subscribe an HTTPS endpoint and each newly published close arrives as a signed `close_updated` event, optionally filtered by stage, country and industry. Webhooks are plain HTTPS endpoints next to the MCP server, authenticated with the same API key; the MCP tools themselves stay read-only.
+
+```bash
+curl -s -X POST https://fundmomentum.vc/_api/webhooks/subscribe \
+  -H 'X-API-Key: YOUR_PRO_KEY' -H 'Content-Type: application/json' \
+  -d '{"url":"https://example.com/fm-hook","filters":{"stage":"seed","country":"Germany"}}'
+```
+
+The response returns the subscription and its signing `secret`, **shown once**.
+
+| Endpoint | Body | Does |
+|---|---|---|
+| `POST /_api/webhooks/subscribe` | `url`, optional `filters.stage` / `filters.country` / `filters.industry`, `description` | Create a subscription (max 5 per key) |
+| `GET /_api/webhooks/list` | | Your subscriptions, their health, the last 20 deliveries |
+| `POST /_api/webhooks/test` | `id` | Send a signed `ping` right now |
+| `POST /_api/webhooks/delete` | `id` | Remove a subscription |
+
+Every delivery is a `POST` with `Content-Type: application/json` and these headers:
+
+- `FM-Signature: t=<unix seconds>,v1=<hex>` where `v1` is HMAC-SHA256 of `"<t>.<raw body>"` with your secret. Reject anything older than 5 minutes.
+- `FM-Event` (`close_updated` or `ping`), `FM-Event-Id` (stable per change; use it to de-duplicate), `FM-Delivery`.
+
+Answer `2xx` within 10 seconds. Failures are retried after 1 min, 5 min, 30 min, 2 h, 6 h, 12 h and 24 h. Forty failed attempts in a row switch a subscription off; a successful `test` switches it back on. Redirects are not followed, and endpoints must be public `https` on port 443.
+
+```json
+{
+  "id": "evt_close_123_1791830000000",
+  "type": "close_updated",
+  "api_version": "2026-10-12",
+  "created_at": "2026-10-12T09:00:00.000Z",
+  "data": {
+    "fund": {
+      "slug": "example-seed-fund-ii", "name": "Example Seed Fund II", "country": "Germany",
+      "fundingStage": "seed", "fundSize": "€33.3M", "raisingStatus": "closed",
+      "industries": ["saas"], "url": "https://fundmomentum.vc/funds/example-seed-fund-ii"
+    },
+    "last_close": {
+      "type": "final", "date": "2026-09-01", "amount_m": 33.3, "currency": "EUR",
+      "size_display": "€33.3M", "target_m": null,
+      "source_url": "https://fundmomentum.vc/blog/...", "primary_url": "https://..."
+    },
+    "previous_close": { "type": "first", "date": "2026-03-01" }
+  }
+}
+```
+
+Verifying in Node:
+
+```js
+import { createHmac, timingSafeEqual } from "node:crypto";
+
+function verify(secret, rawBody, header, toleranceS = 300) {
+  const parts = Object.fromEntries(header.split(",").map((p) => p.split("=")));
+  const t = Number(parts.t);
+  if (!t || Math.abs(Date.now() / 1000 - t) > toleranceS) return false;
+  const expected = createHmac("sha256", secret).update(`${t}.${rawBody}`).digest();
+  const given = Buffer.from(parts.v1 ?? "", "hex");
+  return given.length === expected.length && timingSafeEqual(given, expected);
+}
+```
+
+Without Pro, poll `get_changes` for `close_updated` rows instead, which is free.
 
 ### API Reference
 

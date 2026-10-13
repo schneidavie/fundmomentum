@@ -89,11 +89,13 @@ fi
 # 1045 -> 1,045
 group() { printf '%s' "$1" | sed -E ':a;s/([0-9])([0-9]{3})($|,)/\1,\2\3/;ta'; }
 
-# 1045 -> 1000+  (round down to the nearest hundred, no thousands separator).
+# 990 -> 950+  (round down to the nearest fifty, no thousands separator; the
+# site's copy uses the same step since Oct 2026, and the count is VC funds only,
+# PE and credit funds are tracked but not counted).
 # Publishing the exact live figure would be a claim that goes stale between
 # runs; rounding down is always true and still moves on its own as we grow.
 round_down() {
-  if [ "$1" -lt 100 ]; then printf '%s' "$1"; else printf '%s+' "$(( $1 / 100 * 100 ))"; fi
+  if [ "$1" -lt 100 ]; then printf '%s' "$1"; else printf '%s+' "$(( $1 / 50 * 50 ))"; fi
 }
 
 FUNDS_H="$(round_down "$FUNDS")"

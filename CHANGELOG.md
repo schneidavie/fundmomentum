@@ -4,6 +4,21 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+### Added
+
+- **`fund_type` in `get_fund`**: `vc`, `studio`, `pe` or `credit`. Venture
+  studios stay in `search_funds` and `match_startup`; private equity and credit
+  funds are tracked but never returned by search, only by `get_fund` with their
+  slug.
+
+### Changed
+
+- Fund counts (server card, `GET /mcp`, README, `server.json`) now count only
+  the funds search can return. A stage, industry and fund-type audit moved
+  about 130 buyout, secondaries, continuation, infrastructure, credit and
+  public-equity vehicles out of the venture index, so the published count goes
+  from 1100+ to 950+. Counts are rounded down to the nearest fifty.
+
 ## [1.6.0] — 2026-10-12
 
 Fund closes become a feed: pull them with `closed_since`, or have them pushed.

@@ -338,8 +338,9 @@ When `has_more` is `true`, call again with the returned `next_since` before slee
 
 Fund Momentum covers fund closes as primary research, and every covered close is written back into the fund record. That makes "which funds just closed" a query, not a crawl.
 
-- **`get_fund` → `last_close`**: `type` (`launch`, `first`, `interim`, `final`, `closed_unspecified`, `target_only`), `date`, `amount_m` and `currency` exactly as the fund stated them (never converted), `size_display`, `target_m`, `source_url` (the Fund Momentum post) and `primary_url` (the press release). `null` means the close has not been covered by Fund Momentum, not that the fund has not closed.
-- **`search_funds` with `closed_since`** (`YYYY-MM-DD`): funds whose latest covered close is on or after that date, newest first, each with `lastCloseDate` and `lastCloseType`.
+- **`get_fund` → `last_close`**: `type` (`launch`, `first`, `interim`, `final`, `closed_unspecified`, `target_only`), `date`, `amount_m` and `currency` exactly as the fund stated them (never converted), `size_display`, `target_m`, `source_url` (the Fund Momentum post) and `primary_url` (the press release). `null` means the close has not been covered by Fund Momentum, not that the fund has not closed. `date` is the day Fund Momentum reported the close (`date_basis: "reported"`, explained in `date_basis_note`), which can be later than the day the fund signed it.
+- **`search_funds` with `closed_since`** (`YYYY-MM-DD`): funds whose latest covered close is on or after that date, newest first, each with `lastCloseDate` and `lastCloseType`. `launch` and `target_only` entries are skipped.
+- **Write-back rules**: a post is applied only to the fund whose vintage it names (no numeral means Fund I); posts covering several funds never change a fund's size; only canonical sizes are written; a launch or target never replaces a known size; closes found only on the open web are not written into fund records.
 
 ```json
 {"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"closed_since":"2026-09-01","stage":"seed"}},"id":1}

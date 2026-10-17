@@ -6,12 +6,20 @@ All notable changes to the Fund Momentum MCP server.
 
 ### Added
 
+- **`last_close.date_basis`** (`"reported"`) and `date_basis_note`: the date is the
+  day Fund Momentum reported the close, not necessarily the signing day.
+
 - **`fund_type` in `get_fund`**: `vc`, `studio`, `pe` or `credit`. Venture
   studios stay in `search_funds` and `match_startup`; private equity and credit
   funds are tracked but never returned by search, only by `get_fund` with their
   slug.
 
 ### Changed
+
+- Close write-back: a post now applies only to the fund whose vintage it names
+  (ordinal words such as "Sixth Fund" and trailing numerals such as "XVII"
+  count); posts covering several funds never change a fund's size.
+  `closed_since` skips `launch` and `target_only` entries.
 
 - Fund counts (server card, `GET /mcp`, README, `server.json`) now count only
   the funds search can return. A stage, industry and fund-type audit moved

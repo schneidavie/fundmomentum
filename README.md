@@ -538,6 +538,12 @@ To sync a number in a new spot, wrap it in a marker pair and it is picked up on 
 
 ---
 
+## Contributing and listings
+
+This repository documents the public MCP server. It does not accept listing, directory or link-submission requests, whether as issues or pull requests; those are closed without a reply. Open an issue or pull request only for an error in this documentation. For anything else write to [michael@fundmomentum.vc](mailto:michael@fundmomentum.vc).
+
+---
+
 ## Links
 
 - **Platform:** [fundmomentum.vc](https://fundmomentum.vc)

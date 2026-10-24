@@ -242,7 +242,7 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 "Which funds were added or updated since last Monday?"
 ```
 
-### Available Tools (8)
+### Available Tools (10)
 
 | Tool | Title | Tier | Description |
 |---|---|---|---|
@@ -254,10 +254,18 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 | `match_startup` | Match startup to funds | Pro | AI-powered fund matching based on startup description |
 | `check_lp_coverage` | Check LP coverage | Free, keyless | How many LPs match a country and LP type. Counts only, never a name |
 | `search_lps` | Search LP records | LP Radar | LP records (name, type, HQ, focus, website, emerging-manager backing), max 25 per call, unlimited calls |
+| `get_usage` | Get my usage and limits | Free, keyless | Your tier, calls used and remaining, credits (agent keys), reset time and per-minute limit. Does not count against the keyless 10 calls a day |
+| `send_feedback` | Send feedback to Fund Momentum | Free, keyless | Report a bug, data issue or missing feature (`message` max 1000 characters, optional `category`, `tool_name`). 5 per caller per UTC day. Leave out personal details of third parties |
 
-All eight tools are read-only and non-destructive, and advertise it (webhook subscriptions are separate HTTPS endpoints, see below):
+Nine of the ten tools are read-only and non-destructive, and advertise it (webhook subscriptions are separate HTTPS endpoints, see below):
 `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`, `openWorldHint: false`.
-An agent can call any of them without a confirmation prompt. Nothing here mutates state.
+An agent can call them without a confirmation prompt.
+
+The exception is `send_feedback` (`readOnlyHint: false`, `destructiveHint: false`): it stores one short message and touches no fund, account or billing data.
+
+`search_funds` returns **10 funds when `limit` is omitted, for every caller**. Pass a larger `limit` explicitly; the caps are unchanged (keyless 10, Starter 50, Pro 250, agent keys up to 150 funds per UTC day). A truncated response carries `matched`, `truncated` and, where paging is allowed, `next_offset`.
+
+A keyless caller with 2 or fewer calls left today gets one extra short text item after the tool result with the calls left, the reset time and the pricing link. The JSON result and `_meta` are unchanged.
 
 `search_funds` and `get_fund` were previously documented as **Starter**. They are **Free**.
 

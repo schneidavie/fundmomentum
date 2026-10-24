@@ -341,7 +341,7 @@ Subscribe, test, list and delete are documented in the
 
 | Tool | Title | Tier | Key arguments |
 |---|---|---|---|
-| `search_funds` | Search VC funds | Free | `stage`, `country`, `industry`, `closed_since` (`YYYY-MM-DD`), `limit`, `offset` |
+| `search_funds` | Search VC funds | Free | `stage`, `country`, `industry`, `closed_since` (`YYYY-MM-DD`), `limit` (default 10 for every caller), `offset` |
 | `get_fund` | Get fund profile | Free | `slug` (required) |
 | `get_changes` | Get changed funds since | Free | `since`, `if_none_match`, `limit` (1–200, default 50) |
 | `get_fund_signals` | Get fund investor signals | Pro | `slug` (required) |
@@ -349,9 +349,12 @@ Subscribe, test, list and delete are documented in the
 | `match_startup` | Match startup to funds | Pro | `description` (required, max 500 chars), `stage`, `country` |
 | `check_lp_coverage` | Check LP coverage | Free, keyless | `country`, `lp_type` |
 | `search_lps` | Search LP records | LP Radar | `country`, `lp_type`, `limit` (1–25, default 10; above 25 is rejected) |
+| `get_usage` | Get my usage and limits | Free, keyless | none |
+| `send_feedback` | Send feedback to Fund Momentum | Free, keyless | `message` (required, max 1000 chars), `category` (`bug`, `data_issue`, `missing_feature`, `other`), `tool_name` |
 
-All eight are `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`,
-`openWorldHint: false`, so they are safe for an agent to call unattended.
+Nine of the ten are `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`,
+`openWorldHint: false`, so they are safe for an agent to call unattended. `send_feedback` is
+`readOnlyHint: false` (it stores one short message) and never touches fund, account or billing data.
 
 The authoritative, always-current version of this table is the
 [server card](https://fundmomentum.vc/_api/well-known/mcp/server-card).

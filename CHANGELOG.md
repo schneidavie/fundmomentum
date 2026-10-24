@@ -6,6 +6,27 @@ All notable changes to the Fund Momentum MCP server.
 
 ### Added
 
+- **`get_usage`** (free, no key, not counted against the keyless 10 calls a day):
+  tier, calls used and remaining for the current window, credits remaining
+  (agent keys), `resets_at` and the per-minute pace limit.
+
+- **`send_feedback`** (free, no key): `message` (max 1000 characters), optional
+  `category` (`bug`, `data_issue`, `missing_feature`, `other`) and `tool_name`.
+  5 per caller per UTC day. It is the one tool with `readOnlyHint: false`; it
+  stores a single message and touches no fund, account or billing data.
+
+- **Low-calls nudge**: a keyless caller with 2 or fewer calls left today gets one
+  extra text content item with the calls left, the reset time and the pricing
+  link. The JSON payload and `_meta` are unchanged.
+
+- **Plain-language Pro teaser** on the payment challenge for `get_fund_signals`,
+  `get_gp_profile` and `match_startup`: `human_message`, `upgrade_url` and a
+  `teaser` block (`has_signals`; `has_gp_data` with a GP count; a static
+  description for `match_startup`) in `error.data`, and one sentence appended
+  to the message. No signal or GP content is revealed. Status code, challenge
+  and payment fields are unchanged, and a wrong slug is still `not_found`
+  before any payment.
+
 - **`last_close.date_basis`** (`"reported"`) and `date_basis_note`: the date is the
   day Fund Momentum reported the close, not necessarily the signing day.
 
@@ -15,6 +36,15 @@ All notable changes to the Fund Momentum MCP server.
   slug.
 
 ### Changed
+
+- **Behavior change: `search_funds` now returns 10 funds when `limit` is
+  omitted, for every caller.** Agents paying with credits used to receive every
+  match (up to the 150-funds-a-day allowance, billed per fund), and Starter and
+  Pro keys used to receive their per-call ceiling. Pass a larger `limit`
+  explicitly. Caps are unchanged: keyless 10, Starter 50, Pro 250, agent keys
+  150 funds per UTC day.
+
+- The server now publishes 10 tools; nine are read-only.
 
 - Close write-back: a post now applies only to the fund whose vintage it names
   (ordinal words such as "Sixth Fund" and trailing numerals such as "XVII"

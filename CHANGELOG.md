@@ -4,6 +4,8 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+## [1.7.0] — 2026-10-25
+
 ### Added
 
 - **`get_usage`** (free, no key, not counted against the keyless 10 calls a day):

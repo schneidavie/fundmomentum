@@ -4,6 +4,10 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+## [1.8.0] — 2026-10-25
+
+Documentation only; the server is unchanged.
+
 ### Changed
 
 - Docs: the keyless descriptions in the README and `server.json` now say that

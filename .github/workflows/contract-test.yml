@@ -1,1 +1,29 @@
-Get-Content C:\Users\micha\fundmomentum-contract\.github\workflows\contract-test.yml -Raw | Set-Clipboard
+name: contract-test
+
+# MCP vs REST v1: same input, same output. Weekly, on demand, and on any change
+# to the test itself.
+on:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays 06:17 UTC
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/contract-test.ts"
+      - ".github/workflows/contract-test.yml"
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Run contract test
+        env:
+          FM_BASE: https://fundmomentum.vc
+          # A Free key is enough (100 calls/month; a run uses about 12).
+          # Add it under Settings > Secrets and variables > Actions.
+          FM_API_KEY: ${{ secrets.FM_API_KEY }}
+        run: node scripts/contract-test.ts

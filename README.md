@@ -55,7 +55,7 @@ Every response carries a `_meta` block telling you where you stand:
 }
 ```
 
-The keyless trial covers those four tools. Keyless `get_changes` looks back at most **7 days** and answers `since_floor_applied: true` when it shortens your window; a free key widens that to 30 days. See [Incremental sync](#incremental-sync-use-get_changes-not-a-polling-loop).
+The keyless trial covers those four tools. `get_usage` and `send_feedback` are also free and keyless, but unmetered: they never count against the daily allowance. Keyless `get_changes` looks back at most **7 days** and answers `since_floor_applied: true` when it shortens your window; a free key widens that to 30 days. See [Incremental sync](#incremental-sync-use-get_changes-not-a-polling-loop).
 
 ### Access without registration
 
@@ -63,7 +63,7 @@ There is no signup wall. An agent can discover this server, pay for what it need
 
 | Access | How you get it | What works | Limits |
 |---|---|---|---|
-| **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund`, `get_changes` (7-day window), `check_lp_coverage` | 10 calls/caller/UTC day |
+| **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund`, `get_changes` (7-day window), `check_lp_coverage` (plus unmetered `get_usage`, `send_feedback`) | 10 calls/caller/UTC day |
 | **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All six fund tools on credits. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
 | **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | All six fund tools, priced per call | €1,000 per payer per day |
 | **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six fund tools on credits | €5 / €20 / €50 / €100 |
@@ -505,7 +505,7 @@ These tiers cover the MCP server and API only.
 | Tier | Price | API Calls | Tools |
 |---|---|---|---|
 | Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six fund tools, no account needed |
-| Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund`, `get_changes` (7 days back), `check_lp_coverage` |
+| Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund`, `get_changes` (7 days back), `check_lp_coverage`; `get_usage` and `send_feedback` are unmetered |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Starter | €9/mo | 1,000/mo | `search_funds`, `get_fund`, `get_changes` |
 | Pro | <!--fm:pro_price-->€29/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals |

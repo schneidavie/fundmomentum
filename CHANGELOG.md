@@ -4,6 +4,12 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+### Changed
+
+- Docs: the keyless descriptions in the README and `server.json` now say that
+  `get_usage` and `send_feedback` are also keyless and unmetered, alongside the
+  four tools that share the daily allowance.
+
 ## [1.7.0] — 2026-10-25
 
 ### Added

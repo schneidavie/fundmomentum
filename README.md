@@ -180,6 +180,35 @@ Out of credits used to surface as JSON-RPC error `-32001`. It is now an HTTP `40
 
 If you would rather not pay at all, the fallback is real: drop the `X-API-Key` header and `search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
 
+#### Knowing the cost before you call: `max_credits` and `billing`
+
+`search_funds` costs 1 credit (€0.01) per fund returned, and an empty result costs nothing.
+
+**`max_credits`** (optional, integer 1 to 25) caps the page at that many rows. It only lowers `limit`, it never raises it. Values above 25 are clamped to 25. Zero, negative and non-integer values are rejected before any charge. If you leave it out, your `limit` applies (default page: 10). Starter and Pro subscribers are never capped by it.
+
+**`billing`** is added to every `search_funds` response:
+
+```json
+{ "credits_charged": 4, "balance_after": 8, "next_page_cost": 4, "next_offset": 4, "payment_mode": "credits", "credits_unreturned": 0 }
+```
+
+- `payment_mode` is `credits`, `mpp`, `subscription` or `keyless`. `balance_after` is `null` except for `credits`.
+- `next_offset` is `null` on the last page, and `next_page_cost` is `0` when nothing remains.
+- A short page carries `truncated_reason`: `max_credits`, `balance` or `limit`.
+- If your balance covers only part of a page, you get the rows you can afford (`truncated_reason: "balance"`).
+
+**Out of credits.** A key with no credits gets an HTTP 402 (`application/problem+json` on REST v1; an MCP result with `isError: true` and `structuredContent`):
+
+```json
+{ "type": "about:blank", "title": "Payment Required", "status": 402,
+  "required": 10, "available": 0, "shortfall": 10,
+  "top_up": { "url": "https://fundmomentum.vc/pricing", "tool": null } }
+```
+
+Agents with no credits can still pay for `search_funds` inline: send an MPP payment credential with the request.
+
+**`search_lps` without LP Radar** returns a 403 `lp_access_required` error with `entitlement: "lp_radar"` and a `plan_url`. It never returns a credit 402 or a payment challenge.
+
 #### Linking an email (optional)
 
 `POST /_api/agent/link` with `{"email":"..."}` attaches a key to a human account for **invoices and a dashboard only**. It grants no access and changes no credits. An address already verified, a Google sign-in say, links immediately and no mail is sent. This endpoint and `/_api/agent/link/resend` (3/day) are the only places the agent path ever sends email.

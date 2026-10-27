@@ -4,6 +4,8 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+## [1.9.0] — 2026-10-28
+
 ### Added
 
 - `search_funds`: optional `max_credits` (1 to 25) and a `billing` receipt on every response.
@@ -13,6 +15,7 @@ All notable changes to the Fund Momentum MCP server.
 
 - `search_funds` no longer charges for an empty page.
 - A balance that covers only part of a page returns the rows it can pay for.
+- Synced the disclosed-LP count in the docs (742 to 751).
 
 ## [1.8.0] — 2026-10-25
 

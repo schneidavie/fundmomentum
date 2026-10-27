@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.schneidavie/fund-momentum",
   "title": "Fund Momentum",
-  "description": "Agentic fundraising intelligence: 950+ tracked VC funds and 742 disclosed LPs over MCP",
-  "version": "1.8.0",
+  "description": "Agentic fundraising intelligence: 950+ tracked VC funds and 751 disclosed LPs over MCP",
+  "version": "1.9.0",
   "repository": {
     "url": "https://github.com/schneidavie/fundmomentum",
     "source": "github"
@@ -15,7 +15,7 @@
       "headers": [
         {
           "name": "X-API-Key",
-          "description": "API key. Optional: search_funds, get_fund, get_changes (7-day window) and check_lp_coverage answer 10 calls per caller per UTC day with no key at all; get_usage and send_feedback are also keyless and do not count against that allowance. No registration or email is required. Agents self-register at https://fundmomentum.vc/_api/agent/register with just an agent_name and get a key plus 25 free credits usable on all six fund tools, or skip keys entirely and pay per call over MPP (Tempo USDC) when a paid tool answers HTTP 402. check_lp_coverage is free and keyless; LP records (search_lps) need an LP Radar subscription at https://fundmomentum.vc/lp-radar and are never sold per call. A free human key (100 calls/month) is at https://fundmomentum.vc/pricing.",
+          "description": "API key. Optional: search_funds, get_fund, get_changes (7-day window) and check_lp_coverage answer 10 calls per caller per UTC day with no key at all; get_usage and send_feedback are also keyless and do not count against that allowance. No registration or email is required. Agents self-register at https://fundmomentum.vc/_api/agent/register with just an agent_name and get a key plus 25 free credits usable on all six fund tools, or skip keys entirely and pay per call over MPP (Tempo USDC) when a paid tool answers HTTP 402. check_lp_coverage is free and keyless; LP records (search_lps) need an LP Radar subscription at https://fundmomentum.vc/lp-radar and are never sold per call. A free human key (100 calls/month) is at https://fundmomentum.vc/pricing. search_funds accepts an optional max_credits (1 to 25) and returns a billing receipt with every response.",
           "isRequired": false,
           "isSecret": true
         }

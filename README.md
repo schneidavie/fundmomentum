@@ -1,6 +1,6 @@
 # Fund Momentum: the agentic pulse of Venture Capital
 
-> Agentic fundraising intelligence for founders and emerging fund managers · <!--fm:funds-->950+<!--/fm:funds--> tracked VC funds · <!--fm:lps-->751<!--/fm:lps--> disclosed LPs · LP Radar · Remote MCP server with pay-per-call
+> Agentic fundraising intelligence for founders and emerging fund managers · <!--fm:funds-->950+<!--/fm:funds--> tracked VC funds · <!--fm:lps-->754<!--/fm:lps--> disclosed LPs · LP Radar · Remote MCP server with pay-per-call
 
 **[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [LP Radar](https://fundmomentum.vc/lp-radar) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
 
@@ -22,7 +22,7 @@ Real data, no card, no email address. Quota headers, the free key and the other 
 
 ## What is Fund Momentum?
 
-Fund Momentum is agentic fundraising intelligence for founders and emerging fund managers. It tracks **<!--fm:funds-->950+<!--/fm:funds--> VC funds**, every one of which raised capital since September 2024. Around 300 fund closings are covered as primary research, not scraped rows. **LP Radar** maps **<!--fm:lps-->751<!--/fm:lps--> disclosed LPs** and shows which of them back Fund I and II managers.
+Fund Momentum is agentic fundraising intelligence for founders and emerging fund managers. It tracks **<!--fm:funds-->950+<!--/fm:funds--> VC funds**, every one of which raised capital since September 2024. Around 300 fund closings are covered as primary research, not scraped rows. **LP Radar** maps **<!--fm:lps-->754<!--/fm:lps--> disclosed LPs** and shows which of them back Fund I and II managers.
 
 Your agent queries it over a remote MCP server. A founder asks Claude or ChatGPT who backs their round. An autonomous agent registers itself and pays per call.
 
@@ -536,15 +536,14 @@ These tiers cover the MCP server and API only.
 | Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six fund tools, no account needed |
 | Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund`, `get_changes` (7 days back), `check_lp_coverage`; `get_usage` and `send_feedback` are unmetered |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
-| Starter | €9/mo | 1,000/mo | `search_funds`, `get_fund`, `get_changes` |
+| Starter | <!--fm:starter_price-->€9/mo<!--/fm:starter_price--> | <!--fm:starter_calls-->1,000<!--/fm:starter_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Pro | <!--fm:pro_price-->€29/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals |
-| Enterprise | Custom | Unlimited | All six fund tools, custom contract & SLA |
+| Enterprise | <!--fm:enterprise_price-->Custom<!--/fm:enterprise_price--> | Unlimited | All six fund tools, custom contract & SLA |
 | **LP Radar** | **€199/mo or €1,499/yr** | Unlimited | `search_lps` (`check_lp_coverage` is free on every row). Separate subscription, [card checkout](https://fundmomentum.vc/lp-radar) |
 
-The keyless, Free and Pro rows are generated from the server card. The Starter
-and Enterprise rows are still typed by hand. The card exposes no tier block for
-them, so treat [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) as
-authoritative if those two ever disagree with this table.
+The keyless, Free, Starter, Pro and Enterprise rows are generated from the server
+card. Treat [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) as
+authoritative if this table ever disagrees with it.
 
 → [MCP plans & client setup](https://fundmomentum.vc/mcp) · [Subscribe & get a key](https://fundmomentum.vc/pricing)
 
@@ -559,7 +558,7 @@ Fund and LP counts, the keyless and Free allowances and the Pro price in this RE
 
 Two numbers are **not** covered: the **Starter** and **Enterprise** rows in the pricing table. The server card exposes `authentication.free_tier` and a Pro price via `tools[].price`, but no tier block, so there is nothing to read them from. They stay hand-typed until the card grows one. See the note at the top of [`scripts/sync-counts.sh`](scripts/sync-counts.sh) for how to wire them up when it does.
 
-The fund count is published rounded down to the nearest hundred (`1000+` today), matching the site's own copy and the server card's note that marketing figures round the live count down. It still moves on its own as the index grows; it is simply never ahead of the truth.
+The fund count is published rounded down to the nearest fifty (`950+` today), matching the site's own copy and the server card's note that marketing figures round the live count down. It still moves on its own as the index grows; it is simply never ahead of the truth.
 
 ```bash
 scripts/sync-counts.sh

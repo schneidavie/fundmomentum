@@ -67,6 +67,12 @@ FREE_CALLS="$(printf '%s' "$card"   | jq -er '
   exit 2
 }
 PRO_PRICE="$(printf '%s' "$card"    | jq -er '[.tools[] | select(.requiredTier == "pro") | .price] | unique | .[0]')"
+# Starter and Enterprise come from the tier block the card gained in Oct 2026
+# (authentication.human_subscriptions.tiers). Until the deployed card has it
+# these stay empty and the matching README cells are left untouched.
+STARTER_PRICE="$(printf '%s' "$card" | jq -r '.authentication.human_subscriptions.tiers.starter.price // empty')"
+STARTER_CALLS="$(printf '%s' "$card" | jq -r '.authentication.human_subscriptions.tiers.starter.calls_per_month // empty')"
+ENTERPRISE_PRICE="$(printf '%s' "$card" | jq -r '.authentication.human_subscriptions.tiers.enterprise.price // empty')"
 
 # Never let a broken or empty response blank out the docs.
 case "$FUNDS$LPS$KEYLESS$FREE_CALLS" in *[!0-9]*) echo "sync-counts: non-numeric count in card" >&2; exit 2;; esac
@@ -101,6 +107,8 @@ round_down() {
 FUNDS_H="$(round_down "$FUNDS")"
 LPS_H="$(group "$LPS")"
 FREE_CALLS_H="$(group "$FREE_CALLS")"
+STARTER_CALLS_H=""
+[ -n "$STARTER_CALLS" ] && STARTER_CALLS_H="$(group "$STARTER_CALLS")"
 
 # server.json has no room for HTML markers, so its description is rendered
 # from this template. This is the one place to edit that sentence.
@@ -112,7 +120,12 @@ stale=0
 
 # --- Markdown: substitute between <!--fm:key--> ... <!--/fm:key--> pairs ---
 render_markdown() {
-  sed -E \
+  # Optional keys (tier block): only substitute when the card provided a value.
+  local extra=()
+  [ -n "$STARTER_PRICE" ]    && extra+=(-e "s|(<!--fm:starter_price-->)[^<]*(<!--/fm:starter_price-->)|\\1${STARTER_PRICE}\\2|g")
+  [ -n "$STARTER_CALLS_H" ]  && extra+=(-e "s|(<!--fm:starter_calls-->)[^<]*(<!--/fm:starter_calls-->)|\\1${STARTER_CALLS_H}\\2|g")
+  [ -n "$ENTERPRISE_PRICE" ] && extra+=(-e "s|(<!--fm:enterprise_price-->)[^<]*(<!--/fm:enterprise_price-->)|\\1${ENTERPRISE_PRICE}\\2|g")
+  sed -E "${extra[@]}" \
     -e "s|(<!--fm:funds-->)[^<]*(<!--/fm:funds-->)|\1${FUNDS_H}\2|g" \
     -e "s|(<!--fm:lps-->)[^<]*(<!--/fm:lps-->)|\1${LPS_H}\2|g" \
     -e "s|(<!--fm:keyless_calls-->)[^<]*(<!--/fm:keyless_calls-->)|\1${KEYLESS}\2|g" \

@@ -536,15 +536,14 @@ These tiers cover the MCP server and API only.
 | Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six fund tools, no account needed |
 | Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund`, `get_changes` (7 days back), `check_lp_coverage`; `get_usage` and `send_feedback` are unmetered |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
-| Starter | €9/mo | 1,000/mo | `search_funds`, `get_fund`, `get_changes` |
+| Starter | <!--fm:starter_price-->€9/mo<!--/fm:starter_price--> | <!--fm:starter_calls-->1,000<!--/fm:starter_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Pro | <!--fm:pro_price-->€29/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals |
-| Enterprise | Custom | Unlimited | All six fund tools, custom contract & SLA |
+| Enterprise | <!--fm:enterprise_price-->Custom<!--/fm:enterprise_price--> | Unlimited | All six fund tools, custom contract & SLA |
 | **LP Radar** | **€199/mo or €1,499/yr** | Unlimited | `search_lps` (`check_lp_coverage` is free on every row). Separate subscription, [card checkout](https://fundmomentum.vc/lp-radar) |
 
-The keyless, Free and Pro rows are generated from the server card. The Starter
-and Enterprise rows are still typed by hand. The card exposes no tier block for
-them, so treat [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) as
-authoritative if those two ever disagree with this table.
+The keyless, Free, Starter, Pro and Enterprise rows are generated from the server
+card. Treat [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) as
+authoritative if this table ever disagrees with it.
 
 → [MCP plans & client setup](https://fundmomentum.vc/mcp) · [Subscribe & get a key](https://fundmomentum.vc/pricing)
 

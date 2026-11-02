@@ -4,6 +4,10 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+### Fixed
+
+- Docs: the prepaid credit-pack amounts in the README (table and the `/_api/agent/credits/topup` example) said `€5 / €20 / €50 / €100`. The real packs are `€10 / €80 / €500` (1,000 / 10,000 / 100,000 credits); corrected to match the live server.
+
 ## [1.9.0] — 2026-10-28
 
 ### Added

@@ -66,7 +66,7 @@ There is no signup wall. An agent can discover this server, pay for what it need
 | **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund`, `get_changes` (7-day window), `check_lp_coverage` (plus unmetered `get_usage`, `send_feedback`) | 10 calls/caller/UTC day |
 | **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All six fund tools on credits. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
 | **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | All six fund tools, priced per call | €1,000 per payer per day |
-| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six fund tools on credits | €5 / €20 / €50 / €100 |
+| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six fund tools on credits | €10 / €80 / €500 |
 | **Linked** *(optional)* | `POST /_api/agent/link` with an email | Everything above, plus invoices and a dashboard | Grants no extra access |
 
 Per-call prices are not repeated here, because a typed price drifts. Each tool states its own in its description, and [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools) is generated from the live tool definitions.
@@ -156,10 +156,10 @@ The same flow tops up a key, so an agent never has to stop:
 ```bash
 curl -s -X POST https://fundmomentum.vc/_api/agent/credits/topup \
   -H "X-API-Key: fm_agent_..." -H "Content-Type: application/json" \
-  -d '{"amount_eur":20}'
+  -d '{"amount_eur":80}'
 ```
 
-`amount_eur` is 5, 20, 50 or 100. €20 buys 2,000 credits. The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€1,000 per payer per UTC day**.
+`amount_eur` is 10, 80 or 500, buying 1,000 / 10,000 / 100,000 credits respectively (the two bigger packs are 20% and 50% off the €0.01-per-credit single-call rate). The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€1,000 per payer per UTC day**.
 
 Prices are quoted in EUR and settle in USDC, converted at the ECB daily reference rate plus a 1.5% buffer for intraday movement and fees. There is no rounding up to the cent: €0.01 charges $0.0118, not $0.02.
 

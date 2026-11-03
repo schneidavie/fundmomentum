@@ -236,11 +236,12 @@ print(f"{cov['matched']} of {cov['of_total_disclosed']} disclosed LPs match; "
 `Family office / Holding`, `Fund-of-Funds`, …); common spellings such as `family office` are
 normalised. `country` is spelled out in full; two-letter ISO codes are accepted too.
 
-`search_lps` returns the records themselves, up to 25 per call, for the key of an account holding
-[LP Radar](https://fundmomentum.vc/lp-radar) (€199/month or €1,499/year). Agent keys cannot hold it,
-and it is never sold per call, on credits or over MPP. Without it the call fails with HTTP `403` and
-JSON-RPC `-32001` (no payment challenge, nothing charged), and `error.data` still carries the
-coverage for your filters:
+`search_lps` returns the records themselves, up to 25 per call. As of 2026-11-03 there is no
+separate LP Radar entitlement: it is billed and gated exactly like `get_fund`, per caller type.
+No key at all gets the same keyless daily trial as `get_fund`; a free/Starter/Pro key draws from
+the shared monthly "profile pull" allowance (Free 20/mo, Starter 200/mo, Pro and Enterprise
+unlimited); an agent key is billed per LP returned at the same per-row price as `search_funds`,
+with no monthly cap.
 
 ```python
 r = requests.post(BASE_URL, headers={"X-API-Key": API_KEY, "Content-Type": "application/json"}, json={
@@ -248,9 +249,9 @@ r = requests.post(BASE_URL, headers={"X-API-Key": API_KEY, "Content-Type": "appl
     "params": {"name": "search_lps", "arguments": {"country": "Germany", "limit": 25}},
 })
 body = r.json()
-if "error" in body and body["error"].get("data", {}).get("error_reason") == "lp_access_required":
+if "error" in body and body["error"].get("data", {}).get("error_reason") == "insufficient_credits":
     data = body["error"]["data"]
-    print(f"{data['coverage']['matched']} LPs match — LP Radar needed: {data['lp_radar']['url']}")
+    print(f"Needs {data.get('required')} credits, have {data.get('available')} — top up: {data['top_up']['url']}")
 else:
     lps = json.loads(body["result"]["content"][0]["text"])
 ```
@@ -291,8 +292,7 @@ else:                                           # keyless trial or a monthly tie
 ```
 
 The matching failure modes are HTTP status codes: `402` when an agent is out of credits, `429`
-when a monthly quota is exhausted, `401` for an unrecognised key, `403` (`lp_access_required`) for
-`search_lps` without LP Radar.
+when a monthly quota is exhausted, `401` for an unrecognised key.
 
 ## Recent closes, pulled or pushed
 
@@ -348,7 +348,7 @@ Subscribe, test, list and delete are documented in the
 | `get_gp_profile` | Get General Partner profiles | Pro | `fund_slug` (required), `gp_name` |
 | `match_startup` | Match startup to funds | Pro | `description` (required, max 500 chars), `stage`, `country` |
 | `check_lp_coverage` | Check LP coverage | Free, keyless | `country`, `lp_type` |
-| `search_lps` | Search LP records | LP Radar | `country`, `lp_type`, `limit` (1–25, default 10; above 25 is rejected) |
+| `search_lps` | Search LP records | Free | `country`, `lp_type`, `limit` (1–25, default 10; above 25 is rejected) |
 | `get_usage` | Get my usage and limits | Free, keyless | none |
 | `send_feedback` | Send feedback to Fund Momentum | Free, keyless | `message` (required, max 1000 chars), `category` (`bug`, `data_issue`, `missing_feature`, `other`), `tool_name` |
 

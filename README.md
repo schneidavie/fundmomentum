@@ -16,7 +16,7 @@ curl -s https://fundmomentum.vc/_api/mcp \
 
 Real data, no card, no email address. Quota headers, the free key and the other four tools: [MCP Server](#mcp-server).
 
-**New: LP data over MCP.** `check_lp_coverage` tells you, free and with no key, how many limited partners match a country and LP type. `search_lps` returns the LP records themselves for [LP Radar](https://fundmomentum.vc/lp-radar) subscribers (€199/month or €1,499/year, card checkout). See [LP Radar over MCP](#lp-radar-over-mcp).
+**New: LP data over MCP.** `check_lp_coverage` tells you, free and with no key, how many limited partners match a country and LP type. `search_lps` returns the LP records themselves, billed exactly like `get_fund` — no separate LP Radar subscription. See [LP Radar over MCP](#lp-radar-over-mcp).
 
 ---
 
@@ -117,7 +117,7 @@ No payment, no approval, no human: an agent registers and makes a useful call in
 
 `operator_url` and `contact` are optional free text and are never verified. Send an `email` and it is ignored with a note rather than rejected, so callers written against the old contract keep working.
 
-The 25 credits work on **all six fund tools**. Free tools cost 1 credit (€0.01); the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools). `check_lp_coverage` never costs a credit, and `search_lps` is never sold on credits. See [LP Radar over MCP](#lp-radar-over-mcp).
+The 25 credits work on **all seven priced tools**, `search_lps` included. Free tools cost 1 credit (€0.01) or, for `search_lps` and `search_funds`, 1 credit per row returned; the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools). `check_lp_coverage` never costs a credit. See [LP Radar over MCP](#lp-radar-over-mcp).
 
 #### Why there is no email step
 
@@ -207,7 +207,7 @@ If you would rather not pay at all, the fallback is real: drop the `X-API-Key` h
 
 Agents with no credits can still pay for `search_funds` inline: send an MPP payment credential with the request.
 
-**`search_lps` without LP Radar** returns a 403 `lp_access_required` error with `entitlement: "lp_radar"` and a `plan_url`. It never returns a credit 402 or a payment challenge.
+**`search_lps`** is billed exactly like `search_funds`: an agent key with no credits gets the same 402 shape shown above, priced per LP row rather than per call. There is no separate LP Radar entitlement or refusal path any more.
 
 #### Linking an email (optional)
 
@@ -238,7 +238,7 @@ A wrong slug or a bad argument is refused **before** any payment. The message na
 
 **Near-miss names are resolved only when there is no doubt.** `get_fund`, `get_fund_signals` and `get_gp_profile` accept a name that differs from the real slug only in case or spacing, or that is a hyphen-boundary prefix of exactly one real slug (`speedinvest-africa` resolves to `speedinvest-africa-fund`). It is served and the result carries `resolved_from` (and `_meta.resolved_from` / `resolved_to`) so you learn the real slug. A name that matches several funds (`speedinvest`) is listed, never guessed; no match is `not_found`. Resolution runs before any payment challenge, so a wrong name is never charged. Calling `search_funds` first is still the right way to get a slug.
 
-**Refusal messages** (keyless limit, no key, wrong tier, payment required, LP Radar needed) open with the route for a person, a free key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing), and then the route for automated callers. Every structured field in `error.data` / `_meta` is unchanged; parse those, not the prose.
+**Refusal messages** (keyless limit, no key, wrong tier, payment required) open with the route for a person, a free key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing), and then the route for automated callers. Every structured field in `error.data` / `_meta` is unchanged; parse those, not the prose.
 
 What each tool costs is in its own description. [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools) is generated from the live tool definitions, so it is always the current price. The same section is on [fundmomentum.vc/mpp-wallet](https://fundmomentum.vc/mpp-wallet) as section 5.
 
@@ -282,7 +282,7 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 | `get_gp_profile` | Get General Partner profiles | Pro | Individual GP profiles and backgrounds |
 | `match_startup` | Match startup to funds | Pro | AI-powered fund matching based on startup description |
 | `check_lp_coverage` | Check LP coverage | Free, keyless | How many LPs match a country and LP type. Counts only, never a name |
-| `search_lps` | Search LP records | LP Radar | LP records (name, type, HQ, focus, website, emerging-manager backing), max 25 per call, unlimited calls |
+| `search_lps` | Search LP records | Free | LP records (name, type, HQ, focus, website, emerging-manager backing), max 25 per call, billed exactly like `get_fund` |
 | `get_usage` | Get my usage and limits | Free, keyless | Your tier, calls used and remaining, credits (agent keys), reset time and per-minute limit. Does not count against the keyless 10 calls a day |
 | `send_feedback` | Send feedback to Fund Momentum | Free, keyless | Report a bug, data issue or missing feature (`message` max 1000 characters, optional `category`, `tool_name`). 5 per caller per UTC day. Leave out personal details of third parties |
 
@@ -300,12 +300,12 @@ A keyless caller with 2 or fewer calls left today gets one extra short text item
 
 ### LP Radar over MCP
 
-LP data is a separate product with its own entitlement, not a rung above Pro.
+As of 2026-11-03, LP data is no longer a separate product: `search_lps` is billed and gated exactly like `get_fund`, per caller type. There is no standalone LP Radar subscription any more — it is included in the Pro plan.
 
-- **`check_lp_coverage` is free.** No key, no credit, also on the keyless trial. It answers "do you cover my geography and LP type" with counts only: never a name, website or commitment. Counts under 5 show as `"<5"`, zero as `"none"`. Call it first.
-- **`search_lps` needs [LP Radar](https://fundmomentum.vc/lp-radar)** on the caller's own account key: **€199/month or €1,499/year**, same access on both, cancel any month. Unlimited calls, up to 25 records per call; a larger `limit` is rejected, not clamped.
-- **Not sold per call.** LP records are never available on agent credits, over MPP or on the keyless trial. Without LP Radar, `search_lps` answers `error_reason: "lp_access_required"` with the free coverage count and the purchase link, never a payment challenge.
-- **Buying it.** Self-serve card checkout on [fundmomentum.vc/lp-radar](https://fundmomentum.vc/lp-radar), no account needed beforehand. Access and an API key switch on right after payment under the checkout email; a new account is created if none exists and a welcome email carries the setup link. Manage or cancel in the Stripe billing portal.
+- **`check_lp_coverage` is free, unconditionally.** No key, no credit, also on the keyless trial. It answers "do you cover my geography and LP type" with counts only: never a name, website or commitment. Counts under 5 show as `"<5"`, zero as `"none"`. Call it first.
+- **`search_lps` has no key at all**: a handful of free calls a day, same keyless trial as `get_fund`.
+- **A free/Starter/Pro key** draws `search_lps` rows from the same monthly "profile pull" allowance it shares with `get_fund` (Free 20/mo, Starter 200/mo, Pro and Enterprise unlimited — [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) has current figures). Up to 25 records per call; a larger `limit` is rejected, not clamped.
+- **An agent key is billed per LP returned**, at the same per-row price as `search_funds` — see [Access without registration](#access-without-registration) above. No monthly cap, since every row is paid.
 - **What stays in the web app.** Commitment history, fund sizes, dates and allocation patterns are not served over MCP. There is no LP export on any tier.
 
 ### Incremental sync: use `get_changes`, not a polling loop
@@ -537,9 +537,8 @@ These tiers cover the MCP server and API only.
 | Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund`, `get_changes` (7 days back), `check_lp_coverage`; `get_usage` and `send_feedback` are unmetered |
 | Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Starter | <!--fm:starter_price-->€9/mo<!--/fm:starter_price--> | <!--fm:starter_calls-->1,000<!--/fm:starter_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
-| Pro | <!--fm:pro_price-->€19/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals |
-| Enterprise | <!--fm:enterprise_price-->Custom<!--/fm:enterprise_price--> | Unlimited | All six fund tools, custom contract & SLA |
-| **LP Radar** | **€199/mo or €1,499/yr** | Unlimited | `search_lps` (`check_lp_coverage` is free on every row). Separate subscription, [card checkout](https://fundmomentum.vc/lp-radar) |
+| Pro | <!--fm:pro_price-->€19/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals, plus unlimited `search_lps` (LP Radar, now included — no separate subscription) |
+| Enterprise | <!--fm:enterprise_price-->Custom<!--/fm:enterprise_price--> | Unlimited | All six fund tools, custom contract & SLA, plus unlimited `search_lps` |
 
 The keyless, Free, Starter, Pro and Enterprise rows are generated from the server
 card. Treat [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) as

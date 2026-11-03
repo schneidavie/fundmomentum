@@ -4,6 +4,18 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+### Changed
+
+- **LP Radar folded into Pro (2026-11-03).** `search_lps` is no longer a
+  standalone €199/month or €1,499/year subscription. It is now billed and
+  gated exactly like `get_fund`: free on the keyless trial, metered by the
+  same monthly "profile pull" allowance as `get_fund` for Free/Starter/Pro/
+  Enterprise keys, and billed per LP row at the `search_funds` per-row price
+  for agent keys. `check_lp_coverage` is unaffected — still free, counts
+  only, unconditionally. Docs updated across the README, `server.json` and
+  `examples/developers.md` to drop the retired pricing and the
+  `lp_access_required` refusal path, which no longer exists for `search_lps`.
+
 ## [1.9.0] — 2026-10-28
 
 ### Added

@@ -6,6 +6,30 @@ All notable changes to the Fund Momentum MCP server.
 
 ### Changed
 
+- **Limits synced with the live server (2026-11-04).** One table now covers every plan, taken from the
+  server card's `plan_limits`. A "profile pull" is one `get_fund` call or one LP row returned by
+  `search_lps`; `search_funds` rows are not pulls.
+
+  | Plan | Calls | Profile pulls | Pace | `search_funds` max | Webhooks |
+  |---|---|---|---|---|---|
+  | Keyless | 10 per UTC day, one shared pool (`search_lps` included) | Shared with calls | 120/min | 10 per call | None |
+  | Free | 300/month | 20/month | 20/min | 10 per call | 1 subscription, 50 events/month |
+  | Starter | 1,000/month | 200/month | 30/min | 50 per call | 1 subscription, 50 events/month |
+  | Pro | 10,000/month | Unlimited | 60/min | 250 per call, with `offset` | 5 subscriptions, unlimited events |
+  | Enterprise | Unlimited | Unlimited | 120/min | 250 per call | 5 subscriptions, unlimited events |
+  | Agent (credits) | Metered on credits | No monthly cap | 60/min and 2,000/UTC day | 150 funds per key per UTC day | None, poll `get_changes` |
+
+  - Free raised to 300 calls and 20 profile pulls per month (was 100 calls).
+  - `search_lps` truncates instead of failing: when the remaining pull allowance is smaller than the page,
+    only the remaining rows are returned with `truncated: true` and `truncated_reason: "pull_quota"`. At
+    zero the error is `pull_quota_exceeded` with `pulls_used`, `pulls_limit`, `resets_at` and `upgrade_url`.
+  - `get_usage` and `GET /_api/v1/usage` now also return `pulls_used`, `pulls_limit`, `pulls_remaining`,
+    `pulls_window` and `pulls_resets_at`.
+  - Pro fair-use guard: `search_lps` is capped at 500 LP rows per UTC day per key. Over it the call fails
+    with an HTTP 429-style error, `error_reason: "fair_use_daily_lp_rows"`, with `next_step` and
+    `resets_at`. Pulls stay unlimited per month.
+  - Agents: no monthly pull cap. Pace is 60 per minute and 2,000 per UTC day, `search_funds` is capped at
+    150 funds per key per UTC day, and there are no webhooks (poll `get_changes`).
 - **LP Radar folded into Pro (2026-11-03).** `search_lps` is no longer a
   standalone €199/month or €1,499/year subscription. It is now billed and
   gated exactly like `get_fund`: free on the keyless trial, metered by the

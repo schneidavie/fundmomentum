@@ -41,8 +41,8 @@ tempo wallet login
 tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_fund_signals","arguments":{"slug":"speedinvest-africa-fund"}},"id":1}' https://fundmomentum.vc/_api/mcp
 ```
 
-To buy a balance up front instead, `POST /_api/agent/credits/topup` with `{"amount_eur":20}`
-(5/20/50/100) and pay the same challenge. Spending is capped at €1,000 per payer per UTC day, checked
+To buy a balance up front instead, `POST /_api/agent/credits/topup` with `{"amount_eur":80}`
+(10/80/500) and pay the same challenge. Spending is capped at €1,000 per payer per UTC day, checked
 *before* any challenge is issued.
 
 The challenge is on a standard `WWW-Authenticate: Payment ...` header. A paid response carries
@@ -241,7 +241,7 @@ separate LP Radar entitlement: it is billed and gated exactly like `get_fund`, p
 No key at all gets the same keyless daily trial as `get_fund`; a free/Starter/Pro key draws from
 the shared monthly "profile pull" allowance (Free 20/mo, Starter 200/mo, Pro and Enterprise
 unlimited); an agent key is billed per LP returned at the same per-row price as `search_funds`,
-with no monthly cap. A profile pull is one `get_fund` call or one LP row returned by `search_lps`; `search_funds` rows are not pulls. If the remaining allowance is smaller than the page, only the remaining rows come back with `truncated: true` and `truncated_reason: "pull_quota"`; at zero the call fails with `pull_quota_exceeded` (see the error table below). On Pro, `search_lps` is capped at 500 LP rows per UTC day per key (`fair_use_daily_lp_rows`).
+with no monthly cap. A profile pull is one `get_fund` call or one LP row returned by `search_lps`; `search_funds` rows are not pulls. If the remaining allowance is smaller than the page, only the remaining rows come back with `truncated: true` and `truncated_reason: "pull_quota"`; at zero the call fails with `pull_quota_exceeded` (see the error table below). On Pro, `search_lps` is capped at 500 LP rows per UTC day per key (`fair_use_daily_lp_rows`): a key part-way through its 500 rows gets a truncated page with `truncated_reason: "fair_use_daily_lp_rows"`, and at 500 rows the call is refused.
 
 ```python
 r = requests.post(BASE_URL, headers={"X-API-Key": API_KEY, "Content-Type": "application/json"}, json={
@@ -325,6 +325,7 @@ Pull and fair-use responses:
 |---|---|
 | `truncated: true`, `truncated_reason: "pull_quota"` | `search_lps` on a keyless, Free or Starter caller whose remaining pull allowance is smaller than the page: only the remaining rows come back. Not an error |
 | `-32001`, `error_reason: "pull_quota_exceeded"` | `get_fund` or `search_lps` with zero pulls left. `error.data` carries `pulls_used`, `pulls_limit`, `resets_at` and `upgrade_url`. Nothing is charged. Keyless callers get `anon_quota_exceeded` instead |
+| `truncated: true`, `truncated_reason: "fair_use_daily_lp_rows"` | `search_lps` on a Pro key part-way through its 500 LP rows per UTC day: only the remaining rows come back. Not an error |
 | `-32001` (HTTP `429`), `error_reason: "fair_use_daily_lp_rows"` | `search_lps` on a Pro key that has been served 500 LP rows today (UTC). `error.data` carries `next_step` and `resets_at`. Nothing is charged |
 
 ## Recent closes, pulled or pushed

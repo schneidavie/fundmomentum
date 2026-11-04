@@ -161,7 +161,7 @@ curl -s -X POST https://fundmomentum.vc/_api/agent/credits/topup \
   -d '{"amount_eur":80}'
 ```
 
-`amount_eur` is 10, 80 or 500: EUR 10 buys 1,000 credits, EUR 80 buys 10,000 and EUR 500 buys 100,000. The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€1,000 per payer per UTC day**.
+`amount_eur` is 10, 80 or 500: EUR 10 buys 1,000 credits, EUR 80 buys 10,000 and EUR 500 buys 100,000. Card checkout currently sells the EUR 10 pack only. The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€1,000 per payer per UTC day**.
 
 Prices are quoted in EUR and settle in USDC, converted at the ECB daily reference rate plus a 1.5% buffer for intraday movement and fees. There is no rounding up to the cent: €0.01 charges $0.0118, not $0.02.
 

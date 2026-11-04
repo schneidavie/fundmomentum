@@ -66,7 +66,7 @@ There is no signup wall. An agent can discover this server, pay for what it need
 | **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund`, `get_changes` (7-day window), `check_lp_coverage`, `search_lps` (plus unmetered `get_usage`, `send_feedback`) | 10 calls/caller/UTC day, one shared pool; pace 120/min |
 | **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All 11 tools on credits, except the free ones that need no credits (`check_lp_coverage`, `get_usage`, `send_feedback`); `request_warm_intro` also needs the agent key linked to a human account. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
 | **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | Every priced tool, priced per call | €1,000 per payer per day |
-| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All 11 tools on credits, except the free ones that need no credits (`check_lp_coverage`, `get_usage`, `send_feedback`) | €5 / €20 / €50 / €100 |
+| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All 11 tools on credits, except the free ones that need no credits (`check_lp_coverage`, `get_usage`, `send_feedback`) | €10 / €80 / €500 |
 | **Linked** *(optional)* | `POST /_api/agent/link` with an email | Everything above, plus invoices and a dashboard | Grants no extra access |
 
 Agent keys have no monthly pull cap. Pace is 60 per minute and 2,000 per UTC day, `search_funds` is capped at 150 funds per key per UTC day, and there are no webhooks: poll `get_changes`.
@@ -158,10 +158,10 @@ The same flow tops up a key, so an agent never has to stop:
 ```bash
 curl -s -X POST https://fundmomentum.vc/_api/agent/credits/topup \
   -H "X-API-Key: fm_agent_..." -H "Content-Type: application/json" \
-  -d '{"amount_eur":20}'
+  -d '{"amount_eur":80}'
 ```
 
-`amount_eur` is 5, 20, 50 or 100. €20 buys 2,000 credits. The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€1,000 per payer per UTC day**.
+`amount_eur` is 10, 80 or 500: EUR 10 buys 1,000 credits, EUR 80 buys 10,000 and EUR 500 buys 100,000. The daily ceiling is checked **before** a challenge is issued, so you are never invited to pay for something that would then be refused. Spending is capped at **€1,000 per payer per UTC day**.
 
 Prices are quoted in EUR and settle in USDC, converted at the ECB daily reference rate plus a 1.5% buffer for intraday movement and fees. There is no rounding up to the cent: €0.01 charges $0.0118, not $0.02.
 
@@ -308,7 +308,7 @@ As of 2026-11-03, LP data is no longer a separate product: `search_lps` is bille
 - **`check_lp_coverage` is free, unconditionally.** No key, no credit, also on the keyless trial. It answers "do you cover my geography and LP type" with counts only: never a name, website or commitment. Counts under 5 show as `"<5"`, zero as `"none"`. Call it first.
 - **`search_lps` with no key at all** uses the same keyless trial as `get_fund`: 10 calls per UTC day, one shared pool with every other keyless tool.
 - **A free/Starter/Pro key** draws `search_lps` rows from the same monthly "profile pull" allowance it shares with `get_fund` (Free 20/mo, Starter 200/mo, Pro and Enterprise unlimited — [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) has current figures). Up to 25 records per call; a larger `limit` is rejected, not clamped. A profile pull is one `get_fund` call or one LP row returned by `search_lps`; `search_funds` rows are not pulls. If the remaining allowance is smaller than the page, only the remaining rows are returned with `truncated: true` and `truncated_reason: "pull_quota"`. At zero the error is `pull_quota_exceeded` with `pulls_used`, `pulls_limit`, `resets_at` and `upgrade_url`.
-- **Pro fair-use guard.** `search_lps` is capped at 500 LP rows per UTC day per key. Over it the call fails with an HTTP 429-style error, `error_reason: "fair_use_daily_lp_rows"`, with `next_step` and `resets_at`. Pro pulls stay unlimited per month.
+- **Pro fair-use guard.** `search_lps` is capped at 500 LP rows per UTC day per key. A Pro key part-way through its 500 rows gets a truncated page with `truncated_reason: "fair_use_daily_lp_rows"`. At 500 rows the call is refused with an HTTP 429-style error, `error_reason: "fair_use_daily_lp_rows"`, `next_step` and `resets_at`. Pro pulls stay unlimited per month.
 - **An agent key is billed per LP returned**, at the same per-row price as `search_funds` — see [Access without registration](#access-without-registration) above. No monthly cap, since every row is paid.
 - **What stays in the web app.** Commitment history, fund sizes, dates and allocation patterns are not served over MCP. There is no LP export on any tier.
 

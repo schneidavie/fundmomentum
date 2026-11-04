@@ -5,7 +5,7 @@ Auth: `X-API-Key: <key>`, or `Authorization: Bearer <key>`, or nothing at all on
 
 ## No API key at all
 
-`search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them with no credential. Keyless `get_changes` looks back at most 7 days. Start here.
+`search_funds`, `get_fund`, `get_changes`, `check_lp_coverage` and `search_lps` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them, one shared pool, with no credential. Keyless `get_changes` looks back at most 7 days. Start here.
 
 ```bash
 curl -s https://fundmomentum.vc/_api/mcp \
@@ -13,7 +13,7 @@ curl -s https://fundmomentum.vc/_api/mcp \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"stage":"seed","country":"Germany","limit":5}},"id":1}'
 ```
 
-Once you hit the daily cap, a free key raises it to <!--fm:free_calls-->100<!--/fm:free_calls--> calls/month and widens the `get_changes` window to 30 days. Humans subscribe and copy a key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing); [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) has the plans and client setup. Agents can self-register:
+Once you hit the daily cap, a free key raises it to <!--fm:free_calls-->300<!--/fm:free_calls--> calls/month (plus 20 profile pulls a month) and widens the `get_changes` window to 30 days. Humans subscribe and copy a key at [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing); [fundmomentum.vc/mcp](https://fundmomentum.vc/mcp) has the plans and client setup. Agents can self-register:
 
 ```bash
 curl -s https://fundmomentum.vc/_api/agent/register \
@@ -23,7 +23,7 @@ curl -s https://fundmomentum.vc/_api/agent/register \
 
 There is **no `email` field**. That returns `201` with `"api_key"`, `"agent_id"` and
 `"agent_credits": 25` with no payment, no approval and no human, so an agent can register and make a
-useful call in the same second. The credits work on all six fund tools. The key is returned once; only a
+useful call in the same second. The credits work on all 11 tools, except the free ones that need no credits (`check_lp_coverage`, `get_usage`, `send_feedback`); `request_warm_intro` also needs the agent key linked to a human account. The key is returned once; only a
 hash is stored.
 
 New keys are capped at 3 per IP and 10 per /24 per UTC day (`429` beyond that, naming both escape
@@ -41,8 +41,8 @@ tempo wallet login
 tempo request -X POST --json '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_fund_signals","arguments":{"slug":"speedinvest-africa-fund"}},"id":1}' https://fundmomentum.vc/_api/mcp
 ```
 
-To buy a balance up front instead, `POST /_api/agent/credits/topup` with `{"amount_eur":20}`
-(5/20/50/100) and pay the same challenge. Spending is capped at €1,000 per payer per UTC day, checked
+To buy a balance up front instead, `POST /_api/agent/credits/topup` with `{"amount_eur":80}`
+(10/80/500) and pay the same challenge. Spending is capped at €1,000 per payer per UTC day, checked
 *before* any challenge is issued.
 
 The challenge is on a standard `WWW-Authenticate: Payment ...` header. A paid response carries
@@ -55,7 +55,7 @@ not auto-refunded, so a `not_found` on a paid call comes back with `paid: true` 
 instead, and carry no receipt.
 
 The 402 payload also names the free fallback: drop the `X-API-Key` header and the keyless allowance
-still answers `search_funds`, `get_fund`, `get_changes` and `check_lp_coverage`.
+still answers `search_funds`, `get_fund`, `get_changes`, `check_lp_coverage` and `search_lps`.
 
 ## Python: Search Funds
 
@@ -236,11 +236,12 @@ print(f"{cov['matched']} of {cov['of_total_disclosed']} disclosed LPs match; "
 `Family office / Holding`, `Fund-of-Funds`, …); common spellings such as `family office` are
 normalised. `country` is spelled out in full; two-letter ISO codes are accepted too.
 
-`search_lps` returns the records themselves, up to 25 per call, for the key of an account holding
-[LP Radar](https://fundmomentum.vc/lp-radar) (€199/month or €1,499/year). Agent keys cannot hold it,
-and it is never sold per call, on credits or over MPP. Without it the call fails with HTTP `403` and
-JSON-RPC `-32001` (no payment challenge, nothing charged), and `error.data` still carries the
-coverage for your filters:
+`search_lps` returns the records themselves, up to 25 per call. As of 2026-11-03 there is no
+separate LP Radar entitlement: it is billed and gated exactly like `get_fund`, per caller type.
+No key at all gets the same keyless daily trial as `get_fund`; a free/Starter/Pro key draws from
+the shared monthly "profile pull" allowance (Free 20/mo, Starter 200/mo, Pro and Enterprise
+unlimited); an agent key is billed per LP returned at the same per-row price as `search_funds`,
+with no monthly cap. A profile pull is one `get_fund` call or one LP row returned by `search_lps`; `search_funds` rows are not pulls. If the remaining allowance is smaller than the page, only the remaining rows come back with `truncated: true` and `truncated_reason: "pull_quota"`; at zero the call fails with `pull_quota_exceeded` (see the error table below). On Pro, `search_lps` is capped at 500 LP rows per UTC day per key (`fair_use_daily_lp_rows`): a key part-way through its 500 rows gets a truncated page with `truncated_reason: "fair_use_daily_lp_rows"`, and at 500 rows the call is refused.
 
 ```python
 r = requests.post(BASE_URL, headers={"X-API-Key": API_KEY, "Content-Type": "application/json"}, json={
@@ -248,9 +249,9 @@ r = requests.post(BASE_URL, headers={"X-API-Key": API_KEY, "Content-Type": "appl
     "params": {"name": "search_lps", "arguments": {"country": "Germany", "limit": 25}},
 })
 body = r.json()
-if "error" in body and body["error"].get("data", {}).get("error_reason") == "lp_access_required":
+if "error" in body and body["error"].get("data", {}).get("error_reason") == "insufficient_credits":
     data = body["error"]["data"]
-    print(f"{data['coverage']['matched']} LPs match — LP Radar needed: {data['lp_radar']['url']}")
+    print(f"Needs {data.get('required')} credits, have {data.get('available')} — top up: {data['top_up']['url']}")
 else:
     lps = json.loads(body["result"]["content"][0]["text"])
 ```
@@ -291,8 +292,41 @@ else:                                           # keyless trial or a monthly tie
 ```
 
 The matching failure modes are HTTP status codes: `402` when an agent is out of credits, `429`
-when a monthly quota is exhausted, `401` for an unrecognised key, `403` (`lp_access_required`) for
-`search_lps` without LP Radar.
+when a monthly quota is exhausted, `401` for an unrecognised key.
+
+For the profile-pull counters, call `get_usage` (or `GET /_api/v1/usage`). It is free, needs no key and does not count against the keyless allowance. `pulls_window` is `daily_shared_with_calls` on the keyless trial, where pulls and calls share one pool.
+
+```python
+usage = mcp_call("get_usage", {})
+print(f"Calls: {usage['calls_used']}/{usage['calls_limit']}, resets {usage['resets_at']}")
+print(f"Pulls: {usage['pulls_used']}/{usage['pulls_limit']} ({usage['pulls_remaining']} left), "
+      f"window {usage['pulls_window']}, resets {usage['pulls_resets_at']}")
+# {"tier": "keyless", "window": "daily", "calls_used": 0, "calls_limit": 10, "calls_remaining": 10,
+#  "credits_remaining": null, "resets_at": "2026-11-05T00:00:00.000Z",
+#  "pulls_used": 0, "pulls_limit": 10, "pulls_remaining": 10,
+#  "pulls_window": "daily_shared_with_calls", "pulls_resets_at": "2026-11-05T00:00:00.000Z",
+#  "pace_limit_per_minute": 120, ...}
+```
+
+A profile pull is one `get_fund` call or one LP row returned by `search_lps` (one pull per row). `search_funds` rows are not pulls. Limits by plan:
+
+| Plan | Calls | Profile pulls | Pace | `search_funds` max | Webhooks |
+|---|---|---|---|---|---|
+| Keyless | 10 per UTC day, one shared pool (`search_lps` included) | Shared with calls | 120/min | 10 per call | None |
+| Free | 300/month | 20/month | 20/min | 10 per call | 1 subscription, 50 events/month |
+| Starter | 1,000/month | 200/month | 30/min | 50 per call | 1 subscription, 50 events/month |
+| Pro | 10,000/month | Unlimited (`search_lps` fair use: 500 LP rows per UTC day per key) | 60/min | 250 per call, with `offset` | 5 subscriptions, unlimited events |
+| Enterprise | Unlimited | Unlimited | 120/min | 250 per call | 5 subscriptions, unlimited events |
+| Agent (credits) | Metered on credits | No monthly cap, every pull is paid per row | 60/min and 2,000/UTC day | 150 funds per key per UTC day | None, poll `get_changes` |
+
+Pull and fair-use responses:
+
+| Response | Meaning |
+|---|---|
+| `truncated: true`, `truncated_reason: "pull_quota"` | `search_lps` on a keyless, Free or Starter caller whose remaining pull allowance is smaller than the page: only the remaining rows come back. Not an error |
+| `-32001`, `error_reason: "pull_quota_exceeded"` | `get_fund` or `search_lps` with zero pulls left. `error.data` carries `pulls_used`, `pulls_limit`, `resets_at` and `upgrade_url`. Nothing is charged. Keyless callers get `anon_quota_exceeded` instead |
+| `truncated: true`, `truncated_reason: "fair_use_daily_lp_rows"` | `search_lps` on a Pro key part-way through its 500 LP rows per UTC day: only the remaining rows come back. Not an error |
+| `-32001` (HTTP `429`), `error_reason: "fair_use_daily_lp_rows"` | `search_lps` on a Pro key that has been served 500 LP rows today (UTC). `error.data` carries `next_step` and `resets_at`. Nothing is charged |
 
 ## Recent closes, pulled or pushed
 
@@ -305,7 +339,7 @@ for f in funds["results"] if isinstance(funds, dict) else funds:
 ```
 
 `get_fund` then has the full `last_close` block (amount and currency as stated,
-source URLs). On a Pro key you can have every new close pushed instead:
+source URLs). On any key plan (not agent keys) you can have every new close pushed instead:
 
 ```python
 # Flask receiver for close_updated webhooks.
@@ -335,7 +369,7 @@ def fm_hook():
 ```
 
 Subscribe, test, list and delete are documented in the
-[README](../README.md#webhooks-pro-and-enterprise).
+[README](../README.md#webhooks).
 
 ## Tool reference
 
@@ -348,13 +382,14 @@ Subscribe, test, list and delete are documented in the
 | `get_gp_profile` | Get General Partner profiles | Pro | `fund_slug` (required), `gp_name` |
 | `match_startup` | Match startup to funds | Pro | `description` (required, max 500 chars), `stage`, `country` |
 | `check_lp_coverage` | Check LP coverage | Free, keyless | `country`, `lp_type` |
-| `search_lps` | Search LP records | LP Radar | `country`, `lp_type`, `limit` (1–25, default 10; above 25 is rejected) |
+| `search_lps` | Search LP records | Free | `country`, `lp_type`, `limit` (1–25, default 10; above 25 is rejected) |
 | `get_usage` | Get my usage and limits | Free, keyless | none |
 | `send_feedback` | Send feedback to Fund Momentum | Free, keyless | `message` (required, max 1000 chars), `category` (`bug`, `data_issue`, `missing_feature`, `other`), `tool_name` |
+| `request_warm_intro` | Request a warm intro | Per intro | `target_type` (`lp` or `fund`, required), `slug` (required) |
 
-Nine of the ten are `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`,
+Nine of the eleven are `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`,
 `openWorldHint: false`, so they are safe for an agent to call unattended. `send_feedback` is
-`readOnlyHint: false` (it stores one short message) and never touches fund, account or billing data.
+`readOnlyHint: false` (it stores one short message) and never touches fund, account or billing data; `request_warm_intro` is also `readOnlyHint: false` (it creates one introduction request).
 
 The authoritative, always-current version of this table is the
 [server card](https://fundmomentum.vc/_api/well-known/mcp/server-card).

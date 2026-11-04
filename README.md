@@ -6,7 +6,7 @@
 
 ## Try it now: no key, no signup
 
-`search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them with **no credential at all**. Paste this:
+`search_funds`, `get_fund`, `get_changes`, `check_lp_coverage` and `search_lps` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them, one shared pool, with **no credential at all**. Paste this:
 
 ```bash
 curl -s https://fundmomentum.vc/_api/mcp \
@@ -14,7 +14,7 @@ curl -s https://fundmomentum.vc/_api/mcp \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"search_funds","arguments":{"stage":"seed","country":"Germany","limit":5}},"id":1}'
 ```
 
-Real data, no card, no email address. Quota headers, the free key and the other four tools: [MCP Server](#mcp-server).
+Real data, no card, no email address. Quota headers, the free key and the other tools: [MCP Server](#mcp-server).
 
 **New: LP data over MCP.** `check_lp_coverage` tells you, free and with no key, how many limited partners match a country and LP type. `search_lps` returns the LP records themselves, billed exactly like `get_fund` — no separate LP Radar subscription. See [LP Radar over MCP](#lp-radar-over-mcp).
 
@@ -41,7 +41,7 @@ Connect Claude, Cursor, or any MCP-compatible AI directly to Fund Momentum.
 
 ### The keyless trial
 
-`search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` answer **<!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them, with no credential at all**. No signup, no card, no key. This is the front door: see real data before you decide anything. The curl at the top of this README is a complete, working call.
+`search_funds`, `get_fund`, `get_changes`, `check_lp_coverage` and `search_lps` answer **<!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per caller per UTC day between them, with no credential at all**. It is one shared pool: `search_lps` draws from it too, with no separate LP and VC limit. No signup, no card, no key. This is the front door: see real data before you decide anything. The curl at the top of this README is a complete, working call.
 
 Every response carries a `_meta` block telling you where you stand:
 
@@ -55,7 +55,7 @@ Every response carries a `_meta` block telling you where you stand:
 }
 ```
 
-The keyless trial covers those four tools. `get_usage` and `send_feedback` are also free and keyless, but unmetered: they never count against the daily allowance. Keyless `get_changes` looks back at most **7 days** and answers `since_floor_applied: true` when it shortens your window; a free key widens that to 30 days. See [Incremental sync](#incremental-sync-use-get_changes-not-a-polling-loop).
+The keyless trial covers those five tools, at a pace of 120 calls per minute per address. `get_usage` and `send_feedback` are also free and keyless, but unmetered: they never count against the daily allowance. Keyless `get_changes` looks back at most **7 days** and answers `since_floor_applied: true` when it shortens your window; a free key widens that to 30 days. See [Incremental sync](#incremental-sync-use-get_changes-not-a-polling-loop).
 
 ### Access without registration
 
@@ -63,11 +63,13 @@ There is no signup wall. An agent can discover this server, pay for what it need
 
 | Access | How you get it | What works | Limits |
 |---|---|---|---|
-| **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund`, `get_changes` (7-day window), `check_lp_coverage` (plus unmetered `get_usage`, `send_feedback`) | 10 calls/caller/UTC day |
-| **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All six fund tools on credits. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
-| **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | All six fund tools, priced per call | €1,000 per payer per day |
-| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All six fund tools on credits | €5 / €20 / €50 / €100 |
+| **Keyless** | Nothing. Just call the endpoint. | `search_funds`, `get_fund`, `get_changes` (7-day window), `check_lp_coverage`, `search_lps` (plus unmetered `get_usage`, `send_feedback`) | 10 calls/caller/UTC day, one shared pool; pace 120/min |
+| **Anonymous key** | `POST {"agent_name":"..."}` to `/_api/agent/register` | All 11 tools on credits, except the free ones that need no credits (`check_lp_coverage`, `get_usage`, `send_feedback`); `request_warm_intro` also needs the agent key linked to a human account. **25 free credits** on creation. | 3 new keys per IP, 10 per /24, per day |
+| **Paid, inline** | Nothing. Call a Pro tool, get `402`, pay, retry. | Every priced tool, priced per call | €1,000 per payer per day |
+| **Paid, prepaid** | `POST /_api/agent/credits/topup`, pay the challenge | All 11 tools on credits, except the free ones that need no credits (`check_lp_coverage`, `get_usage`, `send_feedback`) | €5 / €20 / €50 / €100 |
 | **Linked** *(optional)* | `POST /_api/agent/link` with an email | Everything above, plus invoices and a dashboard | Grants no extra access |
+
+Agent keys have no monthly pull cap. Pace is 60 per minute and 2,000 per UTC day, `search_funds` is capped at 150 funds per key per UTC day, and there are no webhooks: poll `get_changes`.
 
 Per-call prices are not repeated here, because a typed price drifts. Each tool states its own in its description, and [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools) is generated from the live tool definitions.
 
@@ -117,7 +119,7 @@ No payment, no approval, no human: an agent registers and makes a useful call in
 
 `operator_url` and `contact` are optional free text and are never verified. Send an `email` and it is ignored with a note rather than rejected, so callers written against the old contract keep working.
 
-The 25 credits work on **all seven priced tools**, `search_lps` included. Free tools cost 1 credit (€0.01) or, for `search_lps` and `search_funds`, 1 credit per row returned; the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools). `check_lp_coverage` never costs a credit. See [LP Radar over MCP](#lp-radar-over-mcp).
+The 25 credits work on all 11 tools, except the free ones that need no credits (`check_lp_coverage`, `get_usage`, `send_feedback`); `request_warm_intro` also needs the agent key linked to a human account. Free tools cost 1 credit (€0.01) or, for `search_lps` and `search_funds`, 1 credit per row returned; the Pro tools are priced per call, as listed in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools). `check_lp_coverage` never costs a credit. See [LP Radar over MCP](#lp-radar-over-mcp).
 
 #### Why there is no email step
 
@@ -178,7 +180,7 @@ Everything structural passes, including the mainnet token and recipient addresse
 
 Out of credits used to surface as JSON-RPC error `-32001`. It is now an HTTP `402`. Update any handler matching the old code.
 
-If you would rather not pay at all, the fallback is real: drop the `X-API-Key` header and `search_funds`, `get_fund`, `get_changes` and `check_lp_coverage` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
+If you would rather not pay at all, the fallback is real: drop the `X-API-Key` header and `search_funds`, `get_fund`, `get_changes`, `check_lp_coverage` and `search_lps` still answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with no credential.
 
 #### Knowing the cost before you call: `max_credits` and `billing`
 
@@ -271,7 +273,7 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 "Which funds were added or updated since last Monday?"
 ```
 
-### Available Tools (10)
+### Available Tools (11)
 
 | Tool | Title | Tier | Description |
 |---|---|---|---|
@@ -282,17 +284,18 @@ Restart Claude Desktop. Done. Drop the `headers` block entirely to run on the ke
 | `get_gp_profile` | Get General Partner profiles | Pro | Individual GP profiles and backgrounds |
 | `match_startup` | Match startup to funds | Pro | AI-powered fund matching based on startup description |
 | `check_lp_coverage` | Check LP coverage | Free, keyless | How many LPs match a country and LP type. Counts only, never a name |
-| `search_lps` | Search LP records | Free | LP records (name, type, HQ, focus, website, emerging-manager backing), max 25 per call, billed exactly like `get_fund` |
-| `get_usage` | Get my usage and limits | Free, keyless | Your tier, calls used and remaining, credits (agent keys), reset time and per-minute limit. Does not count against the keyless 10 calls a day |
+| `search_lps` | Search LP records | Free | LP records (name, type, HQ, focus, website, emerging-manager backing), max 25 per call, billed exactly like `get_fund` (one profile pull per row). Included in Pro, EUR 0.01 per LP row on agent keys |
+| `get_usage` | Get my usage and limits | Free, keyless | Your tier, calls used and remaining, profile pulls (`pulls_used`, `pulls_limit`, `pulls_remaining`, `pulls_window`, `pulls_resets_at`), credits (agent keys), reset time and per-minute limit. Does not count against the keyless 10 calls a day |
 | `send_feedback` | Send feedback to Fund Momentum | Free, keyless | Report a bug, data issue or missing feature (`message` max 1000 characters, optional `category`, `tool_name`). 5 per caller per UTC day. Leave out personal details of third parties |
+| `request_warm_intro` | Request a warm intro | Per intro | Ask for a warm introduction to a fund or an LP (`target_type`, `slug`). Fulfilled by hand and priced per intro, see the tool description. Needs a human account's key or an agent key linked to one |
 
-Nine of the ten tools are read-only and non-destructive, and advertise it (webhook subscriptions are separate HTTPS endpoints, see below):
+Nine of the eleven tools are read-only and non-destructive, and advertise it (webhook subscriptions are separate HTTPS endpoints, see below):
 `readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`, `openWorldHint: false`.
 An agent can call them without a confirmation prompt.
 
-The exception is `send_feedback` (`readOnlyHint: false`, `destructiveHint: false`): it stores one short message and touches no fund, account or billing data.
+The exceptions are `send_feedback` (`readOnlyHint: false`, `destructiveHint: false`), which stores one short message and touches no fund, account or billing data, and `request_warm_intro`, which creates one introduction request.
 
-`search_funds` returns **10 funds when `limit` is omitted, for every caller**. Pass a larger `limit` explicitly; the caps are unchanged (keyless 10, Starter 50, Pro 250, agent keys up to 150 funds per UTC day). A truncated response carries `matched`, `truncated` and, where paging is allowed, `next_offset`.
+`search_funds` returns **10 funds when `limit` is omitted, for every caller**. Pass a larger `limit` explicitly; the caps are unchanged (keyless and Free 10, Starter 50, Pro 250 with `offset`, agent keys up to 150 funds per key per UTC day). A truncated response carries `matched`, `truncated` and, where paging is allowed, `next_offset`.
 
 A keyless caller with 2 or fewer calls left today gets one extra short text item after the tool result with the calls left, the reset time and the pricing link. The JSON result and `_meta` are unchanged.
 
@@ -303,8 +306,9 @@ A keyless caller with 2 or fewer calls left today gets one extra short text item
 As of 2026-11-03, LP data is no longer a separate product: `search_lps` is billed and gated exactly like `get_fund`, per caller type. There is no standalone LP Radar subscription any more — it is included in the Pro plan.
 
 - **`check_lp_coverage` is free, unconditionally.** No key, no credit, also on the keyless trial. It answers "do you cover my geography and LP type" with counts only: never a name, website or commitment. Counts under 5 show as `"<5"`, zero as `"none"`. Call it first.
-- **`search_lps` has no key at all**: a handful of free calls a day, same keyless trial as `get_fund`.
-- **A free/Starter/Pro key** draws `search_lps` rows from the same monthly "profile pull" allowance it shares with `get_fund` (Free 20/mo, Starter 200/mo, Pro and Enterprise unlimited — [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) has current figures). Up to 25 records per call; a larger `limit` is rejected, not clamped.
+- **`search_lps` with no key at all** uses the same keyless trial as `get_fund`: 10 calls per UTC day, one shared pool with every other keyless tool.
+- **A free/Starter/Pro key** draws `search_lps` rows from the same monthly "profile pull" allowance it shares with `get_fund` (Free 20/mo, Starter 200/mo, Pro and Enterprise unlimited — [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) has current figures). Up to 25 records per call; a larger `limit` is rejected, not clamped. A profile pull is one `get_fund` call or one LP row returned by `search_lps`; `search_funds` rows are not pulls. If the remaining allowance is smaller than the page, only the remaining rows are returned with `truncated: true` and `truncated_reason: "pull_quota"`. At zero the error is `pull_quota_exceeded` with `pulls_used`, `pulls_limit`, `resets_at` and `upgrade_url`.
+- **Pro fair-use guard.** `search_lps` is capped at 500 LP rows per UTC day per key. Over it the call fails with an HTTP 429-style error, `error_reason: "fair_use_daily_lp_rows"`, with `next_step` and `resets_at`. Pro pulls stay unlimited per month.
 - **An agent key is billed per LP returned**, at the same per-row price as `search_funds` — see [Access without registration](#access-without-registration) above. No monthly cap, since every row is paid.
 - **What stays in the web app.** Commitment history, fund sizes, dates and allocation patterns are not served over MCP. There is no LP export on any tier.
 
@@ -385,13 +389,13 @@ Fund Momentum covers fund closes as primary research, and every covered close is
 
 - **Provenance per field**: `get_fund.provenance.field_sources` names the source of `fundSize`, `fundingStage` (with `fundingStage_confidence`) and GP names, ranked `claim` (fund-verified) > `admin` > `blog` (Fund Momentum close coverage) > `website` > `llm`. A lower-ranked source never overwrites a higher one. GP names are kept only when a fetched source names them with a first and last name.
 
-#### Webhooks (Pro and Enterprise)
+#### Webhooks
 
-Push instead of poll. Subscribe an HTTPS endpoint and each newly published close arrives as a signed `close_updated` event, optionally filtered by stage, country and industry. Webhooks are plain HTTPS endpoints next to the MCP server, authenticated with the same API key; the MCP tools themselves stay read-only.
+Push instead of poll. Free and Starter keys get 1 subscription and 50 events per month, Pro and Enterprise 5 subscriptions and unlimited events. Agent keys have no webhooks. Subscribe an HTTPS endpoint and each newly published close arrives as a signed `close_updated` event, optionally filtered by stage, country and industry. Webhooks are plain HTTPS endpoints next to the MCP server, authenticated with the same API key; the MCP tools themselves stay read-only.
 
 ```bash
 curl -s -X POST https://fundmomentum.vc/_api/webhooks/subscribe \
-  -H 'X-API-Key: YOUR_PRO_KEY' -H 'Content-Type: application/json' \
+  -H 'X-API-Key: YOUR_KEY' -H 'Content-Type: application/json' \
   -d '{"url":"https://example.com/fm-hook","filters":{"stage":"seed","country":"Germany"}}'
 ```
 
@@ -399,7 +403,7 @@ The response returns the subscription and its signing `secret`, **shown once**.
 
 | Endpoint | Body | Does |
 |---|---|---|
-| `POST /_api/webhooks/subscribe` | `url`, optional `filters.stage` / `filters.country` / `filters.industry`, `description` | Create a subscription (max 5 per key) |
+| `POST /_api/webhooks/subscribe` | `url`, optional `filters.stage` / `filters.country` / `filters.industry`, `description` | Create a subscription (1 on Free and Starter, 5 on Pro and Enterprise) |
 | `GET /_api/webhooks/list` | | Your subscriptions, their health, the last 20 deliveries |
 | `POST /_api/webhooks/test` | `id` | Send a signed `ping` right now |
 | `POST /_api/webhooks/delete` | `id` | Remove a subscription |
@@ -448,7 +452,7 @@ function verify(secret, rawBody, header, toleranceS = 300) {
 }
 ```
 
-Without Pro, poll `get_changes` for `close_updated` rows instead, which is free.
+Agent keys have no webhooks: poll `get_changes` for `close_updated` rows instead, which is free.
 
 ### API Reference
 
@@ -531,14 +535,16 @@ These tiers cover the MCP server and API only.
 
 **Agents are not on these plans.** They pay per call, at the price each tool states in [`/_api/mcp-tools`](https://fundmomentum.vc/_api/mcp-tools), with no subscription and no account. See [Access without registration](#access-without-registration) above. The monthly plans below are for people.
 
-| Tier | Price | API Calls | Tools |
-|---|---|---|---|
-| Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six fund tools, no account needed |
-| Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund`, `get_changes` (7 days back), `check_lp_coverage`; `get_usage` and `send_feedback` are unmetered |
-| Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
-| Starter | <!--fm:starter_price-->€9/mo<!--/fm:starter_price--> | <!--fm:starter_calls-->1,000<!--/fm:starter_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
-| Pro | <!--fm:pro_price-->€19/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals, plus unlimited `search_lps` (LP Radar, now included — no separate subscription) |
-| Enterprise | <!--fm:enterprise_price-->Custom<!--/fm:enterprise_price--> | Unlimited | All six fund tools, custom contract & SLA, plus unlimited `search_lps` |
+| Tier | Price | API Calls | Profile pulls | Pace | Tools |
+|---|---|---|---|---|---|
+| Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | No monthly cap, every pull is paid per row | 60/min and 2,000/UTC day | All 11 tools on credits, except the free ones that need no credits (`check_lp_coverage`, `get_usage`, `send_feedback`); `request_warm_intro` also needs the agent key linked to a human account. `search_funds` is capped at 150 funds per key per UTC day, `search_lps` is EUR 0.01 per LP row. No webhooks: poll `get_changes` |
+| Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller, one shared pool | Shared with calls | 120/min | `search_funds` (max 10 per call), `get_fund`, `get_changes` (7 days back), `check_lp_coverage`, `search_lps`; `get_usage` and `send_feedback` are unmetered |
+| Free | €0 | <!--fm:free_calls-->300<!--/fm:free_calls-->/mo | 20/mo | 20/min | `search_funds` (max 10 per call), `get_fund`, `get_changes`, `check_lp_coverage`, `search_lps` (one pull per row). Webhooks: 1 subscription, 50 events/mo |
+| Starter | <!--fm:starter_price-->€9/mo<!--/fm:starter_price--> | <!--fm:starter_calls-->1,000<!--/fm:starter_calls-->/mo | 200/mo | 30/min | `search_funds` (max 50 per call), `get_fund`, `get_changes`, `check_lp_coverage`, `search_lps` (one pull per row). Webhooks: 1 subscription, 50 events/mo |
+| Pro | <!--fm:pro_price-->€19/mo<!--/fm:pro_price--> | 10,000/mo | Unlimited | 60/min | All fund tools incl. signals, `search_funds` max 250 per call (with `offset`), plus `search_lps` (LP Radar, now included, no separate subscription; fair use: 500 LP rows per UTC day per key). Webhooks: 5 subscriptions, unlimited events |
+| Enterprise | <!--fm:enterprise_price-->Custom<!--/fm:enterprise_price--> | Unlimited | Unlimited | 120/min | All tools, `search_funds` max 250 per call, custom contract & SLA. Webhooks: 5 subscriptions, unlimited events |
+
+A profile pull is one `get_fund` call or one LP row returned by `search_lps`. `search_funds` rows are not pulls.
 
 The keyless, Free, Starter, Pro and Enterprise rows are generated from the server
 card. Treat [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) as

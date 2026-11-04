@@ -25,11 +25,13 @@ All notable changes to the Fund Momentum MCP server.
     zero the error is `pull_quota_exceeded` with `pulls_used`, `pulls_limit`, `resets_at` and `upgrade_url`.
   - `get_usage` and `GET /_api/v1/usage` now also return `pulls_used`, `pulls_limit`, `pulls_remaining`,
     `pulls_window` and `pulls_resets_at`.
-  - Pro fair-use guard: `search_lps` is capped at 500 LP rows per UTC day per key. Over it the call fails
-    with an HTTP 429-style error, `error_reason: "fair_use_daily_lp_rows"`, with `next_step` and
+  - Pro fair-use guard: `search_lps` is capped at 500 LP rows per UTC day per key. A key part-way through
+    its 500 rows gets a truncated page with `truncated_reason: "fair_use_daily_lp_rows"`; at 500 rows the
+    call is refused with an HTTP 429-style error, `error_reason: "fair_use_daily_lp_rows"`, `next_step` and
     `resets_at`. Pulls stay unlimited per month.
   - Agents: no monthly pull cap. Pace is 60 per minute and 2,000 per UTC day, `search_funds` is capped at
     150 funds per key per UTC day, and there are no webhooks (poll `get_changes`).
+  - Docs: corrected credit top-up pack amounts to EUR 10/80/500 = 1,000/10,000/100,000 credits.
 - **LP Radar folded into Pro (2026-11-03).** `search_lps` is no longer a
   standalone €199/month or €1,499/year subscription. It is now billed and
   gated exactly like `get_fund`: free on the keyless trial, metered by the

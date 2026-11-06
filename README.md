@@ -554,9 +554,9 @@ Founder and investor-signal plans for the platform itself are priced separately
 
 ## Keeping the numbers honest
 
-Fund and LP counts, the keyless and Free allowances and the Pro price in this README are **generated, not typed**. [`scripts/sync-counts.sh`](scripts/sync-counts.sh) reads them from the live server card and rewrites the values between the `<!--fm:*-->` marker pairs, plus `version` and `description` in [`server.json`](server.json).
+Fund and LP counts, the keyless, Free, Starter and Pro allowances and prices in this README are **generated, not typed**. [`scripts/sync-counts.sh`](scripts/sync-counts.sh) reads them from the live server card and rewrites the values between the `<!--fm:*-->` marker pairs, plus `version` and `description` in [`server.json`](server.json).
 
-Two numbers are **not** covered: the **Starter** and **Enterprise** rows in the pricing table. The server card exposes `authentication.free_tier` and a Pro price via `tools[].price`, but no tier block, so there is nothing to read them from. They stay hand-typed until the card grows one. See the note at the top of [`scripts/sync-counts.sh`](scripts/sync-counts.sh) for how to wire them up when it does.
+The Starter, Pro and Enterprise price and call rows come from the card's `authentication.human_subscriptions.tiers` block. If the deployed card does not carry that block, [`scripts/sync-counts.sh`](scripts/sync-counts.sh) leaves those cells untouched instead of blanking them.
 
 The fund count is published rounded down to the nearest fifty (`950+` today), matching the site's own copy and the server card's note that marketing figures round the live count down. It still moves on its own as the index grows; it is simply never ahead of the truth.
 

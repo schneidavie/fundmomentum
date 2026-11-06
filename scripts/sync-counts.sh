@@ -13,20 +13,15 @@
 #
 # To change the *wording* around a number, edit the marker text in README.md
 # or the DESCRIPTION_TEMPLATE below. To sync a number in a new spot, wrap it
-# in a marker pair -- <!--fm:funds-->1000+<!--/fm:funds--> -- and it is picked
+# in a marker pair -- <!--fm:funds-->950+<!--/fm:funds--> -- and it is picked
 # up automatically. HTML comment markers are invisible in rendered Markdown.
 #
-# The fund count is published rounded down ("1000+"), matching the site's own
+# The fund count is published rounded down to the nearest fifty ("950+"), matching the site's own
 # marketing copy and the server card's note that it rounds the live figure
 # down. It is still derived from the card on every run, never typed by hand.
 #
-# NOT sourced from the card: the Starter and Enterprise rows of the README
-# pricing table. The card exposes authentication.free_tier and a Pro price via
-# tools[].price, but it has no tier block -- there is literally no "starter"
-# string in it -- so there is nothing to read those two from. They are typed by
-# hand and can drift. If the card ever grows a tier block, wrap the values in
-# <!--fm:starter_price--> / <!--fm:starter_calls--> marker pairs in README.md
-# and add matching -e lines to render_markdown below.
+# Starter and Enterprise come from authentication.human_subscriptions.tiers.
+# If the deployed card lacks that block, those README cells are left untouched.
 
 set -euo pipefail
 

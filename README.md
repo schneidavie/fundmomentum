@@ -1,6 +1,6 @@
 # Fund Momentum: the agentic pulse of Venture Capital
 
-> Agentic fundraising intelligence for founders and emerging fund managers · <!--fm:funds-->1000+<!--/fm:funds--> tracked VC funds · <!--fm:lps-->760<!--/fm:lps--> disclosed LPs · LP Radar · Remote MCP server with pay-per-call
+> Agentic fundraising intelligence for founders and emerging fund managers · <!--fm:funds-->1000+<!--/fm:funds--> tracked VC funds · <!--fm:lps-->779<!--/fm:lps--> disclosed LPs · LP Radar · Remote MCP server with pay-per-call
 
 **[fundmomentum.vc](https://fundmomentum.vc)** · [MCP Docs](https://fundmomentum.vc/mcp) · [LP Radar](https://fundmomentum.vc/lp-radar) · [FM15 Ranking](https://fundmomentum.vc/fm15-2026) · [Smithery](https://smithery.ai/servers/djschneida/fundmomentum)
 
@@ -22,7 +22,7 @@ Real data, no card, no email address. Quota headers, the free key and the other 
 
 ## What is Fund Momentum?
 
-Fund Momentum is agentic fundraising intelligence for founders and emerging fund managers. It tracks **<!--fm:funds-->1000+<!--/fm:funds--> VC funds**, every one of which raised capital since September 2024. Around 300 fund closings are covered as primary research, not scraped rows. **LP Radar** maps **<!--fm:lps-->760<!--/fm:lps--> disclosed LPs** and shows which of them back Fund I and II managers.
+Fund Momentum is agentic fundraising intelligence for founders and emerging fund managers. It tracks **<!--fm:funds-->1000+<!--/fm:funds--> VC funds**, every one of which raised capital since September 2024. Around 300 fund closings are covered as primary research, not scraped rows. **LP Radar** maps **<!--fm:lps-->779<!--/fm:lps--> disclosed LPs** and shows which of them back Fund I and II managers.
 
 Your agent queries it over a remote MCP server. A founder asks Claude or ChatGPT who backs their round. An autonomous agent registers itself and pays per call.
 
@@ -535,7 +535,7 @@ These tiers cover the MCP server and API only.
 |---|---|---|---|
 | Agents (per call) | [per tool](https://fundmomentum.vc/_api/mcp-tools) | Unmetered, pay as you go | All six fund tools, no account needed |
 | Keyless trial | €0, no signup | <!--fm:keyless_calls-->10<!--/fm:keyless_calls-->/day per caller | `search_funds`, `get_fund`, `get_changes` (7 days back), `check_lp_coverage`; `get_usage` and `send_feedback` are unmetered |
-| Free | €0 | <!--fm:free_calls-->100<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
+| Free | €0 | <!--fm:free_calls-->300<!--/fm:free_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Starter | <!--fm:starter_price-->€9/mo<!--/fm:starter_price--> | <!--fm:starter_calls-->1,000<!--/fm:starter_calls-->/mo | `search_funds`, `get_fund`, `get_changes` |
 | Pro | <!--fm:pro_price-->€19/mo<!--/fm:pro_price--> | 10,000/mo | All six fund tools incl. signals |
 | Enterprise | <!--fm:enterprise_price-->Custom<!--/fm:enterprise_price--> | Unlimited | All six fund tools, custom contract & SLA |

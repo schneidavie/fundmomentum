@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.schneidavie/fund-momentum",
   "title": "Fund Momentum",
-  "description": "Agentic fundraising intelligence: 1000+ tracked VC funds and 760 disclosed LPs over MCP",
-  "version": "1.10.0",
+  "description": "Agentic fundraising intelligence: 1000+ tracked VC funds and 779 disclosed LPs over MCP",
+  "version": "1.11.0",
   "repository": {
     "url": "https://github.com/schneidavie/fundmomentum",
     "source": "github"

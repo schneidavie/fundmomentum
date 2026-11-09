@@ -6,7 +6,7 @@ You do not need an API key to start. `search_funds`, `get_fund`, `get_changes` a
 `check_lp_coverage` answer <!--fm:keyless_calls-->10<!--/fm:keyless_calls--> calls per day with
 no credential at all. That covers everything in Investor Research and Staying Current below. A free key at
 [fundmomentum.vc/pricing](https://fundmomentum.vc/pricing) raises that to
-<!--fm:free_calls-->100<!--/fm:free_calls--> calls/month.
+<!--fm:free_calls-->300<!--/fm:free_calls--> calls/month.
 
 ## Investor Research
 

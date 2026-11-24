@@ -70,3 +70,6 @@ The text of this skill is released under the MIT license. The data behind the MC
 ## Contact
 
 Questions, wrong data, ideas: michael@fundmomentum.vc. Your agent can also report problems with the `send_feedback` tool.
+## Versions
+
+The server and the skill are versioned separately. MCP server releases are tagged `v1.x` (current: v1.9.x). Skill releases are tagged `skill-v1.x`, starting with `skill-v1.0.0`.

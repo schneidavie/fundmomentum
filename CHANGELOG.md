@@ -4,6 +4,10 @@ All notable changes to the Fund Momentum MCP server.
 
 ## [Unreleased]
 
+### Added
+
+- New agent skill `fundraising-with-fund-momentum` (agentskills format, MIT) in its own folder, released as `skill-v1.0.0`. The server is unchanged.
+
 ## [1.9.0] — 2026-10-28
 
 ### Added
